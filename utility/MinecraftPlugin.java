@@ -1,4 +1,4 @@
-package me.dercoolejulianhd.api.minigame.utils;
+package me.xcuzimsmart.utils;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
