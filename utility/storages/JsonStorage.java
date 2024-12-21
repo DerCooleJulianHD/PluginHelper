@@ -1,4 +1,4 @@
-package me.dercoolejulianhd.api.minigame.utils.storages;
+package me.xcuzimsmart.utils.storages;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
