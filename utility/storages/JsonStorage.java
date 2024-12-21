@@ -100,4 +100,11 @@ public final class JsonStorage {
     public Gson getGson() {
         return gson;
     }
+
+    public static JsonStorage getStorage(File file) {
+        final YamlStorage storage = new JsonStorage(file);
+        storage.initializeReader()
+        storage.initializeWriter();
+        return storage;
+    }
 }
