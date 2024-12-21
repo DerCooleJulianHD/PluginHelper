@@ -1,4 +1,4 @@
-package me.dercoolejulianhd.api.minigame.factory;
+package me.xcuzimsmart.utils.factory;
 
 import org.bukkit.ChatColor;
 
