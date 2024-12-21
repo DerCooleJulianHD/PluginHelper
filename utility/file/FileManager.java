@@ -1,4 +1,4 @@
-package me.dercoolejulianhd.api.minigame.utils.file;
+package me.xcuzimsmart.utils.file;
 
 import java.io.File;
 import java.io.IOException;
