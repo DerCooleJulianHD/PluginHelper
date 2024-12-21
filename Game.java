@@ -7,7 +7,7 @@ import java.io.File;
 public interface Game extends Map {
 
     File getDataFolder();
-    GameSettings settings();
+    YamlStorage settings();
     void sendStartingMessage();
     void sendStoppingMessage();
 
