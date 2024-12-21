@@ -36,13 +36,13 @@ public abstract class PluginListener implements Listener {
         return enabled;
     }
 
-
+	
     private void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
+
 	
-	
-	public MinecraftPlugin getMinecraftPlugin() {
-		return plugin;
-	}
+    public MinecraftPlugin getMinecraftPlugin() {
+	return plugin;
+    }
 }
