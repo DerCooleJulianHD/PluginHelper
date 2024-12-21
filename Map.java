@@ -8,5 +8,5 @@ public interface Map {
     Game load();
     void unload();
     boolean reset();
-    boolean isOnline();
+    boolean isLoaded();
 }
