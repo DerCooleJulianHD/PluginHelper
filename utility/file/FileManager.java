@@ -19,7 +19,7 @@ public class FileManager {
         return file.exists();
     }
 
-    public static boolean createFiles(File file) {
+    public static boolean createFile(File file) {
         if (file.exists()) return true;
         final File destination = file.getParentFile();
 
