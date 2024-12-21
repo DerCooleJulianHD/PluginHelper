@@ -1,7 +1,6 @@
-package me.dercoolejulianhd.api.minigame.utils.storages;
+package me.xcuzimsmart.utils.storages;
 
 import org.bukkit.configuration.file.YamlConfiguration;
-
 import java.io.*;
 
 public class YamlStorage {
