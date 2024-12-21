@@ -55,4 +55,10 @@ public class YamlStorage {
     public YamlConfiguration getConfiguration() {
         return config;
     }
+
+    public static YamlConfiguration getStorageConfiguration(File file) {
+        final YamlStorage storage = new YamlStorage(file);
+        storage.initializeConfig();
+        return storage.getConfiguration();
+    }
 }
