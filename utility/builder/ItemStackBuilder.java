@@ -1,6 +1,6 @@
 package me.xcuzimsmart.utils.builder;
 
-import me.xcuzimsmart.utils.*;;
+import me.xcuzimsmart.utils.*;
 
 import org.bukkit.Material;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
