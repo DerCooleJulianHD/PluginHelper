@@ -20,8 +20,8 @@ public abstract class ScoreboardBuilder {
     
     public ScoreboardBuilder(MinecraftPlugin plugin) {
         this.plugin = plugin;
-        this.scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
         this.objectives = new HashMap<>();
+        this.scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
         this.main = this.scoreboard.registerNewObjective("main", "dummy");
     }
 
