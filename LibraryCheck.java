@@ -7,14 +7,14 @@ import org.bukkit.plugin.PluginManager;
 
 public class LibraryCheck {
 
-    public static boolean hasLibrary(Plugin using, String libraryName) {
-        final Server server = using.getServer();
+    public static boolean hasLibrary(Plugin plugin, String libraryName) {
+        final Server server = plugin.getServer();
         final PluginManager manager = server.getPluginManager();
         final Plugin lib = manager.getPlugin(libraryName);
 
         if (lib == null) {
             server.getConsoleSender().sendMessage(ChatColor.RED + "'" + libraryName + "' plugin not found, please install it before continue.");
-            manager.disablePlugin(using);
+            manager.disablePlugin(plugin);
             return false;
         }
 
@@ -22,5 +22,6 @@ public class LibraryCheck {
         return true;
     }
 }
+
 
 
