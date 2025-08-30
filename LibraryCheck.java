@@ -5,7 +5,7 @@ import org.bukkit.Server;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 
-public class Libraries {
+public class LibraryCheck {
 
     public static void checkForLibrary(Plugin using, String libraryName) {
         final Server server = using.getServer();
@@ -22,3 +22,4 @@ public class Libraries {
         return true;
     }
 }
+
