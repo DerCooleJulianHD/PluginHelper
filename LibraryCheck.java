@@ -7,7 +7,7 @@ import org.bukkit.plugin.PluginManager;
 
 public class LibraryCheck {
 
-    public static void checkForLibrary(Plugin using, String libraryName) {
+    public static boolean hasLibrary(Plugin using, String libraryName) {
         final Server server = using.getServer();
         final PluginManager manager = server.getPluginManager();
         final Plugin lib = manager.getPlugin(libraryName);
@@ -22,4 +22,5 @@ public class LibraryCheck {
         return true;
     }
 }
+
 
