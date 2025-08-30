@@ -86,7 +86,7 @@ public abstract class GameMap implements Loadable {
             if (!zip.exists()) zip.createNewFile();
             final File importFolder = new File(zip, sourceFolder.getName());
             importFolder.mkdirs();
-            FileManager.copyFiles(sourceFolder, importFolder);
+            FileManager.copyFile(sourceFolder, importFolder);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -135,3 +135,4 @@ public abstract class GameMap implements Loadable {
         this.sourceFolder = sourceFolder;
     }
 }
+
