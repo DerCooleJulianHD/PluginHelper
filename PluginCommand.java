@@ -1,13 +1,3 @@
-package minecraft.lib.plugins.command;
-import minecraft.lib.plugins.extension.PluginLibrary;
-import minecraft.lib.plugins.utils.message.MessageBuilder;
-import org.apache.commons.lang.Validate;
-import org.bukkit.ChatColor;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
-import org.bukkit.command.TabCompleter;
-import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 
 public abstract class PluginCommand implements CommandExecutor, TabCompleter {
 
@@ -33,9 +23,9 @@ public abstract class PluginCommand implements CommandExecutor, TabCompleter {
             if ((!isPlayer(sender))) {
                 sender.sendMessage(MessageBuilder.build(plugin, ChatColor.RED + "Only players can execute this type of command."));
                 return false;
-            }
+            
 
-            this.onCommand((Player) sender, strings);
+            this.execute((Player) sender, args)
             return true;
         }
         this.execute(sender, args);
