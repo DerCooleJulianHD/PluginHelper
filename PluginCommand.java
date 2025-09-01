@@ -32,7 +32,7 @@ public abstract class PluginCommand implements CommandExecutor, TabCompleter {
         return true;
     }
 
-    public boolean execute(CommandSender sender, String[] strings) {
+    public abstract void execute(CommandSender sender, String[] strings) {
 
 
         this.onCommand(sender, strings);
