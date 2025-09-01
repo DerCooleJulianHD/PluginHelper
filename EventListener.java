@@ -2,9 +2,9 @@
 public class EventListener implements Listener {
 
     public static final Logger logger = LogManager.getLogger(EventListener.class);
-
-    private final String key;
-    private String name;
+    
+    final String key;
+    String name;
 
     public EventListener(String key, String name) {
         this.key = key;
@@ -27,4 +27,5 @@ public class EventListener implements Listener {
         this.name = name;
     }
 }
+
 
