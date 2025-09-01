@@ -1,5 +1,5 @@
 
-public class YamlConfigurator {
+public class YamlConfigurator implements Loadable {
 
     static final Logger logger = Logger.getLogger(YamlConfigurator.class.getName());
 
@@ -33,7 +33,7 @@ public class YamlConfigurator {
             if (!isLoaded()) load(); // loading the file
             c.set(k, v);
             save(false);
-        }catch (IOException | InvalidConfigurationException e) {
+        }catch (IOException e) {
             logger.log(Level.SEVERE, e.getLocalizedMessage(), e);
         }
     }
@@ -50,7 +50,7 @@ public class YamlConfigurator {
 
             section.set(k, v);
             save(false);
-        } catch (IOException | InvalidConfigurationException e) {
+        } catch (IOException e) {
             logger.log(Level.SEVERE, e.getLocalizedMessage(), e);
         }
     }
@@ -61,16 +61,27 @@ public class YamlConfigurator {
         this.write(section, k, v);
     }
 
+    public static void write(File file, String k, Object v) {
+        YamlConfigurator c = new YamlConfigurator(file.getParentFile(), file.getName());
+        c.write(k, v);
+    }
+
+    public static void write(File file, ConfigurationSection section, String k, Object v) {
+        YamlConfigurator c = new YamlConfigurator(file.getParentFile(), file.getName());
+        c.write(section, k, v);
+    }
+
+    public static void write(File file, String section, String k, Object v) {
+        YamlConfigurator c = new YamlConfigurator(file.getParentFile(), file.getName());
+        c.write(section, k, v);
+    }
+
     // reads an object from a YamlConfiguration from a specific key(k).
     public Object read(String k) {
         if (!file.exists()) return null;
         if (!isYamlFile(file)) return null; // does check if our file has the .yml ending
 
-        try {
-            if (!isLoaded()) load(); // loading the file;
-        } catch (IOException | InvalidConfigurationException e) {
-            logger.log(Level.SEVERE, e.getLocalizedMessage(), e);
-        }
+        if (!isLoaded()) load(); // loading the file;
 
         return c.get(k);
     }
@@ -79,13 +90,9 @@ public class YamlConfigurator {
         if (!file.exists()) return null;
 
         if (!isYamlFile(file)) return null; // does check if our file has the .yml ending
-        try {
-            if (!isLoaded()) load(); // loading the file;
-            // reads the object as value(v) on a configuration section with specific key(k)
-            if (section == null) return null;
-        } catch (IOException | InvalidConfigurationException e) {
-            logger.log(Level.SEVERE, e.getLocalizedMessage(), e);
-        }
+        if (!isLoaded()) load(); // loading the file;
+        // reads the object as value(v) on a configuration section with specific key(k)
+        if (section == null) return null;
 
         return section.get(k);
     }
@@ -95,6 +102,21 @@ public class YamlConfigurator {
         if (section == null) section = c.createSection(sectionName);
 
         return read(section, k);
+    }
+
+    public static Object read(File file, String k) {
+        YamlConfigurator c = new YamlConfigurator(file.getParentFile(), file.getName());
+        return c.read(k);
+    }
+
+    public static Object read(File file, ConfigurationSection section, String k) {
+        YamlConfigurator c = new YamlConfigurator(file.getParentFile(), file.getName());
+        return c.read(section, k);
+    }
+
+    public static Object read(File file, String section, String k) {
+        YamlConfigurator c = new YamlConfigurator(file.getParentFile(), file.getName());
+        return c.read(section, k);
     }
 
     public int readInt(String k) {
@@ -205,11 +227,11 @@ public class YamlConfigurator {
         return (byte) read(section, k);
     }
 
-    public Set<String> readKeys(String k) {
+    public Set<String> keys(String k) {
         return c.getKeys(false);
     }
 
-    public Set<String> readKeys(ConfigurationSection section) {
+    public Set<String> keys(ConfigurationSection section) {
         return section.getKeys(false);
     }
 
@@ -229,17 +251,22 @@ public class YamlConfigurator {
         return (ItemStack) read(section, k);
     }
 
-    void load() throws IOException, InvalidConfigurationException {
-        c.load(file);
-        setLoaded(true);
+    @Override
+    public void load() {
+        try {
+            c.load(file);
+            setLoaded(true);
+        } catch (IOException | InvalidConfigurationException e) {
+            logger.log(Level.SEVERE, e.getLocalizedMessage(), e);
+        }
     }
 
+    @Override
     public void unload() {
         try {
             save(true);
-            this.c = null;
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            logger.log(Level.SEVERE, e.getLocalizedMessage(), e);
         }
     }
 
@@ -256,11 +283,13 @@ public class YamlConfigurator {
         c.getConfigurationSection(s);
     }
 
+    @Override
     public boolean isLoaded() {
         return loaded;
     }
 
-    void setLoaded(boolean loaded) {
+    @Override
+    public void setLoaded(boolean loaded) {
         this.loaded = loaded;
     }
 
@@ -278,7 +307,7 @@ public class YamlConfigurator {
 
     void createFiles() {
         if (dir != null) if (!dir.exists()) dir.mkdirs();
-
+        if (file.exists()) return;
         try {
              file.createNewFile();
         } catch (IOException e) {
