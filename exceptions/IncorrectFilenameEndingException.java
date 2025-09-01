@@ -1,6 +1,3 @@
-package minecraft.lib.plugins.exceptions;
-
-import java.io.File;
 
 public class IncorrectFilenameEndingException extends InvalidParameterException {
 
@@ -16,3 +13,4 @@ public class IncorrectFilenameEndingException extends InvalidParameterException 
         return file.getName() + "does not end with: " + ending;
     }
 }
+
