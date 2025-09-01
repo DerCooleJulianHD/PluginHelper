@@ -1,12 +1,3 @@
-package minecraft.lib.plugins.listener;
-
-import minecraft.lib.plugins.extension.PluginLibrary;
-import org.bukkit.Bukkit;
-import org.bukkit.event.HandlerList;
-import org.bukkit.plugin.PluginManager;
-
-import javax.annotation.Nullable;
-import java.util.HashMap;
 
 public final class ListenerBundle extends HashMap<String, EventListener> {
 
@@ -69,3 +60,4 @@ public final class ListenerBundle extends HashMap<String, EventListener> {
         return ListenerBundle.activeListeners;
     }
 }
+
