@@ -1,4 +1,3 @@
-package minecraft.lib.plugins.utils;
 
 public interface Loadable {
 
@@ -10,3 +9,4 @@ public interface Loadable {
 
     void setLoaded(boolean loaded);
 }
+
