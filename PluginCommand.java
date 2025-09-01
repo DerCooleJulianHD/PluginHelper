@@ -13,7 +13,7 @@ public abstract class PluginCommand implements CommandExecutor, TabCompleter {
     }
 
     @Override // [from: CommandExecutor]
-    public boolean onCommand(CommandSender sender, org.bukkit.command.Command command, String label, String[] args) {
+    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (this.requiresPermission() && (!sender.hasPermission(info.permission()))) {
             sender.sendMessage(MessageBuilder.build(plugin, ChatColor.RED + "You doun't have the permission to execute this command. (missing: " + info.permission() + ")"));
             return false;
@@ -46,4 +46,5 @@ public abstract class PluginCommand implements CommandExecutor, TabCompleter {
         return sender instanceof Player;
     }
 }
+
 
