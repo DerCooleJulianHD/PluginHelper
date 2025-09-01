@@ -1,17 +1,3 @@
-package de.xcuzimsmart.minigameapi.classes.game.map;
-
-import de.xcuzimsmart.minigameapi.classes.game.GameManager;
-import de.xcuzimsmart.minigameapi.main.MinigameApi;
-import minecraft.lib.plugins.utils.Loadable;
-import minecraft.lib.plugins.utils.file.FileManager;
-import org.bukkit.Bukkit;
-import org.bukkit.Difficulty;
-import org.bukkit.World;
-import org.bukkit.WorldCreator;
-import org.bukkit.metadata.FixedMetadataValue;
-
-import java.io.File;
-import java.io.IOException;
 
 // world for any minigame
 public abstract class GameMap implements Loadable {
@@ -135,4 +121,5 @@ public abstract class GameMap implements Loadable {
         this.sourceFolder = sourceFolder;
     }
 }
+
 
