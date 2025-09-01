@@ -1,8 +1,3 @@
-package minecraft.lib.plugins.utils.file;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 
 public class FileManager {
 
@@ -52,3 +47,4 @@ public class FileManager {
         return hasChilds(file);
     }
 }
+
