@@ -1,14 +1,3 @@
-package de.xcuzimsmart.minigameapi.classes.game;
-
-import de.xcuzimsmart.minigameapi.classes.game.map.GameMap;
-import de.xcuzimsmart.minigameapi.classes.game.map.LocalGameMap;
-import de.xcuzimsmart.minigameapi.classes.game.map.OriginalGameMap;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
 
 public class GameManager {
 
@@ -54,3 +43,4 @@ public class GameManager {
         return names == null ? new ArrayList<>() : Arrays.stream(names).toList();
     }
 }
+
