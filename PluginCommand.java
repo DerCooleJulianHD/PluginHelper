@@ -34,15 +34,8 @@ public abstract class PluginCommand implements CommandExecutor, TabCompleter {
 
     public abstract void execute(CommandSender sender, String[] strings);
 
-    public void sendHelp(CommandSender sender) {
-        sender.sendMessage(MessageBuilder.build(plugin, ChatColor.RED + this.info.name() + " Help:"));
-
-        list.values().forEach((s, command) -> {
-            String builder = ChatColor.GRAY + "- " + ChatColor.RED + "/" + this.info.name() + " " + s +
-                    ChatColor.DARK_GRAY + " : " + ChatColor.YELLOW + command.getDescription();
-
-            sender.sendMessage(builder);
-        });
+    public void sendHelp(CommandSender sender, String usage) {
+        sender.sendMessage(MessageBuilder.build(plugin, usage));
     }
 
     public CommandInfo getInfo() {
