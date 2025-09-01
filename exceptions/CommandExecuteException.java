@@ -1,6 +1,3 @@
-package minecraft.lib.plugins.exceptions;
-
-import minecraft.lib.plugins.command.PluginCommand;
 
 public class CommandExecuteException extends Exception {
 
@@ -25,3 +22,4 @@ public class CommandExecuteException extends Exception {
         return command;
     }
 }
+
