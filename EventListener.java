@@ -1,8 +1,3 @@
-package minecraft.lib.plugins.listener;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.bukkit.event.Listener;
 
 public class EventListener implements Listener {
 
@@ -32,3 +27,4 @@ public class EventListener implements Listener {
         this.name = name;
     }
 }
+
