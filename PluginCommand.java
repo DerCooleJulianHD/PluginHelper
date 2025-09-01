@@ -32,12 +32,7 @@ public abstract class PluginCommand implements CommandExecutor, TabCompleter {
         return true;
     }
 
-    public abstract void execute(CommandSender sender, String[] strings) {
-
-
-        this.onCommand(sender, strings);
-        return true;
-    }
+    public abstract void execute(CommandSender sender, String[] strings);
 
     public void sendHelp(CommandSender sender) {
         sender.sendMessage(MessageBuilder.build(plugin, ChatColor.RED + this.info.name() + " Help:"));
