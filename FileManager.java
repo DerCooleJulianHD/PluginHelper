@@ -1,20 +1,22 @@
 
 public class FileManager {
 
+    public static Logger logger = Logger.getLogger(FileManager.class.getName());
+
     public static void copyFile(File target, File destination) {
         if (!target.exists()) return;
         try {
-            FileInputStream read = new FileInputStream(target);
-            FileOutputStream output = new FileOutputStream(destination);
+            FileInputStream in = new FileInputStream(target);
+            FileOutputStream out = new FileOutputStream(destination);
             if (!destination.exists()) destination.mkdirs();
             byte[] buffer = new byte[1024];
             int length;
-            while ((length = read.read(buffer)) > 0) output.write(buffer, 0, length);
-            output.flush();
-            read.close();
-            output.close();
+            while ((length = in.read(buffer)) > 0) out.write(buffer, 0, length);
+            out.flush();
+            in.close();
+            out.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.SERVRE, e.getLocalizedMessage(), e);
         }
     }
 
@@ -47,4 +49,5 @@ public class FileManager {
         return hasChilds(file);
     }
 }
+
 
