@@ -1,22 +1,20 @@
 
 public class EventListener implements Listener {
-
-    public static final Logger logger = LogManager.getLogger(EventListener.class);
     
-    final String key;
+    final String k;
     String name;
 
-    public EventListener(String key, String name) {
-        this.key = key;
+    public EventListener(String k, String name) {
+        this.k = k;
         this.name = name;
     }
 
-    public EventListener(String key, Class<? extends EventListener> clazz) {
-        this(key, clazz.getName());
+    public EventListener(String k, Class<? extends EventListener> clazz) {
+        this(k, clazz.getName());
     }
 
     public String getKey() {
-        return key;
+        return k;
     }
 
     public String getName() {
@@ -27,5 +25,3 @@ public class EventListener implements Listener {
         this.name = name;
     }
 }
-
-
