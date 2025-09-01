@@ -19,15 +19,11 @@ public abstract class PluginCommand implements CommandExecutor, TabCompleter {
             return false;
         }
 
-        if (info.requiresPlayer()) {
-            if ((!isPlayer(sender))) {
-                sender.sendMessage(MessageBuilder.build(plugin, ChatColor.RED + "Only players can execute this type of command."));
-                return false;
-            
-
-            this.execute((Player) sender, args)
-            return true;
+        if (info.requiresPlayer() && (!isPlayer(sender))) {
+            sender.sendMessage(MessageBuilder.build(plugin, ChatColor.RED + "Only players can execute this type of command."));
+            return false;
         }
+
         this.execute(sender, args);
         return true;
     }
@@ -48,9 +44,5 @@ public abstract class PluginCommand implements CommandExecutor, TabCompleter {
 
     public boolean isPlayer(CommandSender sender) {
         return sender instanceof Player;
-    }
-
-    public String getDescription() {
-        return info.description();
     }
 }
