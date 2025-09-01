@@ -1,17 +1,4 @@
-package de.xcuzimsmart.bedwars.utils;
-
-import de.xcuzimsmart.bedwars.BedWars;
-import minecraft.lib.plugins.utils.message.MessageBuilder;
-import net.minecraft.server.v1_8_R3.IChatBaseComponent;
-import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
-import net.minecraft.server.v1_8_R3.PacketPlayOutTitle;
-import net.minecraft.server.v1_8_R3.PlayerConnection;
-import org.bukkit.ChatColor;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
-import org.bukkit.entity.Player;
-
-import java.util.Collection;
-
+
 public class Titles {
 
     private static final BedWars plugin = BedWars.getInstance();
