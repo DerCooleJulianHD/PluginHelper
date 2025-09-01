@@ -1,8 +1,8 @@
 
 public class PlayerManager {
-
-    private static final BedWars plugin = BedWars.getInstance();
-    private static final List<Player> spectators = new ArrayList<>();
+    
+    static final BedWars plugin = BedWars.getInstance();
+    static final List<Player> spectators = new ArrayList<>();
 
     public static void readyPlayer(Player player) {
         player.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
@@ -58,7 +58,7 @@ public class PlayerManager {
         }
     }
 
-    private static void setSpectorTeam(Player player) {
+    static void setSpectorTeam(Player player) {
         player.setGameMode(GameMode.ADVENTURE);
 
         final Scoreboard scoreboard = player.getScoreboard();
@@ -80,4 +80,5 @@ public class PlayerManager {
         }
     }
 }
+
 
