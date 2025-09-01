@@ -1,19 +1,3 @@
-package de.xcuzimsmart.bedwars.utils;
-
-import de.xcuzimsmart.bedwars.BedWars;
-import de.xcuzimsmart.bedwars.teams.Team;
-import de.xcuzimsmart.bedwars.teams.TeamList;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.GameMode;
-import org.bukkit.entity.Player;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
-import org.bukkit.scoreboard.NameTagVisibility;
-import org.bukkit.scoreboard.Scoreboard;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class PlayerManager {
 
@@ -96,3 +80,4 @@ public class PlayerManager {
         }
     }
 }
+
