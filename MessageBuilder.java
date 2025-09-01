@@ -1,9 +1,4 @@
-package minecraft.lib.plugins.utils.message;
-
-import minecraft.lib.plugins.extension.PluginLibrary;
-import minecraft.lib.plugins.utils.Prefixable;
-import org.bukkit.ChatColor;
-
+
 public class MessageBuilder {
 
     public static String buildMessageOutput(String prefix, String message) {
@@ -13,8 +8,8 @@ public class MessageBuilder {
         return ChatColor.translateAlternateColorCodes('&', out.toString());
     }
 
-    public static String build(PluginLibrary library, String message) {
-        if (!(library instanceof Prefixable prefixable)) return buildMessageOutput(null, message);
+    public static String build(Plugin plugin, String message) {
+        if (!(plugin instanceof Prefixable prefixable)) return buildMessageOutput(null, message);
         return buildMessageOutput(prefixable.getPrefix(), message);
     }
 
