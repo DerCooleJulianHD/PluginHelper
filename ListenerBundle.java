@@ -15,8 +15,8 @@ public final class ListenerBundle extends HashMap<String, EventListener> {
         PluginManager manager = Bukkit.getPluginManager();
         manager.registerEvents(listener, library.getJavaPlugin());
     }
-
-    private void unregisterListener(String key) {
+    
+    void unregisterListener(String key) {
         if (!isActive(key)) return;
         EventListener listener = getListenerByKey(key);
         if (listener == null) return;
@@ -60,5 +60,6 @@ public final class ListenerBundle extends HashMap<String, EventListener> {
         return ListenerBundle.activeListeners;
     }
 }
+
 
 
