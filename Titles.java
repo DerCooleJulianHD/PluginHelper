@@ -1,7 +1,7 @@
 
 public class Titles {
 
-    private static final BedWars plugin = BedWars.getInstance();
+    static Plugin plugin;
 
     public static void sendTitle(Player player, String title, String subtitle) {
         player.sendTitle(title, subtitle);
