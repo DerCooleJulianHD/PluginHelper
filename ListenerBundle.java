@@ -2,7 +2,7 @@
 public final class ListenerBundle extends HashMap<String, EventListener> {
 
     public final PluginLibrary library;
-    private static ListenerBundle activeListeners;
+    static ListenerBundle activeListeners;
 
     public ListenerBundle(PluginLibrary library) {
         this.library = library;
@@ -60,4 +60,5 @@ public final class ListenerBundle extends HashMap<String, EventListener> {
         return ListenerBundle.activeListeners;
     }
 }
+
 
