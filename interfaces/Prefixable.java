@@ -1,4 +1,3 @@
-package minecraft.lib.plugins.utils;
 
 public interface Prefixable {
 
@@ -6,3 +5,4 @@ public interface Prefixable {
 
     void setPrefix(String prefix);
 }
+
