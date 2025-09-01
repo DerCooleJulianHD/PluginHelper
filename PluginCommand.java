@@ -8,7 +8,7 @@ public abstract class PluginCommand implements CommandExecutor, TabCompleter {
     public PluginCommand(Plugin plugin) {
         this.plugin = plugin;
         this.info = getClass().getDeclaredAnnotation(CommandInfo.class);
-        Validate.notNull(this.info, getClass().getName() + " Missing CommandInfo Annotation");
+        Validate.notNull(this.info, getClass().getName() + " misses CommandInfo Annotation");
         plugin.getServer().getPluginCommand(info.name()).setExecutor(this);
     }
 
@@ -46,3 +46,4 @@ public abstract class PluginCommand implements CommandExecutor, TabCompleter {
         return sender instanceof Player;
     }
 }
+
