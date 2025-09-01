@@ -1,7 +1,7 @@
 
 public class FileManager {
-
-    public static Logger logger = Logger.getLogger(FileManager.class.getName());
+    
+    static Logger logger = Logger.getLogger(FileManager.class.getName());
 
     public static void copyFile(File target, File destination) {
         if (!target.exists()) return;
@@ -49,5 +49,6 @@ public class FileManager {
         return hasChilds(file);
     }
 }
+
 
 
