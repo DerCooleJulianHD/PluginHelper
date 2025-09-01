@@ -1,4 +1,3 @@
-package minecraft.lib.plugins.exceptions;
 
 public class IndexOutOfRangeException extends InvalidParameterException {
 
@@ -10,3 +9,4 @@ public class IndexOutOfRangeException extends InvalidParameterException {
         super(message, cause);
     }
 }
+
