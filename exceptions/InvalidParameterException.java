@@ -1,4 +1,3 @@
-package minecraft.lib.plugins.exceptions;
 
 public class InvalidParameterException extends Exception {
 
@@ -10,3 +9,4 @@ public class InvalidParameterException extends Exception {
         super(message, cause);
     }
 }
+
