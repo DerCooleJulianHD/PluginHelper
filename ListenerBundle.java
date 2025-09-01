@@ -1,43 +1,43 @@
 
-public final class ListenerBundle extends HashMap<String, EventListener> {
+public final class ListenerBundle extends  {
 
-    public final PluginLibrary library;
-    static ListenerBundle activeListeners;
+    final Plugin plugin;
+    static HashMap<String, EventListener> activeListeners;
 
-    public ListenerBundle(PluginLibrary library) {
-        this.library = library;
+    public ListenerBundle(Plugin plugin) {
+        this.plugin = plugin;
         ListenerBundle.activeListeners = this;
     }
 
     public void register(EventListener listener) {
         if (isActive(listener.getKey())) return;
-        this.put(listener.getKey(), listener);
+        activeListeners.put(listener.getKey(), listener);
         PluginManager manager = Bukkit.getPluginManager();
-        manager.registerEvents(listener, library.getJavaPlugin());
+        manager.registerEvents(listener, plugin);
     }
     
-    void unregisterListener(String key) {
-        if (!isActive(key)) return;
-        EventListener listener = getListenerByKey(key);
+    void unregisterListener(String k) {
+        if (!isActive(k)) return;
+        EventListener listener = getListenerByKey(k);
         if (listener == null) return;
         HandlerList.unregisterAll(listener);
     }
 
-    public void unregister(String key) {
-        this.unregisterListener(key);
-        this.remove(key);
+    public void unregister(String k) {
+        this.unregisterListener(k);
+        this.remove(k);
     }
 
     public void unregisterAll() {
         if (this.isEmpty()) return;
-        for (String key : this.keySet()) this.unregisterListener(key);
+        for (String k : activeListeners.keySet()) this.unregisterListener(k);
         this.clear();
     }
 
     public EventListener getListenerByName(String name) {
         if (this.isEmpty()) return null;
 
-        for (String key : this.keySet()) {
+        for (String key : activeListeners.keySet()) {
             EventListener listener = getListenerByKey(key);
             if (listener == null) continue;
             if (listener.getName().equals("unknown")) continue;
@@ -48,18 +48,15 @@ public final class ListenerBundle extends HashMap<String, EventListener> {
     }
 
     @Nullable
-    public EventListener getListenerByKey(String key) {
-        return this.get(key);
+    public EventListener getListenerByKey(String k) {
+        return this.get(k);
     }
 
-    public boolean isActive(String key) {
-        return !this.isEmpty() && this.containsKey(key);
+    public boolean isActive(String k) {
+        return !this.isEmpty() && this.containsKey(k);
     }
 
     public static HashMap<String, EventListener> getActiveListeners() {
         return ListenerBundle.activeListeners;
     }
 }
-
-
-
