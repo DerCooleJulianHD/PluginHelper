@@ -1,9 +1,3 @@
-package pluginutility;
-
-import org.bukkit.ChatColor;
-import org.bukkit.Server;
-import org.bukkit.plugin.Plugin;
-import org.bukkit.plugin.PluginManager;
 
 public class LibraryCheck {
 
@@ -22,6 +16,7 @@ public class LibraryCheck {
         return true;
     }
 }
+
 
 
 
