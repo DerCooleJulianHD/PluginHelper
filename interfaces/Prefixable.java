@@ -1,3 +1,4 @@
+package de.code.test;
 
 public interface Prefixable {
 
@@ -5,4 +6,5 @@ public interface Prefixable {
 
     void setPrefix(String prefix);
 }
+
 
