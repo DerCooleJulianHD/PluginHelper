@@ -1,3 +1,4 @@
+package de.code.test;
 
 public interface Loadable {
 
