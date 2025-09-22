@@ -6,7 +6,7 @@ public final class ListenerBundle {
 
     public ListenerBundle(Plugin plugin) {
         this.plugin = plugin;
-        ListenerBundle.activeListeners = this;
+        ListenerBundle.activeListeners = new HashMap<>();
     }
 
     public void register(EventListener listener) {
