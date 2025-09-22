@@ -1,5 +1,5 @@
 
-public final class ListenerBundle extends  {
+public final class ListenerBundle {
 
     final Plugin plugin;
     static HashMap<String, EventListener> activeListeners;
