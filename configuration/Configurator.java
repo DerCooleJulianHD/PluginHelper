@@ -1,6 +1,6 @@
-package de.code.test.configuration;
+package de.xcuzimsmart.pluginhelper.code.configuration;
 
-import de.code.test.Loadable;
+import de.xcuzimsmart.pluginhelper.code.interfaces.Loadable;
 
 import java.io.File;
 import java.io.IOException;
@@ -9,7 +9,7 @@ import java.util.logging.Logger;
 
 public abstract class Configurator implements Loadable {
 
-    static final Logger logger = Logger.getLogger(Configurator.class.getName());
+    protected static final Logger logger = Logger.getLogger(Configurator.class.getName());
 
     protected final File dir, file;
     protected final String[] endings;
@@ -19,13 +19,22 @@ public abstract class Configurator implements Loadable {
     public Configurator(File dir, String fileName, String ending) {
         this.dir = dir;
         this.endings = new String[]{ending};
-        this.file = new File(dir, hasFileEnding(ending) ? fileName : fileName + ending);
+        this.file = new File(dir, correctFileName(fileName, ending));
     }
 
     public Configurator(File dir, String fileName, String[] endings) {
         this.dir = dir;
         this.endings = endings;
-        this.file = new File(dir, hasFileEnding(endings) ? fileName : fileName + endings[0]);
+        this.file = new File(dir, correctFileName(fileName, endings));
+    }
+
+    public String correctFileName(String fileName, String ending) {
+        return hasFileEnding(fileName, ending) ? fileName : fileName + ending;
+    }
+
+    public String correctFileName(String fileName, String[] endings) {
+        if (endings.length > 0) return this.correctFileName(fileName, endings[0]);
+        return fileName;
     }
 
     public abstract void save();
@@ -40,15 +49,15 @@ public abstract class Configurator implements Loadable {
         }
     }
 
-    protected boolean hasFileEnding(String s) {
-        return file.getName().endsWith(s);
+    protected boolean hasFileEnding(String fileName, String ending) {
+        return fileName.endsWith(ending);
     }
 
-    protected boolean hasFileEnding(String[] strings) {
-        if (strings.length == 0) throw new RuntimeException("No such Ending to compare");
+    protected boolean hasFileEnding(String fileName, String[] endings) {
+        if (endings.length == 0) throw new RuntimeException("No such Ending to compare");
 
-        for (String s : strings) {
-            if (!(hasFileEnding(s))) continue;
+        for (String s : endings) {
+            if (!(hasFileEnding(fileName, s))) continue;
             return true;
         }
 

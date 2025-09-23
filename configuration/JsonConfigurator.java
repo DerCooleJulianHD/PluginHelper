@@ -1,4 +1,4 @@
-package de.code.test.configuration;
+package de.xcuzimsmart.pluginhelper.code.configuration;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -7,6 +7,7 @@ import org.apache.commons.lang.Validate;
 import java.io.*;
 import java.util.logging.Level;
 
+@JsonProperties()
 public class JsonConfigurator extends Configurator {
 
     final Gson gson;
@@ -32,10 +33,6 @@ public class JsonConfigurator extends Configurator {
         this(new File(dir), fileName);
     }
 
-    public static JsonConfigurator config(File file) {
-        return new JsonConfigurator(file.getParentFile(), file.getName());
-    }
-
     // writes an object to a Json-Configuration.
     public void write(Object o) {
         createFiles();
@@ -44,6 +41,7 @@ public class JsonConfigurator extends Configurator {
 
         try {
             if (!isLoaded()) load(); // loading the file
+
             writer.write(gson.toJson(o));
             save();
         } catch (Exception e) {
@@ -65,6 +63,7 @@ public class JsonConfigurator extends Configurator {
         try {
             writer.flush();
             writer.close();
+            this.writer = null;
         } catch (IOException e) {
             logger.log(Level.SEVERE, e.getLocalizedMessage(), e);
         }
@@ -74,6 +73,7 @@ public class JsonConfigurator extends Configurator {
     public void load() {
         try {
             this.reader = new FileReader(file);
+            this.writer = new FileWriter(file);
             this.setLoaded(true);
         } catch (IOException e) {
             logger.log(Level.SEVERE, e.getLocalizedMessage(), e);
@@ -81,6 +81,6 @@ public class JsonConfigurator extends Configurator {
     }
 
     public boolean isJsonFile() {
-        return hasFileEnding(".json");
+        return hasFileEnding(file.getName(), ".json");
     }
 }

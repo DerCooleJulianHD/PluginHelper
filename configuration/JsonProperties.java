@@ -1,4 +1,4 @@
-package de.code.test.configuration;
+package de.xcuzimsmart.pluginhelper.code.configuration;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
