@@ -1,7 +1,9 @@
 package de.xcuzimsmart.pluginhelper.code.git.branch.main.timer;
 
+import de.xcuzimsmart.pluginhelper.code.Main;
 import de.xcuzimsmart.pluginhelper.code.git.branch.main.utils.Messanger;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -9,9 +11,9 @@ public final class Timer extends BukkitRunnable {
 
     final Plugin plugin;
 
-    int seconds;
-    int minutes;
     int hours;
+    int minutes;
+    int seconds;
 
     boolean running;
 
@@ -20,9 +22,9 @@ public final class Timer extends BukkitRunnable {
 
         this.running = false;
 
-        this.seconds = 0;
-        this.minutes = 0;
         this.hours = 0;
+        this.minutes = 0;
+        this.seconds = 0;
     }
 
     public int getSeconds() {
@@ -45,45 +47,46 @@ public final class Timer extends BukkitRunnable {
         this.running = running;
     }
 
+    public void setHours(int hours) {
+        this.hours = hours;
+    }
+
+    public void setMinutes(int minutes) {
+        this.minutes = minutes;
+    }
+
+    public void setSeconds(int seconds) {
+        this.seconds = seconds;
+    }
+
     @Override
     public String toString() {
-        return (seconds < 10 ? "0" + seconds : seconds) + ":" + (minutes < 10 ? "0" + minutes : minutes) + ":" +  (hours < 10 ? "0" + hours : hours);
-    }
-
-    public void countSeconds() {
-        seconds++;
-    }
-
-    public void countMinutes() {
-        if (seconds < 60) return;
-        minutes++;
-        seconds = 0;
-    }
-
-    public void countHours() {
-        if (minutes < 60) return;
-        hours++;
-        minutes = 0;
-        seconds = 0;
+        return ChatColor.translateAlternateColorCodes('&', "&f[&6" + (hours < 10 ? "0" + hours : hours) + ":" + (minutes < 10 ? "0" + minutes : minutes) + ":" + (seconds < 10 ? "0" + seconds : seconds) + "&f]");
     }
 
     public void sendActionBar() {
-        if (!isRunning()) return;
         Messanger.sendActionBar(Bukkit.getOnlinePlayers(), this.toString());
     }
 
     @Override
     public void run() {
+
+        if (isRunning()) {
+            if (seconds == 59) {
+                minutes++;
+                seconds = 0;
+            } else if (minutes == 59) {
+                hours++;
+                minutes = 0;
+            } else {
+                seconds++;
+            }
+        }
+
         sendActionBar();
-
-        if (!isRunning()) return;
-
-        countSeconds();
-        countMinutes();
-        countHours();
     }
 
     public void start() {
-        runTaskTimer(plugin, 20, 20);
+        runTaskTimer(plugin, 0, 20);
     }
 }

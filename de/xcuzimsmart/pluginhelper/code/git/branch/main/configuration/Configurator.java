@@ -9,7 +9,7 @@ import java.util.logging.Logger;
 
 public abstract class Configurator implements Loadable {
 
-    protected static final Logger logger = Logger.getLogger(Configurator.class.getName());
+    public static final Logger logger = Logger.getLogger(Configurator.class.getName());
 
     protected final File dir, file;
     protected final String[] endings;
@@ -39,7 +39,7 @@ public abstract class Configurator implements Loadable {
 
     public abstract void save();
 
-    protected void createFiles() {
+    public void createFiles() {
         if (dir != null) if (!dir.exists()) dir.mkdirs();
         if (file.exists()) return;
         try {

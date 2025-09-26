@@ -4,7 +4,8 @@ import de.xcuzimsmart.pluginhelper.code.Main;
 import de.xcuzimsmart.pluginhelper.code.git.branch.main.bundle.ListenerBundle;
 import de.xcuzimsmart.pluginhelper.code.git.branch.main.configuration.JsonConfigurator;
 import de.xcuzimsmart.pluginhelper.code.git.branch.main.configuration.YamlConfigurator;
-import de.xcuzimsmart.pluginhelper.code.git.branch.main.timer.Timer;
+import de.xcuzimsmart.pluginhelper.code.git.branch.main.utils.Dependencies;
+import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -13,7 +14,7 @@ public final class Test implements Listener {
 
     public final Main main = Main.getInstance();
 
-    private final JsonConfigurator jsonConfig = new JsonConfigurator(main.getDataFolder(), "test.json");;
+    private final JsonConfigurator jsonConfig = new JsonConfigurator(main.getDataFolder(), "test.json");
     private final YamlConfigurator yamlConfig = new YamlConfigurator(main.getDataFolder(), "test.yml");
     private final ListenerBundle listeners = new ListenerBundle(main);
 
@@ -23,11 +24,12 @@ public final class Test implements Listener {
      * here goes your test fields
      */
 
-    private Timer timer;
-
     // ###############################################################################################################
 
     public Test() {
+        yamlConfig.createFiles();
+        jsonConfig.createFiles();
+
         this.executeTestCode(); // final
     }
 
@@ -35,14 +37,6 @@ public final class Test implements Listener {
         /*
         * here goes your test code.
         */
-
-        try {
-            timer = new Timer(main);
-
-            timer.start();
-        } catch (Exception e) {
-            if (timer != null) timer.cancel();
-        }
     }
 
     @EventHandler

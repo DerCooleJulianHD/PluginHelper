@@ -1,5 +1,6 @@
 package de.xcuzimsmart.pluginhelper.code.git.branch.main.command;
 
+import de.xcuzimsmart.pluginhelper.code.git.branch.main.utils.MessageBuilder;
 import de.xcuzimsmart.pluginhelper.code.git.branch.main.utils.Messanger;
 import org.apache.commons.lang.Validate;
 import org.bukkit.ChatColor;
@@ -10,6 +11,8 @@ import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.logging.Logger;
 
 public abstract class PluginCommand implements CommandExecutor, TabCompleter {
@@ -30,12 +33,12 @@ public abstract class PluginCommand implements CommandExecutor, TabCompleter {
     @Override // [from: CommandExecutor]
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (this.requiresPermission() && (!sender.hasPermission(info.permission()))) {
-            Messanger.broadcast(plugin, sender, ChatColor.RED + "You doun't have the permission to execute this command. (missing: " + info.permission() + ")");
+            Messanger.broadcast(plugin, sender, MessageBuilder.COMMAND_NO_PERMISSION);
             return false;
         }
 
         if (info.requiresPlayer() && (!isPlayer(sender))) {
-            Messanger.broadcast(plugin, sender, ChatColor.RED + "Only players can execute this type of command.");
+            Messanger.broadcast(plugin, sender, MessageBuilder.COMMAND_NO_PLAYER_INSTANCE);
             return false;
         }
 
@@ -43,10 +46,21 @@ public abstract class PluginCommand implements CommandExecutor, TabCompleter {
         return true;
     }
 
+    @Override
+    public List<String> onTabComplete(CommandSender commandSender, Command command, String s, String[] strings) {
+        return this.onTabComplete(commandSender, strings);
+    }
+
     public abstract void execute(CommandSender sender, String[] strings);
 
-    public void sendHelp(CommandSender sender, String usage) {
-        Messanger.broadcast(plugin, sender, usage);
+    public List<String> onTabComplete(CommandSender sender, String[] strings) {
+        return List.of();
+    }
+
+    public void sendSyntax(CommandSender sender, String... args) {
+        final StringBuilder builder = new StringBuilder();
+        for (String arg : args) builder.append(arg).append("&7, ").append(ChatColor.AQUA);
+        Messanger.broadcast(plugin, sender, "&cSyntax: &8/&7" + getInfo().name() + " &b" + builder);
     }
 
     public CommandInfo getInfo() {

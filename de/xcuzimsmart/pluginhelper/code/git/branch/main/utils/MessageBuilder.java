@@ -6,6 +6,9 @@ import org.bukkit.plugin.Plugin;
 
 public final class MessageBuilder {
 
+    public static final String COMMAND_NO_PERMISSION = ChatColor.RED + "You doun't have the permission to execute this command.";
+    public static final String COMMAND_NO_PLAYER_INSTANCE = ChatColor.RED + "Only players can execute this type of command.";
+
     public static String buildMessageOutput(String prefix, String message) {
         StringBuilder out = new StringBuilder();
         if (prefix != null) out.append(prefix);

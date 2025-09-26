@@ -5,7 +5,6 @@ import de.xcuzimsmart.pluginhelper.code.git.branch.main.command.PluginCommand;
 import de.xcuzimsmart.pluginhelper.code.git.branch.main.utils.Messanger;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
@@ -25,7 +24,7 @@ public class EnablePluginCommand extends PluginCommand {
     @Override
     public void execute(CommandSender sender, String[] args) {
         if (args.length != 1) /* syntax: /disableplugin <name> */ {
-            this.sendHelp(sender, "&cSyntax: &8/&7" + getInfo().name() + " &b<name>");
+            this.sendSyntax(sender, "<name>");
             return;
         }
 
@@ -59,7 +58,7 @@ public class EnablePluginCommand extends PluginCommand {
     }
 
     @Override
-    public List<String> onTabComplete(CommandSender sender, Command command, String s, String[] args) {
+    public List<String> onTabComplete(CommandSender sender, String[] strings) {
         return getDisabledPlugins();
     }
 

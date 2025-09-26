@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import org.apache.commons.lang.Validate;
 
 import java.io.*;
+import java.util.List;
 import java.util.logging.Level;
 
 @JsonProperties()
