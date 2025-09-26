@@ -1,0 +1,71 @@
+package de.xcuzimsmart.pluginhelper.code.git.branch.main.utils;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.util.Objects;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+public final class FileManager {
+    
+    static Logger logger = Logger.getLogger(FileManager.class.getName());
+
+    public static void copyInnerFiles(File from, File to) {
+        if (!from.exists()) return;
+        try {
+            FileInputStream in = new FileInputStream(from);
+            FileOutputStream out = new FileOutputStream(to);
+            if (!to.exists()) to.mkdirs();
+            byte[] buffer = new byte[1024];
+            int length;
+            while ((length = in.read(buffer)) > 0) out.write(buffer, 0, length);
+            out.flush();
+            in.close();
+            out.close();
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, e.getLocalizedMessage(), e);
+        }
+    }
+
+    public static void copyDir(File dir, File to) {
+        if (!dir.exists()) return;
+        if (!to.exists()) to.mkdirs();
+
+        final File copy = new File(to, dir.getName());
+
+        if (!copy.isDirectory()) return;
+        if (!copy.exists()) copy.mkdirs();
+        copyInnerFiles(dir, copy);
+    }
+
+    public static void deleteFile(File file) {
+        if (!file.exists()) return;
+
+        if (file.isDirectory()) {
+            File[] childs = file.listFiles();
+            if (childs == null) return;
+            if (hasChilds(file))
+                for (File child : childs) deleteFile(child);
+        }
+
+        file.delete();
+    }
+
+    public static boolean hasChilds(File dir) {
+        return dir.listFiles() != null && Objects.requireNonNull(dir.listFiles()).length > 0;
+    }
+
+    public static void renameFile(File file, String newName) {
+        if (!file.exists()) return;
+        File destination = new File(file.getParent(), newName);
+        file.renameTo(destination);
+    }
+
+    public static boolean isFolderEmpty(File file) {
+        return file.isDirectory() && (!hasChilds(file));
+    }
+}
+
+
+
