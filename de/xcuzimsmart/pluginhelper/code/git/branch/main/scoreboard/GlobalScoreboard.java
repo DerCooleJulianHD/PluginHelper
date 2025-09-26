@@ -8,6 +8,6 @@ public final class GlobalScoreboard extends ScoreboardBuilder {
     public GlobalScoreboard(String title) {
         super(Bukkit.getScoreboardManager().getNewScoreboard());
         // registering new Objective
-        this.addObjective("display", "dummy", title, DisplaySlot.SIDEBAR, false);
+        this.addObjective("display", "dummy", title, DisplaySlot.SIDEBAR, false, true);
     }
 }

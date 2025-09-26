@@ -1,5 +1,6 @@
 package de.xcuzimsmart.pluginhelper.code.git.branch.main.scoreboard;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.DisplaySlot;
@@ -10,15 +11,15 @@ import org.bukkit.scoreboard.Team;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public abstract class ScoreboardBuilder {
+/* Abstract */
+public class ScoreboardBuilder {
 
-    protected final Scoreboard scoreboard;
+    protected Scoreboard scoreboard;
 
-    protected Objective objective;
+    protected Objective objective = null;
 
     public ScoreboardBuilder(Scoreboard scoreboard) {
         this.scoreboard = scoreboard;
-        this.objective = null;
     }
 
     public void setLine(int id, String s) {
@@ -101,7 +102,7 @@ public abstract class ScoreboardBuilder {
         return scoreboard;
     }
 
-    public Objective objective() {
+    public Objective getObjective() {
         return objective;
     }
 
@@ -109,19 +110,22 @@ public abstract class ScoreboardBuilder {
         this.objective = objective;
     }
 
-    public void addObjective(String key, String criteria, String title, DisplaySlot displaySlot, boolean replace) {
+    public void addObjective(String key, String criteria, String title, DisplaySlot displaySlot, boolean replace, boolean main) {
         if (replace && hasObjective(key)) scoreboard.getObjective(key).unregister();
 
         if (hasObjective(key)) return;
         Objective o = scoreboard.registerNewObjective(key, criteria);
-        o.setDisplayName(title);
-        o.setDisplaySlot(displaySlot);
+        if (title != null) o.setDisplayName(title);
+        if (displaySlot != null) o.setDisplaySlot(displaySlot);
 
-        if (this.objective == null) setObjective(o);
-        else scoreboard.getObjectives().add(o);
+        if (main) setObjective(o);
     }
 
     public boolean hasObjective(String key) {
         return scoreboard.getObjective(key) != null;
+    }
+
+    public void setScoreboard(Scoreboard scoreboard) {
+        this.scoreboard = scoreboard;
     }
 }
