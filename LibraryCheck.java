@@ -1,7 +1,7 @@
 
-public class LibraryCheck {
+public final class Dependencies {
 
-    public static boolean hasLibrary(Plugin plugin, String libraryName) {
+    public static boolean hasDependencyPlugin(Plugin plugin, String libraryName) {
         final Server server = plugin.getServer();
         final PluginManager manager = server.getPluginManager();
         final Plugin lib = manager.getPlugin(libraryName);
@@ -16,6 +16,7 @@ public class LibraryCheck {
         return true;
     }
 }
+
 
 
 
