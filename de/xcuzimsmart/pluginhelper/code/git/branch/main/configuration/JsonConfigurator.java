@@ -8,24 +8,24 @@ import java.io.*;
 import java.util.List;
 import java.util.logging.Level;
 
-@JsonProperties()
+@JsonProperties() /* <-- by default */
 public class JsonConfigurator extends Configurator {  // cannot be final, because of abstract usages.
 
     final Gson gson;
-    final JsonProperties properties = getClass().getAnnotation(JsonProperties.class);
+    final JsonProperties properties = getClass().getDeclaredAnnotation(JsonProperties.class);
 
     FileWriter writer;
     FileReader reader;
 
-    public JsonConfigurator(File dir, String fileName) {
-        super(dir, fileName, ".json");
+    public JsonConfigurator(File dir, String fileName, boolean replace) {
+        super(dir, fileName, ".json", replace);
         Validate.notNull(properties, getClass().getName() + " misses " + JsonProperties.class.getSimpleName() + " Annotation!");
 
         this.gson = JsonConfigurationBuilder.build(properties);
     }
 
-    public JsonConfigurator(String dir, String fileName) {
-        this(new File(dir), fileName);
+    public JsonConfigurator(String dir, String fileName, boolean replace) {
+        this(new File(dir), fileName, replace);
     }
 
     // writes an object to a Json-Configuration.

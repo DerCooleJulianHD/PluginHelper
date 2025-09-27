@@ -25,7 +25,7 @@ public abstract class PluginCommand implements CommandExecutor, TabCompleter {
 
     public PluginCommand(Plugin plugin) {
         this.plugin = plugin;
-        this.info = getClass().getAnnotation(CommandInfo.class);
+        this.info = getClass().getDeclaredAnnotation(CommandInfo.class);
         Validate.notNull(this.info, getClass().getName() + " misses CommandInfo Annotation");
         plugin.getServer().getPluginCommand(info.name()).setExecutor(this);
     }

@@ -9,12 +9,14 @@ public final class PlayerScoreboard extends ScoreboardBuilder {
     final Player player;
 
     public PlayerScoreboard(Player player, String title) {
-        super(player.getScoreboard());
+        super(Bukkit.getScoreboardManager().getNewScoreboard());
         this.player = player;
 
         if (player.getScoreboard().equals(Bukkit.getScoreboardManager().getMainScoreboard())) {
             player.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
         }
+
+        this.setScoreboard(player.getScoreboard());
 
         // adding the new obj
         this.addObjective("display_" + player.getUniqueId().toString(), "dummy", title, DisplaySlot.SIDEBAR, true, true);

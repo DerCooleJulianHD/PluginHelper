@@ -1,6 +1,7 @@
 package de.xcuzimsmart.pluginhelper.code.git.branch.main.configuration;
 
 import de.xcuzimsmart.pluginhelper.code.git.branch.main.interfaces.Loadable;
+import de.xcuzimsmart.pluginhelper.code.git.branch.main.utils.FileManager;
 
 import java.io.File;
 import java.io.IOException;
@@ -16,16 +17,20 @@ public abstract class Configurator implements Loadable {
 
     boolean loaded = false;
 
-    public Configurator(File dir, String fileName, String ending) {
+    final boolean replace;
+
+    public Configurator(File dir, String fileName, String ending, boolean replace) {
         this.dir = dir;
         this.endings = new String[]{ending};
         this.file = new File(dir, correctFileName(fileName, ending));
+        this.replace = replace;
     }
 
-    public Configurator(File dir, String fileName, String[] endings) {
+    public Configurator(File dir, String fileName, String[] endings, boolean replace) {
         this.dir = dir;
         this.endings = endings;
         this.file = new File(dir, correctFileName(fileName, endings));
+        this.replace = replace;
     }
 
     protected String correctFileName(String fileName, String ending) {
@@ -41,7 +46,9 @@ public abstract class Configurator implements Loadable {
 
     public void createFiles() {
         if (dir != null) if (!dir.exists()) dir.mkdirs();
+        if (replace) FileManager.deleteFile(file);
         if (file.exists()) return;
+
         try {
             file.createNewFile();
         } catch (IOException e) {

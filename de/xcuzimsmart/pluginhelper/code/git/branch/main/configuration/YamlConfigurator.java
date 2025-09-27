@@ -3,6 +3,7 @@ package de.xcuzimsmart.pluginhelper.code.git.branch.main.configuration;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.Location;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -18,12 +19,24 @@ public class YamlConfigurator extends Configurator { // cannot be final, because
 
     final FileConfiguration config = new YamlConfiguration();
 
-    public YamlConfigurator(File dir, String fileName) {
-        super(dir, fileName, new String[]{".yml", ".yaml"});
+    public YamlConfigurator(File dir, String fileName, boolean replace) {
+        super(dir, fileName, new String[]{".yml", ".yaml"}, replace);
     }
 
-    public YamlConfigurator(String dir, String fileName) {
-        this(new File(dir), fileName);
+    public YamlConfigurator(String dir, String fileName, boolean replace) {
+        this(new File(dir), fileName, replace);
+    }
+
+    public boolean isSet(String k) {
+        return config.isSet(k);
+    }
+
+    public ConfigurationSection getConfigurationSection(String name) {
+        return config.getConfigurationSection(name);
+    }
+
+    public void createSection(String name) {
+        config.createSection(name);
     }
 
     // writes an object to a Yaml-Configuration.

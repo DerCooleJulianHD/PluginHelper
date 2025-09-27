@@ -13,5 +13,5 @@ public @interface JsonProperties {
 
     boolean htmlEscaping() default false;
 
-    boolean innerClazzSerialisation() default true;
+    boolean innerClazzSerialisation() default false;
 }

@@ -1,6 +1,6 @@
 package de.xcuzimsmart.pluginhelper.code.git.branch.main.scoreboard;
 
-import org.bukkit.Bukkit;
+import org.apache.commons.lang.ArrayUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.DisplaySlot;
@@ -12,11 +12,13 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 /* Abstract */
-public class ScoreboardBuilder {
+public abstract class ScoreboardBuilder {
 
     protected Scoreboard scoreboard;
 
     protected Objective objective = null;
+
+    protected final int[] scores = new int[0];
 
     public ScoreboardBuilder(Scoreboard scoreboard) {
         this.scoreboard = scoreboard;
@@ -31,6 +33,7 @@ public class ScoreboardBuilder {
         if (entry == null) return;
         if (prefix != null && prefix.length() <= 16) entry.setPrefix(prefix);
         if (suffix != null && suffix.length() <= 16) entry.setSuffix(suffix);
+        ArrayUtils.add(scores, id);
         this.showScore(id);
     }
 
@@ -39,7 +42,7 @@ public class ScoreboardBuilder {
     }
 
     public void addLine(String s) {
-        this.setLine(scoreboard.getEntries().size(), s);
+        this.setLine(scores.length, s);
     }
 
     public void removeLine(int id) {
@@ -59,7 +62,7 @@ public class ScoreboardBuilder {
     }
 
     public void clear() {
-        scoreboard.getEntries().forEach(scoreboard::resetScores);
+        for (int i : scores) this.removeLine(i);
     }
 
     @Nullable
@@ -113,7 +116,11 @@ public class ScoreboardBuilder {
     public void addObjective(String key, String criteria, String title, DisplaySlot displaySlot, boolean replace, boolean main) {
         if (replace && hasObjective(key)) scoreboard.getObjective(key).unregister();
 
-        if (hasObjective(key)) return;
+        if (hasObjective(key)) {
+            this.setObjective(scoreboard.getObjective(key));
+            return;
+        }
+
         Objective o = scoreboard.registerNewObjective(key, criteria);
         if (title != null) o.setDisplayName(title);
         if (displaySlot != null) o.setDisplaySlot(displaySlot);
@@ -127,5 +134,9 @@ public class ScoreboardBuilder {
 
     public void setScoreboard(Scoreboard scoreboard) {
         this.scoreboard = scoreboard;
+    }
+
+    public int[] getScores() {
+        return scores;
     }
 }

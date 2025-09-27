@@ -1,9 +1,9 @@
 package de.xcuzimsmart.pluginhelper.code.git.branch.game;
 
 import de.xcuzimsmart.pluginhelper.code.git.branch.game.map.GameMap;
-import de.xcuzimsmart.pluginhelper.code.git.branch.game.map.OriginalGameMap;
 import org.bukkit.plugin.Plugin;
 
+import javax.annotation.Nullable;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,17 +25,17 @@ public final class GameManager {
         this.names = dir.list();
     }
 
-    public void loadGame(GameMap gameMap) {
-        // example code
+    public void loadGame(String name, @Nullable GameMap map) {
+        final Game game = new Game(plugin, name);
+        if (map != null) game.loadGameMap(map);
     }
 
     public void loadGame(int id) {
-        if (names.length != 0) {
-            if (id >= 0 && id < names.length || id == names.length) {
-                final String name = this.list().get(id);
-                if (name != null)
-                    loadGame(new OriginalGameMap(plugin, name));
-            }
+        if (names.length == 0) return;
+        if (id >= 0 && id < names.length || id == names.length) {
+            final String name = this.list().get(id);
+            if (name != null)
+                loadGame(name, null);
         }
     }
 

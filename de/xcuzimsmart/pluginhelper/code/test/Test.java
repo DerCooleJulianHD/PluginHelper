@@ -13,9 +13,6 @@ import org.bukkit.event.player.PlayerJoinEvent;
 public final class Test implements Listener {
 
     public final Main main = Main.getInstance();
-
-    private final JsonConfigurator jsonConfig = new JsonConfigurator(main.getDataFolder(), "test.json");
-    private final YamlConfigurator yamlConfig = new YamlConfigurator(main.getDataFolder(), "test.yml");
     private final ListenerBundle listeners = new ListenerBundle(main);
 
     // ##############################################################################################################
@@ -27,9 +24,6 @@ public final class Test implements Listener {
     // ###############################################################################################################
 
     public Test() {
-        yamlConfig.createFiles();
-        jsonConfig.createFiles();
-
         this.executeTestCode(); // final
     }
 
@@ -37,19 +31,13 @@ public final class Test implements Listener {
         /*
         * here goes your test code.
         */
+
+        new JsonConfigTest(main);
     }
 
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
         // here when player joins the server.
-    }
-
-    public JsonConfigurator getJsonConfig() {
-        return jsonConfig;
-    }
-
-    public YamlConfigurator getYamlConfig() {
-        return yamlConfig;
     }
 
     public ListenerBundle getListeners() {

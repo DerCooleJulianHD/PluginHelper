@@ -34,9 +34,6 @@ public class Main extends JavaPlugin implements Prefixable {
         }
 
         test = new Test();
-
-        test.getListeners().register(new EventListener() {
-        });
     }
 
     public static Test getTest() {
