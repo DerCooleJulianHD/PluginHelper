@@ -5,7 +5,6 @@ import de.xcuzimsmart.pluginhelper.code.commands.EnablePluginCommand;
 import de.xcuzimsmart.pluginhelper.code.commands.TimerCommand;
 import de.xcuzimsmart.pluginhelper.code.git.branch.main.interfaces.Prefixable;
 import de.xcuzimsmart.pluginhelper.code.git.branch.main.timer.Timer;
-import de.xcuzimsmart.pluginhelper.code.git.branch.main.utils.EventListener;
 import de.xcuzimsmart.pluginhelper.code.test.Test;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -26,7 +25,7 @@ public class Main extends JavaPlugin implements Prefixable {
         new TimerCommand(this);
 
         try {
-            timer = new Timer(this);
+            timer = new Timer(this, 0, 20);
 
             timer.start();
         } catch (Exception e) {

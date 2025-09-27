@@ -1,11 +1,12 @@
 package de.xcuzimsmart.pluginhelper.code.git.branch.main.configuration;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import org.apache.commons.lang.Validate;
 
-import java.io.*;
-import java.util.List;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.logging.Level;
 
 @JsonProperties() /* <-- by default */

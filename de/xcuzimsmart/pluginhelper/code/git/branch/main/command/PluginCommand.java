@@ -11,7 +11,6 @@ import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Logger;
 

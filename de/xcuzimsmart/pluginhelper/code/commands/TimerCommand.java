@@ -52,19 +52,15 @@ public class TimerCommand extends PluginCommand {
             }
 
             case "time": {
-                if (args.length != 2) {
-                    this.sendSyntax(sender, "time <time>");
+                if (args.length != 4) {
+                    this.sendSyntax(sender, "time", "<hours>", "<minutes>", "<seconds>");
                     return;
                 }
-
-                String s = args[1];
 
                 timer.setRunning(false);
 
                 try {
-                    if (s.endsWith("s")) timer.setSeconds(Integer.parseInt(s.replaceAll("s", "")));
-                    else if (s.endsWith("m")) timer.setMinutes(Integer.parseInt(s.replaceAll("m", "")));
-                    else if (s.endsWith("h")) timer.setHours((Integer.parseInt(s.replaceAll("h", ""))));
+                    timer.setTime(Integer.parseInt(args[1]), Integer.parseInt(args[2]), Integer.parseInt(args[3]));
 
                     Messanger.broadcast(plugin, sender, ChatColor.GRAY + "Timer has become a new time.");
                 } catch (NumberFormatException e) {
@@ -76,9 +72,7 @@ public class TimerCommand extends PluginCommand {
 
             case "reset": {
                 timer.setRunning(false);
-                timer.setHours(0);
-                timer.setMinutes(0);
-                timer.setSeconds(0);
+                timer.setTime(0, 0, 0);
                 Messanger.broadcast(plugin, sender, ChatColor.GRAY + "Timer has been reset.");
                 break;
             }

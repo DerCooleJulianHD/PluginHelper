@@ -54,7 +54,7 @@ public final class PlayerManager {
         setSpectorTeam(player);
     }
 
-    void setSpectorTeam(Player player) {
+    private void setSpectorTeam(Player player) {
         player.setGameMode(GameMode.ADVENTURE);
 
         final Scoreboard scoreboard = player.getScoreboard();

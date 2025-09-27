@@ -1,7 +1,5 @@
 package de.xcuzimsmart.pluginhelper.code.git.branch.main.timer;
 
-import de.xcuzimsmart.pluginhelper.code.Main;
-import de.xcuzimsmart.pluginhelper.code.git.branch.game.Game;
 import de.xcuzimsmart.pluginhelper.code.git.branch.main.utils.Messanger;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -18,7 +16,9 @@ public final class Timer extends BukkitRunnable {
 
     boolean running;
 
-    public Timer(Plugin plugin) {
+    final long delay, period;
+
+    public Timer(Plugin plugin, long delay, long period) {
         this.plugin = plugin;
 
         this.running = false;
@@ -26,6 +26,15 @@ public final class Timer extends BukkitRunnable {
         this.hours = 0;
         this.minutes = 0;
         this.seconds = 0;
+
+        this.delay = delay;
+        this.period = period;
+    }
+
+    public void setTime(int hours, int minutes, int seconds) {
+        this.hours = hours;
+        this.minutes = minutes;
+        this.seconds = seconds;
     }
 
     public int getSeconds() {
@@ -88,6 +97,6 @@ public final class Timer extends BukkitRunnable {
     }
 
     public void start() {
-        runTaskTimer(plugin, 0, 20);
+        runTaskTimer(plugin, delay, period);
     }
 }
