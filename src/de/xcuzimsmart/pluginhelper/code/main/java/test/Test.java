@@ -47,7 +47,8 @@ public final class Test implements Listener {
         scoreboard.addLine("&aLine two");
         scoreboard.addLine("Hello!!!");
 
-        Messanger.broadcast(Main.getInstance(), player, ChatColor.GOLD + config.readString("test"));
+        Messanger.broadcast(Main.getInstance(), player, ChatColor.GOLD + config.getMessage());
+        player.getInventory().addItem(config.getItem());
 
         player.playSound(player.getLocation(), Sound.LEVEL_UP, 3, 1);
     }

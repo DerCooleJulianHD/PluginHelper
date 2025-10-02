@@ -20,7 +20,7 @@ public class JsonConfigurator extends Configurator {  // cannot be final, becaus
 
     public JsonConfigurator(File dir, String fileName) {
         super(dir, fileName, ".json");
-        Validate.notNull(properties, getClass().getName() + " misses " + JsonProperties.class.getSimpleName() + " Annotation!");
+        Validate.notNull(properties, getClass().getName() + " misses JsonProperties Annotation!");
 
         this.gson = JsonConfigurationBuilder.build(properties);
     }
