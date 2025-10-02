@@ -21,8 +21,10 @@ public class YamlConfigurator extends Configurator /* cannot be final, because o
 
     boolean loaded = false;
 
+    private static final String[] endings = {".yml", ".yaml"};
+
     public YamlConfigurator(File dir, String fileName) {
-        super(dir, fileName, ".yml", ".yaml");
+        super(dir, fileName, endings);
     }
 
     public YamlConfigurator(String dir, String fileName) {
