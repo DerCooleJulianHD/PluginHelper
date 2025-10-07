@@ -57,11 +57,11 @@ public abstract class MCSpigotPlugin extends JavaPlugin implements Prefixable {
     }
 
     public static MCSpigotPlugin getInstance() {
-        return listeners;
+        return plugin;
     }
 
     public ListenerBundle getListeners() {
-        return name;
+        return listeners;
     }
 
     public static PluginConfigFile getConfiguration() {
