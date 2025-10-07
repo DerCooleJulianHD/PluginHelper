@@ -60,6 +60,10 @@ public abstract class MCSpigotPlugin extends JavaPlugin implements Prefixable {
         return plugin;
     }
 
+    public ListenerBundle getListeners() {
+        return name;
+    }
+
     public static PluginConfigFile getConfiguration() {
         return config;
     }
