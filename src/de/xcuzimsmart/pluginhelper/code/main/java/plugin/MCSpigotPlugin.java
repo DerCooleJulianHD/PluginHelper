@@ -31,16 +31,11 @@ public abstract class MCSpigotPlugin extends JavaPlugin implements Prefixable {
 
     @Override
     public String getPrefix() {
-        
-        return getPrefixFromConfig(config);
+        return getPrefixFromConfig(config, this.prefix);
     }
 
     @Override
     public String getPrefixFromConfig(Configurator config, String defaultValue) {
-        if (!) return defaultValue;
-        if () return ;
-        return ;
-
         return config.isSet("prefix") && (!config.readString("prefix").isEmpty()) ? config.readString("prefix") : defaultValue
     }
 
