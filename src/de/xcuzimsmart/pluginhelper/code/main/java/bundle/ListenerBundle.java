@@ -9,11 +9,10 @@ import org.bukkit.plugin.PluginManager;
 
 public final class ListenerBundle extends Bundle<EventListener> {
 
-    final PluginManager pluginManager;
+    final PluginManager pluginManager = Bukkit.getPluginManager();
 
     public ListenerBundle(Plugin plugin) {
         super(plugin);
-        this.pluginManager = Bukkit.getPluginManager();
     }
 
     @Override
