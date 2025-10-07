@@ -16,11 +16,15 @@ public abstract class MCSpigotPlugin extends JavaPlugin implements Prefixable {
 
     protected static PluginConfigFile config;
 
+    protected final ListenerBundle listeners;
+
     final String name = getClass().getSimpleName();
 
     public MCSpigotPlugin() {
         plugin = this;
         config = new PluginConfigFile(this);
+        
+        this.listeners = new ListenerBundle(this);
 
         this.scoreboard = new GlobalScoreboard();
     }
