@@ -36,7 +36,9 @@ public abstract class Bundle <T> {
 
     // removes the object from the bundle.
     public void unregister(String k) {
-       
+        if (!isRegistered(k)) return;
+        T o = get(k);
+        if (o == null) return;
     }
 
     // unregisters all registered objects
