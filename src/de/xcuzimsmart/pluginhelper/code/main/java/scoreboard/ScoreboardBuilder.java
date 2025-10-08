@@ -28,8 +28,10 @@ public abstract class ScoreboardBuilder implements Scoreboard {
 
         final Score score = scores.get(id);
 
-        if (prefix != null) score.setPrefix(prefix);
-        if (suffix != null) score.setSuffix(suffix);
+        if (score.getPrefix() == null && score.getSuffix() == null) {
+            if (prefix != null) score.setPrefix(prefix);
+            if (suffix != null) score.setSuffix(suffix);
+        }
 
         score.show();
     }
