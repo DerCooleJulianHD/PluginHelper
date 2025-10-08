@@ -4,7 +4,7 @@ public interface Prefixable {
 
     String getPrefix();
 
-    String getPrefixFromConfig(Configurator config, String defaultValue);
+    String getPrefixFromConfig();
 
     void setPrefix(String prefix);
 }
