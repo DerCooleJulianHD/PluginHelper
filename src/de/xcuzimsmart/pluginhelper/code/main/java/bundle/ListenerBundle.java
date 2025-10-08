@@ -17,10 +17,7 @@ public final class ListenerBundle extends Bundle<EventListener> {
 
     @Override
     // adding it.
-    public void register(EventListener listener) {
-        if (isRegistered(listener.getKey())) return;
-        BY_NAME.add(listener.getName());
-        actives.put(listener.getKey(), listener);
+    public void onRegisterObject(EventListener listener) {
         pluginManager.registerEvents(listener, plugin);
         Bukkit.getConsoleSender().sendMessage(this.getName() + ChatColor.GREEN + " Registered " + ChatColor.AQUA + listener.getName() + ChatColor.GRAY + " on key: " + listener.getKey());
     }
