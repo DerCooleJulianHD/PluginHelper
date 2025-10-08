@@ -40,7 +40,6 @@ public abstract class MCSpigotPlugin extends JavaPlugin implements Prefixable {
        final String read = getPrefixFromConfig();
        
        if (!read.isEmpty()) return read;
-
        return null;
     }
 
