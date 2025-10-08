@@ -8,7 +8,7 @@ import org.bukkit.plugin.Plugin;
 public class PluginConfigFile extends YamlConfigurator {
 
     public PluginConfigFile(Plugin plugin) {
-        super(plugin.getDataFolder(), "plugin");
+        super(plugin.getDataFolder(), "config.yml");
 
         createFiles();
     }
