@@ -23,7 +23,9 @@ public abstract class Bundle <T> {
     }
 
     // adds a new object to the bundle.
-    public abstract void register(T o);
+    public void register(T o) {
+       
+    }
 
     // removes the object from the bundle.
     public abstract void unregister(String k);
