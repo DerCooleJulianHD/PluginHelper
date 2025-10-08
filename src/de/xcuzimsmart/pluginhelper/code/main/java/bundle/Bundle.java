@@ -24,11 +24,18 @@ public abstract class Bundle <T> {
 
     // adds a new object to the bundle.
     public void register(T o) {
-       
+       if (isRegistered(listener.getKey())) return;
+       BY_NAME.add(o.name());
+       actives.put(o.key(), o);
+       onRegisterObject(o);
     }
 
+    public abstract void onRegisterObject(T object);
+
     // removes the object from the bundle.
-    public abstract void unregister(String k);
+    public void unregister(String k) {
+       
+    }
 
     // unregisters all registered objects
     public void unregisterAll() {
