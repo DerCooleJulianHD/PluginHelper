@@ -25,9 +25,7 @@ public final class ListenerBundle extends Bundle<EventListener> {
     @Override
     // removing it.
     public void unregister(String k) {
-        if (!isRegistered(k)) return;
-        EventListener listener = get(k);
-        if (listener == null) return;
+        
         HandlerList.unregisterAll(listener);
         this.actives.remove(k);
         BY_NAME.remove(listener.getName());
