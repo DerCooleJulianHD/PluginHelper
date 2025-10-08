@@ -24,11 +24,9 @@ public final class ListenerBundle extends Bundle<EventListener> {
 
     @Override
     // removing it.
-    public void unregister(String k) {
-        
+    public void onUnregisterObject(EventListener listener) {
         HandlerList.unregisterAll(listener);
-        this.actives.remove(k);
-        BY_NAME.remove(listener.getName());
+        
         Bukkit.getConsoleSender().sendMessage(this.getName() + ChatColor.RED + " Unregistered " + ChatColor.AQUA + listener.getName() + ChatColor.GRAY + " on key: " + listener.getKey());
     }
 }
