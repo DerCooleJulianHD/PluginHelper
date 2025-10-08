@@ -7,6 +7,8 @@ public interface Prefixable {
     String getPrefixFromConfig();
 
     void setPrefix(String prefix);
+
+    void setConfigPrefix(String prefix)
 }
 
 
