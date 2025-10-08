@@ -39,7 +39,14 @@ public abstract class Bundle <T> {
         if (!isRegistered(k)) return;
         T o = get(k);
         if (o == null) return;
+
+        BY_NAME.remove(name);
+        actives.remove(key);
+
+        onUnregisterObject(o);
     }
+
+    public abstract void onUnregisterObject(T object)
 
     // unregisters all registered objects
     public void unregisterAll() {
