@@ -27,7 +27,7 @@ public abstract class Bundle <T> {
        if (isRegistered(key)) return;
 
        BY_NAME.add(name);
-       actives.put(key, o);
+       actives.put(k, o);
 
        onRegisterObject(o);
     }
