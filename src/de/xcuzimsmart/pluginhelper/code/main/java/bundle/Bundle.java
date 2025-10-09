@@ -23,7 +23,7 @@ public abstract class Bundle <T> {
     }
 
     // adds a new object to the bundle.
-    public void register(String key, String name, T o) {
+    public void register(String k, String name, T o) {
        if (isRegistered(key)) return;
 
        BY_NAME.add(name);
