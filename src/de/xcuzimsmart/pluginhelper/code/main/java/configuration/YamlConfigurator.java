@@ -5,7 +5,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
@@ -20,8 +19,6 @@ import java.util.logging.Level;
 public class YamlConfigurator extends Configurator /* cannot be final, because of abstract usages. */ {
 
     FileConfiguration config;
-
-    boolean loaded = false;
 
     public YamlConfigurator(MCSpigotPlugin plugin, File dir, String fileName) {
         super(plugin, dir, fileName);
@@ -216,14 +213,6 @@ public class YamlConfigurator extends Configurator /* cannot be final, because o
         return (Location) read(k);
     }
 
-    boolean isLoaded() {
-        return loaded;
-    }
-
-    void setLoaded(boolean b) {
-        this.loaded = b;
-    }
-
     public boolean isEmpty() {
         return keySet(false) != null && keySet(false).isEmpty();
     }
@@ -236,7 +225,11 @@ public class YamlConfigurator extends Configurator /* cannot be final, because o
         }
     }
 
-    void load() {
+    @Override
+    public void load() {
+        if (file == null) return;
+        if (!file.exists()) return;
+
         try {
             config = YamlConfiguration.loadConfiguration(file);
 

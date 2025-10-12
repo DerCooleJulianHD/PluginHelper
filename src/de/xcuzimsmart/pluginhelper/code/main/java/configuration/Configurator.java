@@ -17,6 +17,8 @@ public abstract class Configurator implements Config {
 
     protected final File dir, file;
 
+    boolean loaded = false;
+
     protected final FilenameEnding endings = getClass().getDeclaredAnnotation(FilenameEnding.class);
 
     public Configurator(MCSpigotPlugin plugin, File dir, String fileName) {
@@ -37,11 +39,18 @@ public abstract class Configurator implements Config {
             try {
                 file.createNewFile();
 
-                this.setDefaults();
+                if (this instanceof Defaultable defaultable) {
+                    this.load(); // loading the file first.
+                    defaultable.setDefaults();
+                }
             } catch (IOException e) {
                 logger.log(Level.SEVERE, e.getLocalizedMessage(), e);
             }
         }
+    }
+
+    public boolean exists() {
+        return dir != null && dir.exists() && file.exists();
     }
 
     private String correctFileName(String fileName, String... ending) {
@@ -70,5 +79,15 @@ public abstract class Configurator implements Config {
     @Override
     public MCSpigotPlugin plugin() {
         return plugin;
+    }
+
+    @Override
+    public boolean isLoaded() {
+        return loaded;
+    }
+
+    @Override
+    public void setLoaded(boolean loaded) {
+        this.loaded = loaded;
     }
 }
