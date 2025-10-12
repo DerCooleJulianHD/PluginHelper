@@ -1,6 +1,6 @@
 package de.xcuzimsmart.pluginhelper.code.main.java.plugin;
 
-import de.xcuzimsmart.pluginhelper.code.main.java.configuration.Defaultable;
+import de.xcuzimsmart.pluginhelper.code.main.java.utils.Defaultable;
 import de.xcuzimsmart.pluginhelper.code.main.java.configuration.YamlConfigurator;
 
 public final class PluginConfigFile extends YamlConfigurator implements Defaultable {

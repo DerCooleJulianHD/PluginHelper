@@ -1,6 +1,7 @@
 package de.xcuzimsmart.pluginhelper.code.main.java.configuration;
 
 import de.xcuzimsmart.pluginhelper.code.main.java.plugin.MCSpigotPlugin;
+import de.xcuzimsmart.pluginhelper.code.main.java.utils.Defaultable;
 
 import java.io.File;
 import java.io.IOException;
