@@ -8,7 +8,9 @@ import de.xcuzimsmart.pluginhelper.code.main.java.run.Timer;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public abstract class MCSpigotPlugin extends JavaPlugin implements SpigotPlugin, Prefixable {
+import java.io.File;
+
+public abstract class MCSpigotPlugin extends JavaPlugin implements Prefixable {
 
     protected static MCSpigotPlugin plugin;
 
@@ -23,32 +25,15 @@ public abstract class MCSpigotPlugin extends JavaPlugin implements SpigotPlugin,
     protected ListenerBundle listeners;
     protected CommandManager commandManager;
 
-    @Override
-    public void onLoad() {
+    public MCSpigotPlugin() {
         plugin = this;
+        this.createDataFolder(this.getDataFolder());
         this.config = new PluginConfigFile(this);
 
-        this.onPluginLoad();
-    }
-
-    @Override
-    public void onEnable() {
         this.listeners = new ListenerBundle(this);
         this.commandManager = new CommandManager(this);
+
         this.scoreboard = new GlobalScoreboard();
-
-        this.onPluginEnable();
-    }
-
-    @Override
-    public void onPluginLoad() {}
-
-    @Override
-    public void onPluginDisable() {}
-
-    @Override
-    public void onDisable() {
-        this.onPluginDisable();
     }
 
     public static Timer createTimer(Plugin plugin) {
@@ -117,5 +102,9 @@ public abstract class MCSpigotPlugin extends JavaPlugin implements SpigotPlugin,
 
     public String getPluginName() {
         return name;
+    }
+
+    public void createDataFolder(File file) {
+        if (file != null && !file.exists()) if (file.isDirectory()) file.mkdirs();
     }
 }

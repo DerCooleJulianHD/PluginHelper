@@ -33,7 +33,7 @@ public abstract class Configurator implements Config {
 
     @Override
     public void createFiles() {
-        if (dir != null && !dir.exists()) dir.mkdirs();
+        plugin.createDataFolder(dir);
 
         if (!file.exists()) {
 

@@ -8,7 +8,7 @@ public class Main extends MCSpigotPlugin {
     private static Test test;
 
     @Override
-    public void onPluginEnable() {
+    public void onEnable() {
         test = new Test();
         this.setPrefix("&8[&bPluginHelper&8] &r");
     }
