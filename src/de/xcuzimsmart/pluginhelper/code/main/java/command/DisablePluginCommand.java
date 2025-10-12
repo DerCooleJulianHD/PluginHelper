@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 
-@CommandInfo(name = "disableplugin", permission = "pluginhelper.commands.operation", description = "Disables Plugins.", requiresPlayer = false)
+@CommandInfo(name = "disableplugin", permission = "pluginhelper.commands.operation", requiresPlayer = false)
 public final class DisablePluginCommand extends PluginCommand {
 
     public DisablePluginCommand(Plugin plugin) {

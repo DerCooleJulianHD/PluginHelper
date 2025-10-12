@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public abstract class Bundle <T> {
+public abstract class Bundle<T> {
 
     public final List<String> BY_NAME = new ArrayList<>();
 
@@ -24,12 +24,12 @@ public abstract class Bundle <T> {
 
     // adds a new object to the bundle.
     public void register(String k, String name, T o) {
-       if (isRegistered(k)) return;
+        if (isRegistered(k)) return;
 
-       BY_NAME.add(name);
-       actives.put(k, o);
+        BY_NAME.add(name);
+        actives.put(k, o);
 
-       onRegisterObject(o);
+        onRegisterObject(o);
     }
 
     public abstract void onRegisterObject(T object);
@@ -41,12 +41,12 @@ public abstract class Bundle <T> {
         if (o == null) return;
 
         BY_NAME.remove(name);
-        actives.remove(key);
+        actives.remove(k);
 
         onUnregisterObject(o);
     }
 
-    public abstract void onUnregisterObject(T object)
+    public abstract void onUnregisterObject(T object);
 
     // unregisters all registered objects
     public void unregisterAll() {

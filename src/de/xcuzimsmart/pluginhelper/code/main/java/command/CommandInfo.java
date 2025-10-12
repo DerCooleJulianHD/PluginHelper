@@ -13,7 +13,5 @@ public @interface CommandInfo {
 
     String permission() default "";
 
-    String description() default "No Description Set.";
-
     boolean requiresPlayer();
 }
