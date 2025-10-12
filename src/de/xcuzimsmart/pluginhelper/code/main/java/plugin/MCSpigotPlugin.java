@@ -8,7 +8,7 @@ import de.xcuzimsmart.pluginhelper.code.main.java.run.Timer;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public abstract class MCSpigotPlugin extends JavaPlugin implements SpigotPlugin {
+public abstract class MCSpigotPlugin extends JavaPlugin implements SpigotPlugin, Prefixable {
 
     protected static MCSpigotPlugin plugin;
 
