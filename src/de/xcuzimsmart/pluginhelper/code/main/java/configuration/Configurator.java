@@ -41,7 +41,8 @@ public abstract class Configurator implements Config {
 
                 if (this instanceof Defaultable defaultable) {
                     this.load(); // loading the file first.
-                    defaultable.setDefaults();
+                    if (isLoaded())
+                        defaultable.setDefaults();
                 }
             } catch (IOException e) {
                 logger.log(Level.SEVERE, e.getLocalizedMessage(), e);
