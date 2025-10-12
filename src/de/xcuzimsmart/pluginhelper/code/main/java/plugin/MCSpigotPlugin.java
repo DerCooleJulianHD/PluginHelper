@@ -68,6 +68,11 @@ public abstract class MCSpigotPlugin extends JavaPlugin implements Prefixable {
         config.writeString("prefix", prefix);
     }
 
+    @Override
+    public void setConfigPrefix() {
+        this.setConfigPrefix("");
+    }
+
     public Scoreboard getScoreboard() {
         return scoreboard;
     }

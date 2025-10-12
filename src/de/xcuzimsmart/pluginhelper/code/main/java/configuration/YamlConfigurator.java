@@ -1,5 +1,6 @@
 package de.xcuzimsmart.pluginhelper.code.main.java.configuration;
 
+import de.xcuzimsmart.pluginhelper.code.main.java.plugin.MCSpigotPlugin;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.Location;
@@ -18,16 +19,16 @@ import java.util.logging.Level;
 @FilenameEnding(endings = {".yml", ".yaml"})
 public class YamlConfigurator extends Configurator /* cannot be final, because of abstract usages. */ {
 
-    final FileConfiguration config = new YamlConfiguration();
+    FileConfiguration config;
 
     boolean loaded = false;
 
-    public YamlConfigurator(File dir, String fileName) {
-        super(dir, fileName);
+    public YamlConfigurator(MCSpigotPlugin plugin, File dir, String fileName) {
+        super(plugin, dir, fileName);
     }
 
-    public YamlConfigurator(String dir, String fileName) {
-        this(new File(dir), fileName);
+    public YamlConfigurator(MCSpigotPlugin plugin, String dir, String fileName) {
+        this(plugin, new File(dir), fileName);
     }
 
     public boolean isSet(String k) {
@@ -237,10 +238,10 @@ public class YamlConfigurator extends Configurator /* cannot be final, because o
 
     void load() {
         try {
-            config.load(file);
+            config = YamlConfiguration.loadConfiguration(file);
 
             setLoaded(true);
-        } catch (InvalidConfigurationException | IOException e) {
+        } catch (Exception e) {
             logger.log(Level.SEVERE, e.getLocalizedMessage(), e);
         }
     }

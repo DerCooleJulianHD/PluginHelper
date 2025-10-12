@@ -1,5 +1,7 @@
 package de.xcuzimsmart.pluginhelper.code.main.java.configuration;
 
+import de.xcuzimsmart.pluginhelper.code.main.java.plugin.MCSpigotPlugin;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
@@ -11,17 +13,20 @@ public abstract class Configurator implements Config {
 
     public static final Logger logger = Logger.getLogger(Configurator.class.getName());
 
+    protected final MCSpigotPlugin plugin;
+
     protected final File dir, file;
 
     protected final FilenameEnding endings = getClass().getDeclaredAnnotation(FilenameEnding.class);
 
-    public Configurator(File dir, String fileName) {
+    public Configurator(MCSpigotPlugin plugin, File dir, String fileName) {
+        this.plugin = plugin;
         this.dir = dir;
         this.file = new File(dir, correctFileName(fileName, endings != null ? endings.endings() : null));
     }
 
-    public Configurator(String dir, String fileName) {
-        this(new File(dir), fileName);
+    public Configurator(MCSpigotPlugin plugin, String dir, String fileName) {
+        this(plugin, new File(dir), fileName);
     }
 
     @Override
@@ -61,4 +66,9 @@ public abstract class Configurator implements Config {
 
     @Override
     public void setDefaults() {}
+
+    @Override
+    public MCSpigotPlugin plugin() {
+        return plugin;
+    }
 }

@@ -2,6 +2,7 @@ package de.xcuzimsmart.pluginhelper.code.main.java.configuration;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import de.xcuzimsmart.pluginhelper.code.main.java.plugin.MCSpigotPlugin;
 import org.apache.commons.lang.Validate;
 
 import javax.annotation.Nullable;
@@ -19,15 +20,15 @@ public class JsonConfigurator extends Configurator {  // cannot be final, becaus
 
     final JsonProperties properties = getClass().getDeclaredAnnotation(JsonProperties.class);
 
-    public JsonConfigurator(File dir, String fileName) {
-        super(dir, fileName);
+    public JsonConfigurator(MCSpigotPlugin plugin, File dir, String fileName) {
+        super(plugin, dir, fileName);
         Validate.notNull(properties, getClass().getName() + " misses JsonProperties Annotation!");
 
         this.gson = JsonConfigurationBuilder.build(properties);
     }
 
-    public JsonConfigurator(String dir, String fileName) {
-        this(new File(dir), fileName);
+    public JsonConfigurator(MCSpigotPlugin plugin, String dir, String fileName) {
+        this(plugin, new File(dir), fileName);
     }
 
     // writes an object to a Json-Configuration.

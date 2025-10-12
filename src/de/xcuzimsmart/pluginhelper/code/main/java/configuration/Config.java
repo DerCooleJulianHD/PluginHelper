@@ -1,5 +1,7 @@
 package de.xcuzimsmart.pluginhelper.code.main.java.configuration;
 
+import de.xcuzimsmart.pluginhelper.code.main.java.plugin.MCSpigotPlugin;
+
 import java.io.File;
 
 public interface Config {
@@ -11,4 +13,6 @@ public interface Config {
     File getFile();
 
     void setDefaults();
+
+    MCSpigotPlugin plugin();
 }

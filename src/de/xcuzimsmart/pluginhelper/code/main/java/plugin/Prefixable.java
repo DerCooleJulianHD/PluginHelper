@@ -9,6 +9,8 @@ public interface Prefixable {
     void setPrefix(String prefix);
 
     void setConfigPrefix(String prefix);
+
+    void setConfigPrefix();
 }
 
 

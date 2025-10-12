@@ -1,13 +1,17 @@
 package de.xcuzimsmart.pluginhelper.code.main.java.plugin;
 
 import de.xcuzimsmart.pluginhelper.code.main.java.configuration.YamlConfigurator;
-import org.bukkit.plugin.Plugin;
 
 public class PluginConfigFile extends YamlConfigurator {
 
-    public PluginConfigFile(Plugin plugin) {
-        super(plugin.getDataFolder(), "config.yml");
+    public PluginConfigFile(MCSpigotPlugin plugin) {
+        super(plugin, plugin.getDataFolder(), "config.yml");
 
         createFiles();
+    }
+
+    @Override
+    public void setDefaults() {
+        plugin.setConfigPrefix();
     }
 }

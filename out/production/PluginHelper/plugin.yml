@@ -1,0 +1,12 @@
+name: PluginHelper
+version: 1.0
+
+### means the spigot version, this plugin is compatible with.
+api-version: 1.8.8
+
+author: _XCuzImSmart_
+main: de.xcuzimsmart.pluginhelper.code.main.java.Main
+description: Custom Library for Minecraft Plugin Programming using Spigot/Bukkit API. I upload code Files for my Plugins you can copy and use it in your Plugin! [GitHub mirrored]
+
+### default commands for api and bukkit.
+commands:
