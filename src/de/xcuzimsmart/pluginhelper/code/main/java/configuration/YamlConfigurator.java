@@ -18,7 +18,7 @@ import java.util.logging.Level;
 @FilenameEnding(endings = {".yml", ".yaml"})
 public class YamlConfigurator extends Configurator /* cannot be final, because of abstract usages. */ {
 
-    FileConfiguration config;
+    final FileConfiguration config = YamlConfiguration.loadConfiguration(file);
 
     public YamlConfigurator(MCSpigotPlugin plugin, File dir, String fileName) {
         super(plugin, dir, fileName);
@@ -45,7 +45,6 @@ public class YamlConfigurator extends Configurator /* cannot be final, because o
         createFiles();
 
         try {
-            if (!isLoaded()) load(); // loading the file
             config.set(k, v);
             save();
         } catch (Exception e) {
@@ -128,8 +127,6 @@ public class YamlConfigurator extends Configurator /* cannot be final, because o
         if (!file.exists()) return null;
 
         try {
-            if (!isLoaded()) load(); // loading the file;
-
             return config.get(k);
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Unable to read object from: " + file.getName(), e);
@@ -222,20 +219,6 @@ public class YamlConfigurator extends Configurator /* cannot be final, because o
             config.save(file);
         } catch (IOException e) {
             logger.log(Level.SEVERE, "Unable to save: " + file.getName(), e);
-        }
-    }
-
-    @Override
-    public void load() {
-        if (file == null) return;
-        if (!file.exists()) return;
-
-        try {
-            config = YamlConfiguration.loadConfiguration(file);
-
-            setLoaded(true);
-        } catch (Exception e) {
-            logger.log(Level.SEVERE, e.getLocalizedMessage(), e);
         }
     }
 }

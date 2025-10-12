@@ -18,8 +18,6 @@ public abstract class Configurator implements Config {
 
     protected final File dir, file;
 
-    boolean loaded = false;
-
     protected final FilenameEnding endings = getClass().getDeclaredAnnotation(FilenameEnding.class);
 
     public Configurator(MCSpigotPlugin plugin, File dir, String fileName) {
@@ -82,15 +80,5 @@ public abstract class Configurator implements Config {
     @Override
     public MCSpigotPlugin plugin() {
         return plugin;
-    }
-
-    @Override
-    public boolean isLoaded() {
-        return loaded;
-    }
-
-    @Override
-    public void setLoaded(boolean loaded) {
-        this.loaded = loaded;
     }
 }
