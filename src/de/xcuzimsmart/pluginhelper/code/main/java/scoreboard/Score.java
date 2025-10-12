@@ -16,13 +16,15 @@ public final class Score {
     String prefix;
     String suffix;
 
-    final Team entry = this.getEntryTeam();
+    final Team entry;
 
     public Score(Objective obj, int id, String prefix, String suffix) {
         this.objective = obj;
         this.id = id;
         this.prefix = prefix;
         this.suffix = suffix;
+
+        this.entry = this.getEntryTeam();
     }
 
     public Objective getObjective() {

@@ -1,5 +1,6 @@
 package de.xcuzimsmart.pluginhelper.code.main.java.plugin;
 
+import de.xcuzimsmart.pluginhelper.code.main.java.bundle.ListenerBundle;
 import de.xcuzimsmart.pluginhelper.code.main.java.scoreboard.GlobalScoreboard;
 import de.xcuzimsmart.pluginhelper.code.main.java.scoreboard.Scoreboard;
 import de.xcuzimsmart.pluginhelper.code.main.java.timer.Timer;
@@ -25,7 +26,6 @@ public abstract class MCSpigotPlugin extends JavaPlugin implements Prefixable {
         config = new PluginConfigFile(this);
         
         this.listeners = new ListenerBundle(this);
-
         this.scoreboard = new GlobalScoreboard();
     }
 
@@ -35,23 +35,23 @@ public abstract class MCSpigotPlugin extends JavaPlugin implements Prefixable {
 
     @Override
     public String getPrefix() {
-       if (this.prefix != null && !this.prefix.isEmpty()) return this.prefix;
+        if (this.prefix != null && !this.prefix.isEmpty()) return this.prefix;
        
-       final String read = getPrefixFromConfig();
+        final String read = getPrefixFromConfig();
        
-       if (!read.isEmpty()) return read;
-       return null;
+        if (!read.isEmpty()) return read;
+        return null;
     }
 
     @Override
     public String getPrefixFromConfig() {
-       if (config == null) return "";
-       if (!config.isSet("prefix")) return "";
+        if (config == null) return "";
+        if (!config.isSet("prefix")) return "";
 
-       final String read =  config.readString("prefix");
+        final String read =  config.readString("prefix");
        
-       if (read != null) return read;
-       return "";
+        if (read != null) return read;
+        return "";
     }
 
     @Override

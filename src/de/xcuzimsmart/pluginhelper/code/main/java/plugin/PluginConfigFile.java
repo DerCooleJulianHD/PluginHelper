@@ -24,6 +24,6 @@ public class PluginConfigFile extends YamlConfigurator {
     }
 
     public ItemStack getItem() {
-        return (ItemStack) this.read("test.item");
+        return this.readItem("test.item");
     }
 }
