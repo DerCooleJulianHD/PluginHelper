@@ -61,9 +61,6 @@ public class JsonConfigurator extends Configurator {  // cannot be final, becaus
         return null;
     }
 
-    @Override
-    public void load() {}
-
     public static final class JsonConfigurationBuilder {
 
         public static Gson build(JsonProperties properties) {
