@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 
-@CommandInfo(name = "disableplugin", permission = "pluginhelper.commands.operation", requiresPlayer = false)
+@CommandInfo(name = "disableplugin", permission = "adminx.command.disableplugin", requiresPlayer = false)
 public final class DisablePluginCommand extends PluginCommand {
 
     public DisablePluginCommand(Plugin plugin) {
@@ -58,17 +58,16 @@ public final class DisablePluginCommand extends PluginCommand {
 
     @Override
     public List<String> onTabComplete(CommandSender sender, String[] strings) {
-        return getEnabledPlugins();
-    }
-
-    private List<String> getEnabledPlugins() {
         final PluginManager pluginManager = Bukkit.getPluginManager();
         final Plugin[] plugins = pluginManager.getPlugins();
         final List<String> list = new ArrayList<>();
 
         if (plugins == null) return list;
 
-        for (Plugin target : plugins) if (target.isEnabled()) list.add(target.getName());
+        for (Plugin target : plugins)
+            if (target.isEnabled())
+                list.add(target.getName());
+
         return list;
     }
 }
