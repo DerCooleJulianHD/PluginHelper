@@ -5,6 +5,10 @@ import de.xcuzimsmart.pluginhelper.code.main.java.command.CommandManager;
 import de.xcuzimsmart.pluginhelper.code.main.java.scoreboard.GlobalScoreboard;
 import de.xcuzimsmart.pluginhelper.code.main.java.scoreboard.Scoreboard;
 import de.xcuzimsmart.pluginhelper.code.main.java.run.Timer;
+import de.xcuzimsmart.pluginhelper.code.main.java.utils.MessageBuilder;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -34,6 +38,13 @@ public abstract class MCSpigotPlugin extends JavaPlugin implements Prefixable {
         this.commandManager = new CommandManager(this);
 
         this.scoreboard = new GlobalScoreboard();
+
+        sendEnableMessage();
+    }
+
+    @Override
+    public void onDisable() {
+        sendDisableMessage();
     }
 
     public static Timer createTimer(Plugin plugin) {
@@ -106,5 +117,19 @@ public abstract class MCSpigotPlugin extends JavaPlugin implements Prefixable {
 
     public void createDataFolder(File file) {
         if (file != null && !file.exists()) if (file.isDirectory()) file.mkdirs();
+    }
+
+    public void sendEnableMessage() {
+        final ConsoleCommandSender console = Bukkit.getConsoleSender();
+        final String message = MessageBuilder.build(this, ChatColor.GREEN + name + " has been successfully enabled.");
+
+        console.sendMessage(message);
+    }
+
+    public void sendDisableMessage() {
+        final ConsoleCommandSender console = Bukkit.getConsoleSender();
+        final String message = MessageBuilder.build(this, ChatColor.RED + name + " has been successfully disabled.");
+
+        console.sendMessage(message);
     }
 }
