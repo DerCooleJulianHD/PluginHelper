@@ -13,7 +13,5 @@ public interface Config extends Loadable {
 
     File getFile();
 
-    void setDefaults();
-
     MCSpigotPlugin plugin();
 }

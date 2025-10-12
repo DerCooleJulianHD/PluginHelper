@@ -36,18 +36,22 @@ public abstract class Configurator implements Config {
         if (dir != null && !dir.exists()) dir.mkdirs();
 
         if (!file.exists()) {
+
+            if (this instanceof Defaultable) {
+                this.saveDefaultConfig();
+                return;
+            }
+
             try {
                 file.createNewFile();
-
-                if (this instanceof Defaultable defaultable) {
-                    this.load(); // loading the file first.
-                    if (isLoaded())
-                        defaultable.setDefaults();
-                }
             } catch (IOException e) {
                 logger.log(Level.SEVERE, e.getLocalizedMessage(), e);
             }
         }
+    }
+
+    void saveDefaultConfig() {
+        plugin.saveResource(file.getName(), true);
     }
 
     public boolean exists() {
@@ -73,9 +77,6 @@ public abstract class Configurator implements Config {
     public File getFile() {
         return file;
     }
-
-    @Override
-    public void setDefaults() {}
 
     @Override
     public MCSpigotPlugin plugin() {

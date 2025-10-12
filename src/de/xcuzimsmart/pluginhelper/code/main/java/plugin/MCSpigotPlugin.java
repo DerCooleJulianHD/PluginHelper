@@ -18,7 +18,7 @@ public abstract class MCSpigotPlugin extends JavaPlugin implements SpigotPlugin 
 
     protected Scoreboard scoreboard;
 
-    protected static PluginConfigFile config;
+    protected PluginConfigFile config;
 
     protected ListenerBundle listeners;
     protected CommandManager commandManager;
@@ -26,7 +26,7 @@ public abstract class MCSpigotPlugin extends JavaPlugin implements SpigotPlugin 
     @Override
     public void onLoad() {
         plugin = this;
-        config = new PluginConfigFile(this);
+        this.config = new PluginConfigFile(this);
 
         this.onPluginLoad();
     }
@@ -111,7 +111,7 @@ public abstract class MCSpigotPlugin extends JavaPlugin implements SpigotPlugin 
         return listeners;
     }
 
-    public static PluginConfigFile getConfiguration() {
+    public PluginConfigFile getConfiguration() {
         return config;
     }
 

@@ -40,7 +40,7 @@ public final class Test implements Listener {
         // here when player joins the server.
         final Player player = event.getPlayer();
         final Scoreboard scoreboard = Main.getInstance().getScoreboard();
-        final PluginConfigFile config = Main.getConfiguration();
+        final PluginConfigFile config = Main.getInstance().getConfiguration();
 
         player.playSound(player.getLocation(), Sound.LEVEL_UP, 3, 1);
     }

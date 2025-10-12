@@ -8,9 +8,4 @@ public class PluginConfigFile extends YamlConfigurator implements Defaultable {
     public PluginConfigFile(MCSpigotPlugin plugin) {
         super(plugin, plugin.getDataFolder(), "config.yml");
     }
-
-    @Override
-    public void setDefaults() {
-        plugin.setConfigPrefix();
-    }
 }
