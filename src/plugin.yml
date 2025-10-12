@@ -10,7 +10,3 @@ description: Custom Library for Minecraft Plugin Programming using Spigot/Bukkit
 
 ### default commands for api and bukkit.
 commands:
-  disableplugin:
-    description: Disables Plugins.
-  enableplugin:
-    description: Loads and Enables Plugins.

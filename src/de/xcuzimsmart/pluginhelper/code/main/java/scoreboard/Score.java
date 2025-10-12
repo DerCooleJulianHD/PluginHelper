@@ -96,6 +96,18 @@ public final class Score {
         parent.resetScores(name.entryName);
     }
 
+    public String getPrefix() {
+        return prefix;
+    }
+
+    public String getSuffix() {
+        return suffix;
+    }
+
+    public Team getEntry() {
+        return entry;
+    }
+
     public enum EntryName {
 
         SCORE_0(0, ChatColor.GRAY.toString()),

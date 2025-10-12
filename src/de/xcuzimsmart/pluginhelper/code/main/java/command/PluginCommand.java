@@ -27,7 +27,6 @@ public abstract class PluginCommand implements CommandExecutor, TabCompleter {
         this.plugin = plugin;
         this.info = getClass().getDeclaredAnnotation(CommandInfo.class);
         Validate.notNull(this.info, getClass().getName() + " misses CommandInfo Annotation");
-        Bukkit.getPluginCommand(info.name()).setExecutor(this);
     }
 
     @Override // [from: CommandExecutor]

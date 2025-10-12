@@ -23,15 +23,13 @@ public abstract class ScoreboardBuilder implements Scoreboard {
 
 
         if (!scores.containsKey(id)) {
-             scores.put(id, new Score(objective, id, prefix, suffix));
+             scores.put(id, new Score(objective, id, null, null));
         }
 
         final Score score = scores.get(id);
 
-        if (score.getPrefix() == null && score.getSuffix() == null) {
-            if (prefix != null) score.setPrefix(prefix);
-            if (suffix != null) score.setSuffix(suffix);
-        }
+        if (prefix != null) score.setPrefix(prefix);
+        if (suffix != null) score.setSuffix(suffix);
 
         score.show();
     }

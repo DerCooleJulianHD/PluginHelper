@@ -1,9 +1,10 @@
 package de.xcuzimsmart.pluginhelper.code.main.java.plugin;
 
 import de.xcuzimsmart.pluginhelper.code.main.java.bundle.ListenerBundle;
+import de.xcuzimsmart.pluginhelper.code.main.java.command.CommandManager;
 import de.xcuzimsmart.pluginhelper.code.main.java.scoreboard.GlobalScoreboard;
 import de.xcuzimsmart.pluginhelper.code.main.java.scoreboard.Scoreboard;
-import de.xcuzimsmart.pluginhelper.code.main.java.timer.Timer;
+import de.xcuzimsmart.pluginhelper.code.main.java.run.Timer;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -18,6 +19,7 @@ public abstract class MCSpigotPlugin extends JavaPlugin implements Prefixable {
     protected static PluginConfigFile config;
 
     protected final ListenerBundle listeners;
+    protected final CommandManager commandManager;
 
     final String name = getClass().getSimpleName();
 
@@ -26,6 +28,8 @@ public abstract class MCSpigotPlugin extends JavaPlugin implements Prefixable {
         config = new PluginConfigFile(this);
         
         this.listeners = new ListenerBundle(this);
+        this.commandManager = new CommandManager(this);
+
         this.scoreboard = new GlobalScoreboard();
     }
 
@@ -74,6 +78,10 @@ public abstract class MCSpigotPlugin extends JavaPlugin implements Prefixable {
 
     public static MCSpigotPlugin getInstance() {
         return plugin;
+    }
+
+    public CommandManager getCommandManager() {
+        return commandManager;
     }
 
     public ListenerBundle getListeners() {

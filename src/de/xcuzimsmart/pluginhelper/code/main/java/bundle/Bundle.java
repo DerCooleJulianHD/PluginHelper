@@ -1,16 +1,16 @@
 package de.xcuzimsmart.pluginhelper.code.main.java.bundle;
 
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.plugin.Plugin;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public abstract class Bundle<T> {
 
-    public final List<String> BY_NAME = new ArrayList<>();
+    public final Map<String, String> BY_NAME = new HashMap<>();
 
     protected final Plugin plugin;
     // this map holds all added objects
@@ -26,10 +26,12 @@ public abstract class Bundle<T> {
     public void register(String k, String name, T o) {
         if (isRegistered(k)) return;
 
-        BY_NAME.add(name);
+        BY_NAME.put(k, name);
         actives.put(k, o);
 
         onRegisterObject(o);
+        Bukkit.getConsoleSender().sendMessage(this.getName() + ChatColor.GREEN + " Registered " +
+                ChatColor.AQUA + name + "(" + o.getClass().getSimpleName() + ") " + ChatColor.GRAY + " on key: " + k);
     }
 
     public abstract void onRegisterObject(T object);
@@ -37,13 +39,17 @@ public abstract class Bundle<T> {
     // removes the object from the bundle.
     public void unregister(String k) {
         if (!isRegistered(k)) return;
-        T o = get(k);
-        if (o == null) return;
 
-        BY_NAME.remove(name);
+        final T o = get(k);
+        final String name = BY_NAME.get(k);
+        if (o == null) return;
         actives.remove(k);
 
+        if (name != null) BY_NAME.remove(name);
+
         onUnregisterObject(o);
+        Bukkit.getConsoleSender().sendMessage(this.getName() + ChatColor.RED + " Unregistered " +
+                ChatColor.AQUA + name + "(" + o.getClass().getSimpleName() + ") " + ChatColor.GRAY + " on key: " + k);
     }
 
     public abstract void onUnregisterObject(T object);
@@ -86,9 +92,8 @@ public abstract class Bundle<T> {
     public T getByName(String name) {
         if (this.actives.isEmpty()) return null;
         if (this.BY_NAME.isEmpty()) return null;
-        if (!this.BY_NAME.contains(name)) return null;
 
-        for (String s : BY_NAME) {
+        for (String s : BY_NAME.values()) {
             T o = get(s);
             if (o == null) continue;
             if (name.equals(s)) return o;
