@@ -15,16 +15,15 @@ import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 
+@FilenameEnding(endings = {".yml", ".yaml"})
 public class YamlConfigurator extends Configurator /* cannot be final, because of abstract usages. */ {
 
     final FileConfiguration config = new YamlConfiguration();
 
     boolean loaded = false;
 
-    private static final String[] endings = {".yml", ".yaml"};
-
     public YamlConfigurator(File dir, String fileName) {
-        super(dir, fileName, endings);
+        super(dir, fileName);
     }
 
     public YamlConfigurator(String dir, String fileName) {

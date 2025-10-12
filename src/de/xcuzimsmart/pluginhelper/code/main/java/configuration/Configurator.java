@@ -13,13 +13,15 @@ public abstract class Configurator implements Config {
 
     protected final File dir, file;
 
-    public Configurator(File dir, String fileName, String... ending) {
+    protected final FilenameEnding endings = getClass().getDeclaredAnnotation(FilenameEnding.class);
+
+    public Configurator(File dir, String fileName) {
         this.dir = dir;
-        this.file = new File(dir, correctFileName(fileName, ending));
+        this.file = new File(dir, correctFileName(fileName, endings != null ? endings.endings() : null));
     }
 
-    public Configurator(String dir, String fileName, String... ending) {
-        this(new File(dir), fileName, ending);
+    public Configurator(String dir, String fileName) {
+        this(new File(dir), fileName);
     }
 
     @Override
@@ -44,7 +46,6 @@ public abstract class Configurator implements Config {
         List<String> list = Arrays.stream(ending).toList();
 
         for (final String s : list) if (fileName.endsWith(s)) return fileName;
-
         return fileName + ending[0];
     }
 

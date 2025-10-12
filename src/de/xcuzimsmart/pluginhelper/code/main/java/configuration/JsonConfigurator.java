@@ -11,6 +11,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.logging.Level;
 
+@FilenameEnding(endings = {".json"})
 @JsonProperties() /* <-- by default */
 public class JsonConfigurator extends Configurator {  // cannot be final, because of abstract usages.
 
@@ -19,7 +20,7 @@ public class JsonConfigurator extends Configurator {  // cannot be final, becaus
     final JsonProperties properties = getClass().getDeclaredAnnotation(JsonProperties.class);
 
     public JsonConfigurator(File dir, String fileName) {
-        super(dir, fileName, ".json");
+        super(dir, fileName);
         Validate.notNull(properties, getClass().getName() + " misses JsonProperties Annotation!");
 
         this.gson = JsonConfigurationBuilder.build(properties);
