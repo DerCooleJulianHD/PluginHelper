@@ -8,29 +8,47 @@ import de.xcuzimsmart.pluginhelper.code.main.java.run.Timer;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public abstract class MCSpigotPlugin extends JavaPlugin implements Prefixable {
+public abstract class MCSpigotPlugin extends JavaPlugin implements SpigotPlugin {
 
     protected static MCSpigotPlugin plugin;
 
     protected String prefix = null;
 
+    final String name = getClass().getSimpleName();
+
     protected Scoreboard scoreboard;
 
     protected static PluginConfigFile config;
 
-    protected final ListenerBundle listeners;
-    protected final CommandManager commandManager;
+    protected ListenerBundle listeners;
+    protected CommandManager commandManager;
 
-    final String name = getClass().getSimpleName();
-
-    public MCSpigotPlugin() {
+    @Override
+    public void onLoad() {
         plugin = this;
         config = new PluginConfigFile(this);
-        
+
+        this.onPluginLoad();
+    }
+
+    @Override
+    public void onEnable() {
         this.listeners = new ListenerBundle(this);
         this.commandManager = new CommandManager(this);
-
         this.scoreboard = new GlobalScoreboard();
+
+        this.onPluginEnable();
+    }
+
+    @Override
+    public void onPluginLoad() {}
+
+    @Override
+    public void onPluginDisable() {}
+
+    @Override
+    public void onDisable() {
+        this.onPluginDisable();
     }
 
     public static Timer createTimer(Plugin plugin) {
