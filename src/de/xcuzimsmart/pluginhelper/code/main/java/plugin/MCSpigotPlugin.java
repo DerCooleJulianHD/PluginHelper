@@ -12,11 +12,7 @@ import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.io.File;
-
 public abstract class MCSpigotPlugin extends JavaPlugin implements SpigotPlugin {
-
-    protected static MCSpigotPlugin plugin;
 
     protected String prefix = null; // by default
 
@@ -29,8 +25,6 @@ public abstract class MCSpigotPlugin extends JavaPlugin implements SpigotPlugin 
 
     @Override
     public void onLoad() {
-        plugin = this;
-
         if (!getDataFolder().exists()) this.getDataFolder().mkdirs();
 
         this.config = new PluginConfigFile(this);
@@ -67,12 +61,12 @@ public abstract class MCSpigotPlugin extends JavaPlugin implements SpigotPlugin 
 
     @Override
     public Plugin getPlugin() {
-        return getAsJavaPlugin();
+        return (Plugin) getAsJavaPlugin();
     }
 
     @Override
     public JavaPlugin getAsJavaPlugin() {
-        return plugin;
+        return this;
     }
 
     @Override
@@ -119,10 +113,6 @@ public abstract class MCSpigotPlugin extends JavaPlugin implements SpigotPlugin 
     @Override
     public void setScoreboard(Scoreboard scoreboard) {
         this.scoreboard = scoreboard;
-    }
-
-    public static SpigotPlugin getInstance() {
-        return plugin;
     }
 
     @Override
