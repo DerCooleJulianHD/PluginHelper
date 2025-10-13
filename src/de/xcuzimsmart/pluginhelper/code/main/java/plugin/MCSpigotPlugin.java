@@ -2,9 +2,9 @@ package de.xcuzimsmart.pluginhelper.code.main.java.plugin;
 
 import de.xcuzimsmart.pluginhelper.code.main.java.bundle.ListenerBundle;
 import de.xcuzimsmart.pluginhelper.code.main.java.command.CommandManager;
+import de.xcuzimsmart.pluginhelper.code.main.java.run.Timer;
 import de.xcuzimsmart.pluginhelper.code.main.java.scoreboard.GlobalScoreboard;
 import de.xcuzimsmart.pluginhelper.code.main.java.scoreboard.Scoreboard;
-import de.xcuzimsmart.pluginhelper.code.main.java.run.Timer;
 import de.xcuzimsmart.pluginhelper.code.main.java.utils.MessageBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -14,13 +14,11 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 
-public abstract class MCSpigotPlugin extends JavaPlugin implements Prefixable {
+public abstract class MCSpigotPlugin extends JavaPlugin implements SpigotPlugin {
 
     protected static MCSpigotPlugin plugin;
 
-    protected String prefix = null;
-
-    final String name = getClass().getSimpleName();
+    protected String prefix = null; // by default
 
     protected Scoreboard scoreboard;
 
@@ -55,14 +53,25 @@ public abstract class MCSpigotPlugin extends JavaPlugin implements Prefixable {
         this.sendDisableMessage();
     }
 
+    @Override
     public void onPluginLoad() {}
 
+    @Override
     public void onPluginDisable() {}
 
-    public abstract void onPluginEnable();
+    @Override
+    public Timer createTimer() {
+        return new Timer(this, 0, 20);
+    }
 
-    public static Timer createTimer(Plugin plugin) {
-        return new Timer(plugin, 0, 20);
+    @Override
+    public Plugin getPlugin() {
+        return getAsJavaPlugin();
+    }
+
+    @Override
+    public JavaPlugin getAsJavaPlugin() {
+        return plugin;
     }
 
     @Override
@@ -101,10 +110,12 @@ public abstract class MCSpigotPlugin extends JavaPlugin implements Prefixable {
         this.setConfigPrefix("");
     }
 
+    @Override
     public Scoreboard getScoreboard() {
         return scoreboard;
     }
 
+    @Override
     public void setScoreboard(Scoreboard scoreboard) {
         this.scoreboard = scoreboard;
     }
@@ -113,36 +124,43 @@ public abstract class MCSpigotPlugin extends JavaPlugin implements Prefixable {
         return plugin;
     }
 
+    @Override
     public CommandManager getCommandManager() {
         return commandManager;
     }
 
+    @Override
     public ListenerBundle getListeners() {
         return listeners;
     }
 
+    @Override
     public PluginConfigFile getConfiguration() {
         return config;
     }
 
+    @Override
     public String getPluginName() {
-        return name;
+        return getDescription().getFullName();
     }
 
+    @Override
     public void createDataFolder(File file) {
         if (file != null && !file.exists()) if (file.isDirectory()) file.mkdirs();
     }
 
+    @Override
     public void sendEnableMessage() {
         final ConsoleCommandSender console = Bukkit.getConsoleSender();
-        final String message = MessageBuilder.build(this, ChatColor.GREEN + name + " has been successfully enabled.");
+        final String message = MessageBuilder.build(this, ChatColor.GREEN + getPluginName() + " has been successfully enabled.");
 
         console.sendMessage(message);
     }
 
+    @Override
     public void sendDisableMessage() {
         final ConsoleCommandSender console = Bukkit.getConsoleSender();
-        final String message = MessageBuilder.build(this, ChatColor.RED + name + " has been successfully disabled.");
+        final String message = MessageBuilder.build(this, ChatColor.RED + getPluginName() + " has been successfully disabled.");
 
         console.sendMessage(message);
     }

@@ -1,12 +1,12 @@
 package de.xcuzimsmart.pluginhelper.code.main.java.command;
 
 import de.xcuzimsmart.pluginhelper.code.main.java.bundle.Bundle;
+import de.xcuzimsmart.pluginhelper.code.main.java.plugin.SpigotPlugin;
 import org.bukkit.Bukkit;
-import org.bukkit.plugin.Plugin;
 
 public final class CommandManager extends Bundle<PluginCommand> {
 
-    public CommandManager(Plugin plugin) {
+    public CommandManager(SpigotPlugin plugin) {
         super(plugin);
     }
 

@@ -1,6 +1,6 @@
 package de.xcuzimsmart.pluginhelper.code.main.java.configuration;
 
-import de.xcuzimsmart.pluginhelper.code.main.java.plugin.MCSpigotPlugin;
+import de.xcuzimsmart.pluginhelper.code.main.java.plugin.SpigotPlugin;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.Location;
@@ -20,11 +20,11 @@ public class YamlConfigurator extends Configurator /* cannot be final, because o
 
     FileConfiguration config = new YamlConfiguration();
 
-    public YamlConfigurator(MCSpigotPlugin plugin, File dir, String fileName) {
+    public YamlConfigurator(SpigotPlugin plugin, File dir, String fileName) {
         super(plugin, dir, fileName);
     }
 
-    public YamlConfigurator(MCSpigotPlugin plugin, String dir, String fileName) {
+    public YamlConfigurator(SpigotPlugin plugin, String dir, String fileName) {
         this(plugin, new File(dir), fileName);
     }
 

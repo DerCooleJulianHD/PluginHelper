@@ -1,16 +1,15 @@
 package de.xcuzimsmart.pluginhelper.code.main.java.command;
 
+import de.xcuzimsmart.pluginhelper.code.main.java.plugin.SpigotPlugin;
 import de.xcuzimsmart.pluginhelper.code.main.java.utils.MessageBuilder;
 import de.xcuzimsmart.pluginhelper.code.main.java.utils.Messanger;
 import org.apache.commons.lang.Validate;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 
 import java.util.List;
 import java.util.logging.Logger;
@@ -19,11 +18,11 @@ public abstract class PluginCommand implements CommandExecutor, TabCompleter {
 
     protected final Logger logger = Logger.getLogger(PluginCommand.class.getSimpleName());
 
-    protected final Plugin plugin;
+    protected final SpigotPlugin plugin;
 
     protected final CommandInfo info;
 
-    public PluginCommand(Plugin plugin) {
+    public PluginCommand(SpigotPlugin plugin) {
         this.plugin = plugin;
         this.info = getClass().getDeclaredAnnotation(CommandInfo.class);
         Validate.notNull(this.info, getClass().getName() + " misses CommandInfo Annotation");

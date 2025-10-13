@@ -10,7 +10,10 @@ public class Main extends MCSpigotPlugin {
     @Override
     public void onPluginEnable() {
         test = new Test();
-        this.setPrefix("&8[&bPluginHelper&8] &r");
+        final String prefix = "&8[&bPluginHelper&8] &r";
+
+        this.setPrefix(prefix);
+        if (config.isEmpty()) this.setConfigPrefix(prefix);
     }
 
     public static Test getTest() {

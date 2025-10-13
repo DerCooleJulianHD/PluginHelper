@@ -1,23 +1,23 @@
 package de.xcuzimsmart.pluginhelper.code.main.java.run;
 
+import de.xcuzimsmart.pluginhelper.code.main.java.plugin.SpigotPlugin;
 import de.xcuzimsmart.pluginhelper.code.main.java.utils.Executable;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public abstract class Counter extends BukkitRunnable implements Executable {
 
-    protected final Plugin plugin;
+    protected final SpigotPlugin plugin;
 
     protected boolean running = false;
 
     protected final long delay, period;
 
-    public Counter(Plugin plugin, long delay, long period) {
+    public Counter(SpigotPlugin plugin, long delay, long period) {
         this.plugin = plugin;
         this.delay = delay;
         this.period = period;
 
-        this.runTaskTimer(plugin, delay, period);
+        this.runTaskTimer(plugin.getPlugin(), delay, period);
     }
 
     @Override
@@ -37,7 +37,7 @@ public abstract class Counter extends BukkitRunnable implements Executable {
         if (isRunning()) this.setRunning(false);
     }
 
-    public Plugin getPlugin() {
+    public SpigotPlugin getPlugin() {
         return plugin;
     }
 

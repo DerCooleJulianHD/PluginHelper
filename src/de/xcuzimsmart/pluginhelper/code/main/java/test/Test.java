@@ -1,13 +1,9 @@
 package de.xcuzimsmart.pluginhelper.code.main.java.test;
 
 import de.xcuzimsmart.pluginhelper.code.main.java.Main;
-import de.xcuzimsmart.pluginhelper.code.main.java.bundle.ListenerBundle;
 import de.xcuzimsmart.pluginhelper.code.main.java.plugin.PluginConfigFile;
-import de.xcuzimsmart.pluginhelper.code.main.java.scoreboard.PlayerScoreboard;
 import de.xcuzimsmart.pluginhelper.code.main.java.scoreboard.Scoreboard;
-import de.xcuzimsmart.pluginhelper.code.main.java.utils.Messanger;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

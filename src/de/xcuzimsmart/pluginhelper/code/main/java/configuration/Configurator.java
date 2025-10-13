@@ -1,11 +1,9 @@
 package de.xcuzimsmart.pluginhelper.code.main.java.configuration;
 
-import de.xcuzimsmart.pluginhelper.code.main.java.plugin.MCSpigotPlugin;
+import de.xcuzimsmart.pluginhelper.code.main.java.plugin.SpigotPlugin;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -13,19 +11,19 @@ public abstract class Configurator implements Config {
 
     public static final Logger logger = Logger.getLogger(Configurator.class.getName());
 
-    protected final MCSpigotPlugin plugin;
+    protected final SpigotPlugin plugin;
 
     protected final File dir, file;
 
     boolean loaded = false;
 
-    public Configurator(MCSpigotPlugin plugin, File dir, String fileName) {
+    public Configurator(SpigotPlugin plugin, File dir, String fileName) {
         this.plugin = plugin;
         this.dir = dir;
         this.file = new File(dir, fileName);
     }
 
-    public Configurator(MCSpigotPlugin plugin, String dir, String fileName) {
+    public Configurator(SpigotPlugin plugin, String dir, String fileName) {
         this(plugin, new File(dir), fileName);
     }
 
@@ -58,7 +56,7 @@ public abstract class Configurator implements Config {
     }
 
     void saveDefaultConfig() {
-        plugin.saveResource(file.getName(), true);
+        plugin.getPlugin().saveResource(file.getName(), true);
     }
 
     public boolean exists() {
@@ -76,7 +74,7 @@ public abstract class Configurator implements Config {
     }
 
     @Override
-    public MCSpigotPlugin plugin() {
+    public SpigotPlugin plugin() {
         return plugin;
     }
 }

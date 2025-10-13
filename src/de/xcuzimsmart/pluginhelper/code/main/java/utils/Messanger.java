@@ -1,5 +1,6 @@
 package de.xcuzimsmart.pluginhelper.code.main.java.utils;
 
+import de.xcuzimsmart.pluginhelper.code.main.java.plugin.SpigotPlugin;
 import net.minecraft.server.v1_8_R3.IChatBaseComponent;
 import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
 import net.minecraft.server.v1_8_R3.PacketPlayOutTitle;
@@ -10,7 +11,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 
 import java.util.Collection;
 
@@ -61,23 +61,23 @@ public final class Messanger {
         for (Player target : collection) Messanger.sendActionBar(target, content);
     }
 
-    public static void broadcast(Plugin plugin, CommandSender entity, String message)  {
+    public static void broadcast(SpigotPlugin plugin, CommandSender entity, String message)  {
         entity.sendMessage(MessageBuilder.build(plugin, message));
     }
 
-    public static void broadcast(Plugin plugin, Collection<? extends CommandSender> collection, String message) {
+    public static void broadcast(SpigotPlugin plugin, Collection<? extends CommandSender> collection, String message) {
         if (collection.isEmpty()) return;
         final String s = MessageBuilder.build(plugin, message);
         collection.forEach(target -> target.sendMessage(s));
     }
 
-    public static void log(Plugin plugin, String log) {
+    public static void log(SpigotPlugin plugin, String log) {
         final ConsoleCommandSender console = Bukkit.getConsoleSender();
 
         broadcast(plugin, console, log);
     }
 
-    public static void logError(Plugin plugin, String message, Throwable ex) {
+    public static void logError(SpigotPlugin plugin, String message, Throwable ex) {
         final ConsoleCommandSender console = Bukkit.getConsoleSender();
 
         broadcast(plugin, console, message);

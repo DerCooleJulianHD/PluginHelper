@@ -1,11 +1,11 @@
 package de.xcuzimsmart.pluginhelper.code.main.java.run;
 
+import de.xcuzimsmart.pluginhelper.code.main.java.plugin.SpigotPlugin;
 import de.xcuzimsmart.pluginhelper.code.main.java.utils.Messanger;
 import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +22,7 @@ public final class Timer extends Counter {
 
     final TimerColor color = getClass().getDeclaredAnnotation(TimerColor.class);
 
-    public Timer(Plugin plugin, long delay, long period) {
+    public Timer(SpigotPlugin plugin, long delay, long period) {
         super(plugin, delay, period);
         Validate.notNull(color, "Timer must have Color Annotation!");
 

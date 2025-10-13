@@ -1,8 +1,8 @@
 package de.xcuzimsmart.pluginhelper.code.main.java.bundle;
 
+import de.xcuzimsmart.pluginhelper.code.main.java.plugin.SpigotPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.plugin.Plugin;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
@@ -12,13 +12,13 @@ public abstract class Bundle<T> {
 
     public final Map<String, String> BY_NAME = new HashMap<>();
 
-    protected final Plugin plugin;
+    protected final SpigotPlugin plugin;
     // this map holds all added objects
     protected final Map<String, T> actives = new HashMap<>();
 
     protected final String name = getClass().getSimpleName();
 
-    public Bundle(Plugin plugin) {
+    public Bundle(SpigotPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -76,7 +76,7 @@ public abstract class Bundle<T> {
         return (!actives.isEmpty()) && actives.containsKey(k);
     }
 
-    public Plugin getPlugin() {
+    public SpigotPlugin getPlugin() {
         return plugin;
     }
 
