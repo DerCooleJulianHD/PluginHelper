@@ -4,6 +4,7 @@ import de.xcuzimsmart.pluginhelper.code.main.java.plugin.SpigotPlugin;
 import de.xcuzimsmart.pluginhelper.code.main.java.utils.MessageBuilder;
 import de.xcuzimsmart.pluginhelper.code.main.java.utils.Messanger;
 import org.apache.commons.lang.Validate;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -30,7 +31,13 @@ public abstract class PluginCommand implements CommandExecutor, TabCompleter {
 
     @Override // [from: CommandExecutor]
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        return tryToExecuteCommand(sender, args);
+        try {
+            return tryToExecuteCommand(sender, args);
+        } catch (Exception e) {
+            Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "couldn't execute command: '" + info.name() + "'.");
+        }
+
+        return false;
     }
 
     @Override
