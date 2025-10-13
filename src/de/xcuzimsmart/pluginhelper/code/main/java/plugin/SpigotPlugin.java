@@ -7,8 +7,6 @@ import de.xcuzimsmart.pluginhelper.code.main.java.scoreboard.Scoreboard;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.io.File;
-
 public interface SpigotPlugin extends Prefixable {
 
     Scoreboard getScoreboard();
@@ -34,8 +32,6 @@ public interface SpigotPlugin extends Prefixable {
     PluginConfigFile getConfiguration();
 
     String getPluginName();
-
-    void createDataFolder(File file);
 
     Plugin getPlugin();
 

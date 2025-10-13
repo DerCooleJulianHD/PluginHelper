@@ -30,9 +30,10 @@ public abstract class MCSpigotPlugin extends JavaPlugin implements SpigotPlugin 
     @Override
     public void onLoad() {
         plugin = this;
-        this.createDataFolder(this.getDataFolder());
-        this.config = new PluginConfigFile(this);
 
+        if (!getDataFolder().exists()) this.getDataFolder().mkdirs();
+
+        this.config = new PluginConfigFile(this);
         this.onPluginLoad();
     }
 
@@ -142,11 +143,6 @@ public abstract class MCSpigotPlugin extends JavaPlugin implements SpigotPlugin 
     @Override
     public String getPluginName() {
         return getDescription().getFullName();
-    }
-
-    @Override
-    public void createDataFolder(File file) {
-        if (file != null && !file.exists()) if (file.isDirectory()) file.mkdirs();
     }
 
     @Override

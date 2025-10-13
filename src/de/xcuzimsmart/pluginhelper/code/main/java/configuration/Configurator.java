@@ -1,10 +1,9 @@
 package de.xcuzimsmart.pluginhelper.code.main.java.configuration;
 
+import de.xcuzimsmart.pluginhelper.code.main.java.Main;
 import de.xcuzimsmart.pluginhelper.code.main.java.plugin.SpigotPlugin;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public abstract class Configurator implements Config {
@@ -28,14 +27,6 @@ public abstract class Configurator implements Config {
     }
 
     @Override
-    public void createFiles() {
-        plugin.createDataFolder(dir);
-
-        if (!file.exists()) {
-            saveDefaultConfig();
-        }
-    }
-
     public boolean hasEnding(String fileName, String ending) {
         if (fileName == null) return false;
         return fileName.endsWith(ending);
@@ -51,10 +42,7 @@ public abstract class Configurator implements Config {
         this.loaded = loaded;
     }
 
-    void saveDefaultConfig() {
-        plugin.getPlugin().saveResource(file.getName(), true);
-    }
-
+    @Override
     public boolean exists() {
         return dir != null && dir.exists() && file.exists();
     }

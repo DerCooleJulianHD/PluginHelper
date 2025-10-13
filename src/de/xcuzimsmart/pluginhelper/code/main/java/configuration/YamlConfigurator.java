@@ -235,9 +235,9 @@ public class YamlConfigurator extends Configurator /* cannot be final, because o
         if (!isYamlFile()) throw new RuntimeException("file must be corect type.");
 
         try {
-            if (!exists()) createFiles();
-
             if (config == null) this.config = new YamlConfiguration();
+
+            if (!exists()) save();
 
             config.load(file);
             this.setLoaded(true);

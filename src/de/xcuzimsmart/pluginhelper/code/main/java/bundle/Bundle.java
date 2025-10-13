@@ -30,8 +30,6 @@ public abstract class Bundle<T> {
         actives.put(k, o);
 
         onRegisterObject(o);
-        Bukkit.getConsoleSender().sendMessage(this.getName() + ChatColor.GREEN + " Registered " +
-                ChatColor.AQUA + name + "(" + o.getClass().getSimpleName() + ") " + ChatColor.GRAY + " on key: " + k);
     }
 
     public abstract void onRegisterObject(T object);
@@ -48,8 +46,6 @@ public abstract class Bundle<T> {
         if (name != null) BY_NAME.remove(name);
 
         onUnregisterObject(o);
-        Bukkit.getConsoleSender().sendMessage(this.getName() + ChatColor.RED + " Unregistered " +
-                ChatColor.AQUA + name + "(" + o.getClass().getSimpleName() + ") " + ChatColor.GRAY + " on key: " + k);
     }
 
     public abstract void onUnregisterObject(T object);

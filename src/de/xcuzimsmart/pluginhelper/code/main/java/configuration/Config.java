@@ -7,11 +7,13 @@ import java.io.File;
 
 public interface Config extends Loadable {
 
-    void createFiles();
-
     File getDir();
 
     File getFile();
 
     SpigotPlugin plugin();
+
+    boolean hasEnding(String fileName, String ending);
+
+    boolean exists();
 }

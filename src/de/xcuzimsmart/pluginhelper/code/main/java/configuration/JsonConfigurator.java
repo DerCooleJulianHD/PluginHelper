@@ -69,9 +69,12 @@ public class JsonConfigurator extends Configurator {  // cannot be final, becaus
         if (!isJsonFile()) throw new RuntimeException("file must be corect type.");
 
         try {
-            if (!exists()) createFiles();
+            if (!exists()) {
+                file.createNewFile();
+            }
+
             this.setLoaded(true);
-        } catch (Exception e) {
+        } catch (IOException e) {
             logger.log(Level.SEVERE, "Unable to load: " + file.getName(), e);
         }
     }
