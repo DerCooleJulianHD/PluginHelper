@@ -32,11 +32,7 @@ public abstract class Configurator implements Config {
         plugin.createDataFolder(dir);
 
         if (!file.exists()) {
-            try {
-                file.createNewFile();
-            } catch (IOException e) {
-                logger.log(Level.SEVERE, e.getLocalizedMessage(), e);
-            }
+            saveDefaultConfig();
         }
     }
 
