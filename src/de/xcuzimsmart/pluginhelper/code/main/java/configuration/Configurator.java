@@ -1,6 +1,5 @@
 package de.xcuzimsmart.pluginhelper.code.main.java.configuration;
 
-import de.xcuzimsmart.pluginhelper.code.main.java.Main;
 import de.xcuzimsmart.pluginhelper.code.main.java.plugin.SpigotPlugin;
 
 import java.io.File;

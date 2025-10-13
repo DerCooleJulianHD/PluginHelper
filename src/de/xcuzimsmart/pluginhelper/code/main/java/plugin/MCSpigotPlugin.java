@@ -121,7 +121,7 @@ public abstract class MCSpigotPlugin extends JavaPlugin implements SpigotPlugin 
         this.scoreboard = scoreboard;
     }
 
-    public static MCSpigotPlugin getInstance() {
+    public static SpigotPlugin getInstance() {
         return plugin;
     }
 
