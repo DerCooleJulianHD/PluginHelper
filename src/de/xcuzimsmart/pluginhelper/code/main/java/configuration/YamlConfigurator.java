@@ -5,6 +5,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
@@ -15,10 +16,9 @@ import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 
-@FilenameEnding(endings = {".yml", ".yaml"})
 public class YamlConfigurator extends Configurator /* cannot be final, because of abstract usages. */ {
 
-    final FileConfiguration config = YamlConfiguration.loadConfiguration(file);
+    FileConfiguration config = new YamlConfiguration();
 
     public YamlConfigurator(MCSpigotPlugin plugin, File dir, String fileName) {
         super(plugin, dir, fileName);
@@ -42,7 +42,8 @@ public class YamlConfigurator extends Configurator /* cannot be final, because o
 
     // writes an object to a Yaml-Configuration.
     public void write(String k, Object v) {
-        createFiles();
+        if (!isYamlFile()) return;
+        if (!isLoaded()) return;
 
         try {
             config.set(k, v);
@@ -124,7 +125,10 @@ public class YamlConfigurator extends Configurator /* cannot be final, because o
 
     // returns an Object from YamlConfiguration
     public Object read(String k) {
+        if (!isLoaded()) return null;
         if (!file.exists()) return null;
+
+        if (!isYamlFile()) return null;
 
         try {
             return config.get(k);
@@ -219,6 +223,26 @@ public class YamlConfigurator extends Configurator /* cannot be final, because o
             config.save(file);
         } catch (IOException e) {
             logger.log(Level.SEVERE, "Unable to save: " + file.getName(), e);
+        }
+    }
+
+    public boolean isYamlFile() {
+        return hasEnding(file.getName(), ".yml") || hasEnding(file.getName(), ".yaml");
+    }
+
+    @Override
+    public void load() {
+        if (!isYamlFile()) throw new RuntimeException("file must be corect type.");
+
+        try {
+            if (!exists()) createFiles();
+
+            if (config == null) this.config = new YamlConfiguration();
+
+            config.load(file);
+            this.setLoaded(true);
+        } catch (InvalidConfigurationException | IOException e) {
+            logger.log(Level.SEVERE, "Unable to load: " + file.getName(), e);
         }
     }
 }

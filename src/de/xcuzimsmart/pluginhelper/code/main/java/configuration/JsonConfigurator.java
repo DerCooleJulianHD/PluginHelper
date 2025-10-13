@@ -12,7 +12,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.logging.Level;
 
-@FilenameEnding(endings = {".json"})
 @JsonProperties() /* <-- by default */
 public class JsonConfigurator extends Configurator {  // cannot be final, because of abstract usages.
 
@@ -33,7 +32,8 @@ public class JsonConfigurator extends Configurator {  // cannot be final, becaus
 
     // writes an object to a Json-Configuration.
     public void write(Object o) {
-        createFiles();
+        if (!isLoaded()) return;
+        if (!isJsonFile()) return;
 
         try {
             final FileWriter writer = new FileWriter(file);
@@ -47,7 +47,10 @@ public class JsonConfigurator extends Configurator {  // cannot be final, becaus
 
     @Nullable
     public Object read(Class<?> classOfT) {
+        if (!isLoaded()) return null;
         if (!file.exists()) return null;
+
+        if (!isJsonFile()) return null;
 
         try {
            final FileReader reader = new FileReader(file);
@@ -59,6 +62,22 @@ public class JsonConfigurator extends Configurator {  // cannot be final, becaus
         }
 
         return null;
+    }
+
+    @Override
+    public void load() {
+        if (!isJsonFile()) throw new RuntimeException("file must be corect type.");
+
+        try {
+            if (!exists()) createFiles();
+            this.setLoaded(true);
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, "Unable to load: " + file.getName(), e);
+        }
+    }
+
+    public boolean isJsonFile() {
+        return hasEnding(file.getName(), ".json");
     }
 
     public static final class JsonConfigurationBuilder {

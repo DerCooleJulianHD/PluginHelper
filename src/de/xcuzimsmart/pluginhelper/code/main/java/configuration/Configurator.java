@@ -1,7 +1,6 @@
 package de.xcuzimsmart.pluginhelper.code.main.java.configuration;
 
 import de.xcuzimsmart.pluginhelper.code.main.java.plugin.MCSpigotPlugin;
-import de.xcuzimsmart.pluginhelper.code.main.java.utils.Defaultable;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,12 +17,12 @@ public abstract class Configurator implements Config {
 
     protected final File dir, file;
 
-    protected final FilenameEnding endings = getClass().getDeclaredAnnotation(FilenameEnding.class);
+    boolean loaded = false;
 
     public Configurator(MCSpigotPlugin plugin, File dir, String fileName) {
         this.plugin = plugin;
         this.dir = dir;
-        this.file = new File(dir, correctFileName(fileName, endings != null ? endings.endings() : null));
+        this.file = new File(dir, fileName);
     }
 
     public Configurator(MCSpigotPlugin plugin, String dir, String fileName) {
@@ -35,12 +34,6 @@ public abstract class Configurator implements Config {
         plugin.createDataFolder(dir);
 
         if (!file.exists()) {
-
-            if (this instanceof Defaultable) {
-                this.saveDefaultConfig();
-                return;
-            }
-
             try {
                 file.createNewFile();
             } catch (IOException e) {
@@ -49,22 +42,27 @@ public abstract class Configurator implements Config {
         }
     }
 
+    public boolean hasEnding(String fileName, String ending) {
+        if (fileName == null) return false;
+        return fileName.endsWith(ending);
+    }
+
+    @Override
+    public boolean isLoaded() {
+        return loaded;
+    }
+
+    @Override
+    public void setLoaded(boolean loaded) {
+        this.loaded = loaded;
+    }
+
     void saveDefaultConfig() {
         plugin.saveResource(file.getName(), true);
     }
 
     public boolean exists() {
         return dir != null && dir.exists() && file.exists();
-    }
-
-    private String correctFileName(String fileName, String... ending) {
-        if (ending == null) return fileName;
-        if (ending.length < 2) return fileName.endsWith(ending[0]) ? fileName : fileName + ending[0];
-
-        List<String> list = Arrays.stream(ending).toList();
-
-        for (final String s : list) if (fileName.endsWith(s)) return fileName;
-        return fileName + ending[0];
     }
 
     @Override
