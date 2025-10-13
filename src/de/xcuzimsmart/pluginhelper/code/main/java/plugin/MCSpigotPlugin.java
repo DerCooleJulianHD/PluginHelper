@@ -29,23 +29,37 @@ public abstract class MCSpigotPlugin extends JavaPlugin implements Prefixable {
     protected ListenerBundle listeners;
     protected CommandManager commandManager;
 
-    public MCSpigotPlugin() {
+    @Override
+    public void onLoad() {
         plugin = this;
         this.createDataFolder(this.getDataFolder());
         this.config = new PluginConfigFile(this);
 
+        this.onPluginLoad();
+    }
+
+    @Override
+    public void onEnable() {
         this.listeners = new ListenerBundle(this);
         this.commandManager = new CommandManager(this);
 
         this.scoreboard = new GlobalScoreboard();
 
-        sendEnableMessage();
+        this.onPluginEnable();
+        this.sendEnableMessage();
     }
 
     @Override
     public void onDisable() {
-        sendDisableMessage();
+        this.onPluginDisable();
+        this.sendDisableMessage();
     }
+
+    public void onPluginLoad() {}
+
+    public void onPluginDisable() {}
+
+    public abstract void onPluginEnable();
 
     public static Timer createTimer(Plugin plugin) {
         return new Timer(plugin, 0, 20);
@@ -53,7 +67,7 @@ public abstract class MCSpigotPlugin extends JavaPlugin implements Prefixable {
 
     @Override
     public String getPrefix() {
-        if (this.prefix != null && !this.prefix.isEmpty()) return this.prefix;
+        if (this.prefix != null) return this.prefix;
        
         final String read = getPrefixFromConfig();
        
