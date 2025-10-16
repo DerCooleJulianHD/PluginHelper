@@ -1,10 +1,10 @@
 package de.xcuzimsmart.pluginhelper.code.main.java.command;
 
+import de.xcuzimsmart.pluginhelper.code.main.java.exceptions.CommandExecuteException;
 import de.xcuzimsmart.pluginhelper.code.main.java.plugin.SpigotPlugin;
 import de.xcuzimsmart.pluginhelper.code.main.java.utils.MessageBuilder;
 import de.xcuzimsmart.pluginhelper.code.main.java.utils.Messanger;
 import org.apache.commons.lang.Validate;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -34,10 +34,8 @@ public abstract class PluginCommand implements CommandExecutor, TabCompleter {
         try {
             return tryToExecuteCommand(sender, args);
         } catch (Exception e) {
-            Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "couldn't execute command: '" + info.name() + "'.");
+            throw new RuntimeException(e);
         }
-
-        return false;
     }
 
     @Override
@@ -45,24 +43,28 @@ public abstract class PluginCommand implements CommandExecutor, TabCompleter {
         return this.onTabComplete(commandSender, strings);
     }
 
-    boolean tryToExecuteCommand(CommandSender sender, String[] args) {
-        if (this.requiresPermission() && (!sender.hasPermission(info.permission()))) {
-            Messanger.broadcast(plugin, sender, MessageBuilder.COMMAND_NO_PERMISSION);
-            return false;
-        }
-
-        if (info.requiresPlayer()) {
-            if (!isPlayer(sender)) {
-                Messanger.broadcast(plugin, sender, MessageBuilder.COMMAND_NO_PLAYER_INSTANCE);
+    boolean tryToExecuteCommand(CommandSender sender, String[] args) throws CommandExecuteException {
+        try {
+            if (this.requiresPermission() && (!sender.hasPermission(info.permission()))) {
+                Messanger.broadcast(plugin, sender, MessageBuilder.COMMAND_NO_PERMISSION);
                 return false;
             }
 
-            this.execute((Player) sender, args);
-            return true;
-        }
+            if (info.requiresPlayer()) {
+                if (!isPlayer(sender)) {
+                    Messanger.broadcast(plugin, sender, MessageBuilder.COMMAND_NO_PLAYER_INSTANCE);
+                    return false;
+                }
 
-        this.execute(sender, args);
-        return true;
+                this.execute((Player) sender, args);
+                return true;
+            }
+
+            this.execute(sender, args);
+            return true;
+        } catch (Exception e) {
+            throw new CommandExecuteException("couldn't execute command: '" + info.name() + "'.", e, this);
+        }
     }
 
     public void execute(CommandSender sender, String[] strings) {}

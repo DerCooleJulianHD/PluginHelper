@@ -20,12 +20,8 @@ public class YamlConfigurator extends Configurator {
 
     FileConfiguration config = new YamlConfiguration();
 
-    public YamlConfigurator(SpigotPlugin plugin, File dir, String fileName) {
-        super(plugin, dir, fileName);
-    }
-
-    public YamlConfigurator(SpigotPlugin plugin, String dir, String fileName) {
-        this(plugin, new File(dir), fileName);
+    public YamlConfigurator(SpigotPlugin plugin, File dir, String fileName, boolean loadOnInit) {
+        super(plugin, dir, fileName, loadOnInit);
     }
 
     @Override
@@ -273,5 +269,9 @@ public class YamlConfigurator extends Configurator {
     // returns true when filr does end with '.yml' or '.yaml'
     public boolean isYamlFile() {
         return hasEnding(file.getName(), ".yml") || hasEnding(file.getName(), ".yaml");
+    }
+
+    public FileConfiguration getConfig() {
+        return config;
     }
 }

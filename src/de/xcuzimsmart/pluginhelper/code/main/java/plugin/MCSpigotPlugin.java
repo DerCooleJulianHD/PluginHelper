@@ -14,7 +14,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public abstract class MCSpigotPlugin extends JavaPlugin implements SpigotPlugin {
 
-    protected String prefix = null; // by default
+    protected String prefix = null; /* <-- by default */
 
     protected Scoreboard scoreboard;
 
@@ -25,27 +25,58 @@ public abstract class MCSpigotPlugin extends JavaPlugin implements SpigotPlugin 
 
     @Override
     public void onLoad() {
-        if (!getDataFolder().exists()) this.getDataFolder().mkdirs();
+        // creating the Plugin folder first.
+        if (!getDataFolder().exists()) {
+            this.getDataFolder().mkdirs();
+        }
 
-        this.config = new PluginConfigFile(this);
-        getPlugin().onLoad();
+        // creating the config file and load it.
+        this.config = new PluginConfigFile(this, true);
+        getPlugin().onLoad(); // invoke the 'onLoad()' on sub class.
     }
 
     @Override
     public void onEnable() {
+        // creating both bundles.
         this.listeners = new ListenerBundle(this);
-        this.commandManager = new CommandManager(this);
+        this.commandManager = new CommandManager(this); // ...CommandManager is also a Bundle.
 
-        this.scoreboard = new GlobalScoreboard();
+        this.scoreboard = new GlobalScoreboard(); // creating a default scoreboard.
 
-        getPlugin().onEnable();
-        this.sendEnableMessage();
+        getPlugin().onEnable(); // invoke the 'onEnable()' on sub class.
+        this.sendEnableMessage(); // printing out to console, that the plugin has been enabled.
     }
 
     @Override
     public void onDisable() {
-        getPlugin().onDisable();
-        this.sendDisableMessage();
+        getPlugin().onDisable(); // invoke the 'onDisable()' on sub class.
+        this.sendDisableMessage(); // printing out to console, that the plugin has been disabled.
+    }
+
+    @Override
+    public String getPrefix() {
+        if (this.prefix != null) return this.prefix;
+       
+        final String read = getPrefixFromConfig();
+       
+        if (read != null && (!read.isEmpty())) return read;
+        return null;
+    }
+
+    @Override
+    public void sendEnableMessage() {
+        final ConsoleCommandSender console = Bukkit.getConsoleSender();
+        final String message = MessageBuilder.build(this, ChatColor.GREEN + getPluginName() + " has been successfully enabled.");
+
+        console.sendMessage(message);
+    }
+
+    @Override
+    public void sendDisableMessage() {
+        final ConsoleCommandSender console = Bukkit.getConsoleSender();
+        final String message = MessageBuilder.build(this, ChatColor.RED + getPluginName() + " has been successfully disabled.");
+
+        console.sendMessage(message);
     }
 
     @Override
@@ -64,24 +95,8 @@ public abstract class MCSpigotPlugin extends JavaPlugin implements SpigotPlugin 
     }
 
     @Override
-    public String getPrefix() {
-        if (this.prefix != null) return this.prefix;
-       
-        final String read = getPrefixFromConfig();
-       
-        if (!read.isEmpty()) return read;
-        return null;
-    }
-
-    @Override
     public String getPrefixFromConfig() {
-        if (config == null) return "";
-        if (!config.isSet("prefix")) return "";
-
-        final String read =  config.readString("prefix");
-       
-        if (read != null) return read;
-        return "";
+        return config.getPrefix();
     }
 
     @Override
@@ -91,7 +106,7 @@ public abstract class MCSpigotPlugin extends JavaPlugin implements SpigotPlugin 
 
     @Override
     public void setConfigPrefix(String prefix) {
-        config.writeString("prefix", prefix);
+        config.setPrefix(prefix);
     }
 
     @Override
@@ -127,21 +142,5 @@ public abstract class MCSpigotPlugin extends JavaPlugin implements SpigotPlugin 
     @Override
     public String getPluginName() {
         return getDescription().getFullName();
-    }
-
-    @Override
-    public void sendEnableMessage() {
-        final ConsoleCommandSender console = Bukkit.getConsoleSender();
-        final String message = MessageBuilder.build(this, ChatColor.GREEN + getPluginName() + " has been successfully enabled.");
-
-        console.sendMessage(message);
-    }
-
-    @Override
-    public void sendDisableMessage() {
-        final ConsoleCommandSender console = Bukkit.getConsoleSender();
-        final String message = MessageBuilder.build(this, ChatColor.RED + getPluginName() + " has been successfully disabled.");
-
-        console.sendMessage(message);
     }
 }

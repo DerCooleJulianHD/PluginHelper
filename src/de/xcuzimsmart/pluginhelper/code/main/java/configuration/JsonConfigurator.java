@@ -21,15 +21,11 @@ public class JsonConfigurator extends Configurator {  // cannot be final, becaus
 
     final JsonProperties properties = getClass().getDeclaredAnnotation(JsonProperties.class);
 
-    public JsonConfigurator(SpigotPlugin plugin, File dir, String fileName) {
-        super(plugin, dir, fileName);
+    public JsonConfigurator(SpigotPlugin plugin, File dir, String fileName, boolean loadOnInit) {
+        super(plugin, dir, fileName, loadOnInit);
         Validate.notNull(properties, getClass().getName() + " misses JsonProperties Annotation!");
 
         this.gson = JsonConfigurationBuilder.build(properties);
-    }
-
-    public JsonConfigurator(SpigotPlugin plugin, String dir, String fileName) {
-        this(plugin, new File(dir), fileName);
     }
 
     // writes an object to a Json-Configuration.

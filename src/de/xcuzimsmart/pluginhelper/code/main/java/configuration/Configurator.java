@@ -15,14 +15,15 @@ public abstract class Configurator implements Config {
 
     boolean loaded = false;
 
-    public Configurator(SpigotPlugin plugin, File dir, String fileName) {
+    public Configurator(SpigotPlugin plugin, File dir, String fileName, boolean loadOnInit) {
         this.plugin = plugin;
         this.dir = dir;
         this.file = new File(dir, fileName);
+        if (loadOnInit) load();
     }
 
-    public Configurator(SpigotPlugin plugin, String dir, String fileName) {
-        this(plugin, new File(dir), fileName);
+    public Configurator(SpigotPlugin plugin, String dir, String fileName, boolean loadOnInit) {
+        this(plugin, new File(dir), fileName, loadOnInit);
     }
 
     @Override
