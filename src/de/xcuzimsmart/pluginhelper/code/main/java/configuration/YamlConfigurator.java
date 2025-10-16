@@ -1,6 +1,7 @@
 package de.xcuzimsmart.pluginhelper.code.main.java.configuration;
 
 import de.xcuzimsmart.pluginhelper.code.main.java.plugin.SpigotPlugin;
+import de.xcuzimsmart.pluginhelper.code.main.java.utils.AbstractUsage;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.Location;
@@ -16,7 +17,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 
-public class YamlConfigurator extends Configurator /* cannot be final, because of abstract usages. */ {
+@AbstractUsage
+public class YamlConfigurator extends Configurator {
 
     FileConfiguration config = new YamlConfiguration();
 
