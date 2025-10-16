@@ -1,10 +1,8 @@
 package de.xcuzimsmart.pluginhelper.code.main.java.arraysort.sorter;
 
-import de.xcuzimsmart.pluginhelper.code.main.java.arraysort.ArraySorter;
+import de.xcuzimsmart.pluginhelper.code.main.java.arraysort.ArraySort;
 
-public final class QuickSort implements ArraySorter {
-
-    int[] sorted = null;
+public final class QuickSort extends ArraySort {
 
     @Override
     public void sort(int[] input) {
@@ -16,11 +14,6 @@ public final class QuickSort implements ArraySorter {
         final int lowIndex = 0;
 
         final int pivot = input[highIndex];
-    }
-
-    @Override
-    public int[] getSorted() {
-        return sorted;
     }
 
     void swap() {
