@@ -1,6 +1,6 @@
 package de.xcuzimsmart.pluginhelper.code.main.java.arraysort;
 
-public interface ArraySorter {
+public interface SortAlgorithm {
 
     void sort(int[] input);
 

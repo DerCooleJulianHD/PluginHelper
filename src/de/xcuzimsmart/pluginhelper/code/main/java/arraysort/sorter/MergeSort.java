@@ -6,10 +6,6 @@ public final class MergeSort extends ArraySort {
 
     @Override
     public void sort(int[] input) {
-        mergesort(input);
-    }
-
-    private void mergesort(int[] input) {
         final int inputLength = input.length;
 
         if (inputLength < 2) return;
@@ -26,43 +22,11 @@ public final class MergeSort extends ArraySort {
             System.arraycopy(input, midIndex, rightHalf, 0, inputLength - midIndex);
 
         // repeat all for every half
-        mergesort(leftHalf);
-        mergesort(rightHalf);
+        sort(leftHalf);
+        sort(rightHalf);
 
         // merge all half's into one's sorted
         merge(input, leftHalf, rightHalf);
-    }
-
-    private void merge(int[] input, int[] leftHalf, int[] rightHalf) {
-        final int leftHalfSize = leftHalf.length;
-        final int rightHalfSize = rightHalf.length;
-
-        int leftIndex = 0, rightIndex = 0, mergedIndex = 0;
-
-        while (leftIndex < leftHalfSize && rightIndex < rightHalfSize) {
-            if (leftHalf[leftIndex] <= rightHalf[rightIndex]) {
-                input[mergedIndex] = leftHalf[leftIndex];
-                leftIndex++;
-            } else {
-                input[mergedIndex] = rightHalf[rightIndex];
-                rightIndex++;
-            }
-
-            mergedIndex++;
-        }
-
-        while (leftIndex < leftHalfSize) {
-            input[mergedIndex] = leftHalf[leftIndex];
-            leftIndex++;
-            mergedIndex++;
-        }
-
-        while (rightIndex < rightHalfSize) {
-            input[mergedIndex] = rightHalf[rightIndex];
-            rightIndex++;
-            mergedIndex++;
-        }
-
         this.setSorted(input);
     }
 }
