@@ -11,13 +11,7 @@ public interface SpigotPlugin extends Prefixable {
 
     Scoreboard getScoreboard();
 
-    void onPluginLoad();
-
-    void onPluginEnable();
-
     void sendEnableMessage();
-
-    void onPluginDisable();
 
     void sendDisableMessage();
 

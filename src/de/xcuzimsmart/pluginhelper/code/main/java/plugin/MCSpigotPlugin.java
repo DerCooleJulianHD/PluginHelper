@@ -28,7 +28,7 @@ public abstract class MCSpigotPlugin extends JavaPlugin implements SpigotPlugin 
         if (!getDataFolder().exists()) this.getDataFolder().mkdirs();
 
         this.config = new PluginConfigFile(this);
-        this.onPluginLoad();
+        getPlugin().onLoad();
     }
 
     @Override
@@ -38,21 +38,15 @@ public abstract class MCSpigotPlugin extends JavaPlugin implements SpigotPlugin 
 
         this.scoreboard = new GlobalScoreboard();
 
-        this.onPluginEnable();
+        getPlugin().onEnable();
         this.sendEnableMessage();
     }
 
     @Override
     public void onDisable() {
-        this.onPluginDisable();
+        getPlugin().onDisable();
         this.sendDisableMessage();
     }
-
-    @Override
-    public void onPluginLoad() {}
-
-    @Override
-    public void onPluginDisable() {}
 
     @Override
     public Timer createTimer() {
@@ -61,7 +55,7 @@ public abstract class MCSpigotPlugin extends JavaPlugin implements SpigotPlugin 
 
     @Override
     public Plugin getPlugin() {
-        return (Plugin) getAsJavaPlugin();
+        return getAsJavaPlugin();
     }
 
     @Override

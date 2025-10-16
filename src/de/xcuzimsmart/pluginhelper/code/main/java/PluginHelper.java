@@ -7,14 +7,14 @@ public class PluginHelper extends MCSpigotPlugin {
     static PluginHelper instance;
 
     @Override
-    public void onPluginEnable() {
+    public void onEnable() {
         instance = this;
 
         this.setPrefix(getPrefix());
         if (config.isEmpty()) this.setConfigPrefix(prefix);
     }
 
-    public static PluginHelper getPluginHelper() {
+    public static PluginHelper get() {
         return instance;
     }
 }
