@@ -2,9 +2,7 @@ package de.xcuzimsmart.pluginhelper.code.main.java.configuration;
 
 import de.xcuzimsmart.pluginhelper.code.main.java.plugin.SpigotPlugin;
 import de.xcuzimsmart.pluginhelper.code.main.java.utils.AbstractUsage;
-import org.bukkit.ChatColor;
-import org.bukkit.Color;
-import org.bukkit.Location;
+import org.bukkit.*;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -30,22 +28,26 @@ public class YamlConfigurator extends Configurator {
         this(plugin, new File(dir), fileName);
     }
 
-    public boolean isSet(String k) {
-        return config.isSet(k);
-    }
+    @Override
+    public void load() {
+        if (!isYamlFile()) throw new RuntimeException("file must be corect type.");
 
-    public ConfigurationSection getConfigurationSection(String name) {
-        return config.getConfigurationSection(name);
-    }
+        try {
+            if (config == null) this.config = new YamlConfiguration();
 
-    public void createSection(String name) {
-        config.createSection(name);
+            if (!exists()) save();
+
+            config.load(file);
+            setLoaded(true);
+        } catch (InvalidConfigurationException | IOException e) {
+            logger.log(Level.SEVERE, "Unable to load: " + file.getName(), e);
+        }
     }
 
     // writes an object to a Yaml-Configuration.
     public void write(String k, Object v) {
         if (!isYamlFile()) return;
-        if (!isLoaded()) return;
+        if (!isLoaded()) load();
 
         try {
             config.set(k, v);
@@ -53,6 +55,54 @@ public class YamlConfigurator extends Configurator {
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Unable to write object to: " + file.getName(), e);
         }
+    }
+
+    // returns an Object from YamlConfiguration
+    public Object read(String k) {
+        if (!file.exists()) return null;
+        if (!isYamlFile()) return null;
+
+        if (!isLoaded()) load();
+
+        try {
+            return config.get(k);
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, "Unable to read object from: " + file.getName(), e);
+        }
+
+        return null;
+    }
+
+    // saves all the data, this is called recorsivly for you when calling the 'write()' method.
+    public void save() {
+        try {
+            config.save(file);
+        } catch (IOException e) {
+            logger.log(Level.SEVERE, "Unable to save: " + file.getName(), e);
+        }
+    }
+
+    // reads a keyed location from section with sub paths.
+    public Location readLocation(String k) {
+        if (config.get(k) instanceof Location) return readSerializedLocation(k);
+
+        final String worldName = readString(k + ".world");
+        World world = Bukkit.getWorld(worldName);
+
+        if (world == null) world = Bukkit.createWorld(WorldCreator.name(worldName));
+
+        final double x = readDouble(k + ".x");
+        final double y = readDouble(k + ".y");
+        final double z = readDouble(k + ".z");
+
+        final Location location = new Location(world, x, y, z);
+
+        if (isSet(k + ".yaw") && isSet(k + ".pitch")) {
+            location.setYaw(readFloat(k + ".yaw"));
+            location.setPitch(readFloat(k + ".pitch"));
+        }
+
+        return location;
     }
 
     // writes a String to YamlConfiguration
@@ -125,22 +175,6 @@ public class YamlConfigurator extends Configurator {
         this.write(k, v);
     }
 
-    // returns an Object from YamlConfiguration
-    public Object read(String k) {
-        if (!isLoaded()) return null;
-        if (!file.exists()) return null;
-
-        if (!isYamlFile()) return null;
-
-        try {
-            return config.get(k);
-        } catch (Exception e) {
-            logger.log(Level.SEVERE, "Unable to read object from: " + file.getName(), e);
-        }
-
-        return null;
-    }
-
     // returns a String
     public String readString(String k) {
         return (String) read(k);
@@ -186,11 +220,6 @@ public class YamlConfigurator extends Configurator {
         return (List<?>) read(k);
     }
 
-    // returns all Keys
-    public Set<String> keySet(boolean deep) {
-        return config.getKeys(deep);
-    }
-
     // returns an ItemStack
     public ItemStack readItem(String k) {
         return (ItemStack) read(k);
@@ -211,40 +240,38 @@ public class YamlConfigurator extends Configurator {
         return (char) read(k);
     }
 
-    // returns a Location
-    public Location readLocation(String k) {
+    // returns a Serialized Location from bukkit.
+    public Location readSerializedLocation(String k) {
         return (Location) read(k);
     }
 
+    // returns all Keys
+    public Set<String> keySet(boolean deep) {
+        return config.getKeys(deep);
+    }
+
+    // returns true when config contains path.
+    public boolean isSet(String k) {
+        return config.isSet(k);
+    }
+
+    // returns true if the config file is empty, which means config doesn't contain any data.
     public boolean isEmpty() {
         return keySet(false) != null && keySet(false).isEmpty();
     }
 
-    public void save() {
-        try {
-            config.save(file);
-        } catch (IOException e) {
-            logger.log(Level.SEVERE, "Unable to save: " + file.getName(), e);
-        }
+    // returns a section
+    public ConfigurationSection getConfigurationSection(String name) {
+        return config.getConfigurationSection(name);
     }
 
+    // creates a section
+    public void createSection(String name) {
+        config.createSection(name);
+    }
+
+    // returns true when filr does end with '.yml' or '.yaml'
     public boolean isYamlFile() {
         return hasEnding(file.getName(), ".yml") || hasEnding(file.getName(), ".yaml");
-    }
-
-    @Override
-    public void load() {
-        if (!isYamlFile()) throw new RuntimeException("file must be corect type.");
-
-        try {
-            if (config == null) this.config = new YamlConfiguration();
-
-            if (!exists()) save();
-
-            config.load(file);
-            this.setLoaded(true);
-        } catch (InvalidConfigurationException | IOException e) {
-            logger.log(Level.SEVERE, "Unable to load: " + file.getName(), e);
-        }
     }
 }

@@ -78,7 +78,7 @@ public abstract class ScoreboardBuilder implements Scoreboard {
     }
 
     @Override
-    public org.bukkit.scoreboard.Scoreboard getScoreboard() {
+    public org.bukkit.scoreboard.Scoreboard getBukkitScoreboard() {
         return scoreboard;
     }
 
@@ -118,7 +118,7 @@ public abstract class ScoreboardBuilder implements Scoreboard {
     }
 
     @Override
-    public void setScoreboard(org.bukkit.scoreboard.Scoreboard scoreboard) {
+    public void setBukkitScoreboard(org.bukkit.scoreboard.Scoreboard scoreboard) {
         this.scoreboard = scoreboard;
     }
 

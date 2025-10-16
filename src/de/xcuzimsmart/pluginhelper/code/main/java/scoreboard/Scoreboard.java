@@ -24,9 +24,9 @@ public interface Scoreboard {
 
     void clear();
 
-    org.bukkit.scoreboard.Scoreboard getScoreboard();
+    org.bukkit.scoreboard.Scoreboard getBukkitScoreboard();
 
-    void setScoreboard(org.bukkit.scoreboard.Scoreboard scoreboard);
+    void setBukkitScoreboard(org.bukkit.scoreboard.Scoreboard scoreboard);
 
     Objective getObjective();
 
