@@ -37,8 +37,6 @@ public final class Score {
 
     public void setPrefix(String prefix) {
         this.prefix = prefix;
-
-        final Team entry = getEntryTeam();
         if (entry == null) return;
 
         if (prefix.length() <= 16) entry.setPrefix(ChatColor.translateAlternateColorCodes('&', prefix));
@@ -46,8 +44,6 @@ public final class Score {
 
     public void setSuffix(String suffix) {
         this.suffix = suffix;
-
-        final Team entry = getEntryTeam();
         if (entry == null) return;
 
         if (suffix.length() <= 16) entry.setSuffix(ChatColor.translateAlternateColorCodes('&', suffix));
