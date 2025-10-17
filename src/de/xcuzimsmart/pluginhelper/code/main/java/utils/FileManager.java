@@ -1,5 +1,7 @@
 package de.xcuzimsmart.pluginhelper.code.main.java.utils;
 
+import org.bukkit.util.FileUtil;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -13,20 +15,7 @@ public final class FileManager {
     static Logger logger = Logger.getLogger(FileManager.class.getName());
 
     public static void copyInnerFiles(File from, File to) {
-        if (!from.exists()) return;
-        try {
-            FileInputStream in = new FileInputStream(from);
-            FileOutputStream out = new FileOutputStream(to);
-            if (!to.exists()) to.mkdirs();
-            byte[] buffer = new byte[1024];
-            int length;
-            while ((length = in.read(buffer)) > 0) out.write(buffer, 0, length);
-            out.flush();
-            in.close();
-            out.close();
-        } catch (Exception e) {
-            logger.log(Level.SEVERE, e.getLocalizedMessage(), e);
-        }
+        FileUtil.copy(from, to);
     }
 
     public static void copyDir(File dir, File to) {
@@ -44,7 +33,7 @@ public final class FileManager {
         if (!file.exists()) return;
 
         if (file.isDirectory()) {
-            File[] childs = file.listFiles();
+            final File[] childs = file.listFiles();
             if (childs == null) return;
             if (hasChilds(file))
                 for (File child : childs) deleteFile(child);
@@ -69,9 +58,7 @@ public final class FileManager {
     }
 
     public static void unzip(File zip, File to) {
-        if (!zip.exists()) return;
-
-        copyInnerFiles(zip, to);
+        if (zip.exists()) copyInnerFiles(zip, to);
     }
 
     public static boolean hasChilds(File dir) {

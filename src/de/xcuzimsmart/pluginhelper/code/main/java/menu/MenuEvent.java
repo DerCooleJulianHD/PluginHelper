@@ -1,15 +1,14 @@
-package de.xcuzimsmart.pluginhelper.code.main.java.menu.event;
+package de.xcuzimsmart.pluginhelper.code.main.java.menu;
 
-import de.xcuzimsmart.pluginhelper.code.main.java.menu.Menu;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.player.PlayerEvent;
 
 public abstract class MenuEvent extends PlayerEvent {
 
-    static final HandlerList handlers = new HandlerList();
+    protected static final HandlerList handlers = new HandlerList();
 
-    final Menu menu;
+    protected final Menu menu;
 
     public MenuEvent(Player p, Menu menu) {
         super(p);
@@ -17,7 +16,7 @@ public abstract class MenuEvent extends PlayerEvent {
     }
 
     @Override
-    public HandlerList getHandlers() {
+    public final HandlerList getHandlers() {
         return handlers;
     }
 
@@ -25,8 +24,7 @@ public abstract class MenuEvent extends PlayerEvent {
         return handlers;
     }
 
-    public Menu getMenu() {
+    public final Menu getMenu() {
         return menu;
     }
-
 }

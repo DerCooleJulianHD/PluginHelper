@@ -9,9 +9,10 @@ import org.bukkit.inventory.ItemFlag;
 import java.util.function.Consumer;
 
 public abstract class Icon extends ItemStackBuilder implements Cloneable {
-    private final Enchantment ENCHANTMENT_TYPE = Enchantment.DURABILITY;
-    protected final Menu menu;
 
+    private final Enchantment ENCHANTMENT_TYPE = Enchantment.DURABILITY;
+
+    protected final Menu menu;
     protected Consumer<Player> action = null;
 
     protected Icon(Menu menu, Material material, int id, int amount, String displayName) {
@@ -30,38 +31,42 @@ public abstract class Icon extends ItemStackBuilder implements Cloneable {
     }
 
     @Override
-    public Icon clone() {
+    public final Icon clone() {
         return (Icon) super.clone();
     }
 
-    public void enchant(boolean visible) {
+    public final void enchant(boolean visible) {
         this.addEnchant(ENCHANTMENT_TYPE, 1);
         if (!visible)
             this.getItemMeta().addItemFlags(ItemFlag.HIDE_ENCHANTS);
     }
 
-    public boolean isEnchanted() {
+    public final boolean isEnchanted() {
         return (getItemMeta().hasEnchants() || getItemMeta().hasEnchant(ENCHANTMENT_TYPE));
     }
 
-    public void setEnchantments() {
+    public final void setEnchantments() {
         this.addEnchant(ENCHANTMENT_TYPE, 1);
     }
 
-    public void removeEnchantments() {
+    public final void removeEnchantments() {
         this.removeEnchant(ENCHANTMENT_TYPE);
     }
 
-    public Menu getMenu() {
+    public final Menu getMenu() {
         return menu;
     }
 
     // defines what happens by clicking on it
-    public void setAction(Consumer<Player> action) {
+    public final void setAction(Consumer<Player> action) {
         this.action = action;
     }
 
-    public Consumer<Player> getAction() {
+    public final Consumer<Player> getAction() {
         return action;
+    }
+
+    public final boolean isMovable() {
+        return this instanceof Moveable;
     }
 }

@@ -37,18 +37,18 @@ public class ItemStackBuilder extends ItemStack {
         return new ItemStackBuilder(material, id, amount);
     }
 
-    public ItemStackBuilder setDisplayName(String displayName) {
+    public final ItemStackBuilder setDisplayName(String displayName) {
         this.displayName = displayName;
         if (meta != null) meta.setDisplayName(displayName);
         return this;
     }
 
-    public ItemStackBuilder setLore(List<String> lore) {
+    public final ItemStackBuilder setLore(List<String> lore) {
         if (meta != null) meta.setLore(lore);
         return this;
     }
 
-    public ItemStackBuilder setLore(String[] lore) {
+    public final ItemStackBuilder setLore(String[] lore) {
         if (meta != null) {
             final List<String> list = Arrays.stream(lore).toList();
             if (list.isEmpty()) return this;
@@ -58,48 +58,49 @@ public class ItemStackBuilder extends ItemStack {
         return this;
     }
 
-    public ItemStackBuilder setUnbreakable(boolean b) {
+    public final ItemStackBuilder setUnbreakable(boolean b) {
         this.unbreakable = b;
         if (meta != null) meta.spigot().setUnbreakable(b);
         return this;
     }
 
-    public void addEnchant(Enchantment enchantment, int lvl) {
+    public final void addEnchant(Enchantment enchantment, int lvl) {
         this.enchantments.put(enchantment, lvl);
     }
 
-    public void removeEnchant(Enchantment enchantment) {
+    public final void removeEnchant(Enchantment enchantment) {
         this.enchantments.remove(enchantment);
     }
 
-    public Material getMaterial() {
+    public final Material getMaterial() {
         return material;
     }
 
-    public ItemStackBuilder setMaterial(Material material) {
+    public final ItemStackBuilder setMaterial(Material material) {
         this.material = material;
+        this.setType(material);
         return this;
     }
 
-    public int getId() {
+    public final int getId() {
         return id;
     }
 
-    public ItemStackBuilder setId(int id) {
+    public final ItemStackBuilder setId(int id) {
         this.id = id;
         return this;
     }
 
     @Override
-    public Map<Enchantment, Integer> getEnchantments() {
+    public final Map<Enchantment, Integer> getEnchantments() {
         return enchantments;
     }
 
-    public void setMeta(ItemMeta meta) {
+    public final void setMeta(ItemMeta meta) {
         this.meta = meta;
     }
 
-    public ItemStack build() {
+    public final ItemStack build() {
         if (meta == null) return this;
 
         meta.setDisplayName(displayName);
@@ -115,7 +116,7 @@ public class ItemStackBuilder extends ItemStack {
         return this;
     }
 
-    public ItemStack update() {
+    public final ItemStack update() {
         return this.build();
     }
 }

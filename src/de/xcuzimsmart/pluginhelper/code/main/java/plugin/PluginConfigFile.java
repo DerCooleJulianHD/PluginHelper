@@ -4,8 +4,8 @@ import de.xcuzimsmart.pluginhelper.code.main.java.configuration.YamlConfigurator
 
 public final class PluginConfigFile extends YamlConfigurator {
 
-    public PluginConfigFile(SpigotPlugin plugin, boolean loadOnInit) {
-        super(plugin, plugin.getPlugin().getDataFolder(), "config.yml", loadOnInit);
+    public PluginConfigFile(boolean loadOnInit) {
+        super(SpigotPlugin.getInstance().getDataFolder(), "config.yml", loadOnInit);
     }
 
     public String getPrefix() {

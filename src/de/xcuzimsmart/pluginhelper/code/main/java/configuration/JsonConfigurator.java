@@ -21,15 +21,15 @@ public class JsonConfigurator extends Configurator {  // cannot be final, becaus
 
     final JsonProperties properties = getClass().getDeclaredAnnotation(JsonProperties.class);
 
-    public JsonConfigurator(SpigotPlugin plugin, File dir, String fileName, boolean loadOnInit) {
-        super(plugin, dir, fileName, loadOnInit);
+    public JsonConfigurator(File dir, String fileName, boolean loadOnInit) {
+        super(dir, fileName, loadOnInit);
         Validate.notNull(properties, getClass().getName() + " misses JsonProperties Annotation!");
 
         this.gson = JsonConfigurationBuilder.build(properties);
     }
 
     // writes an object to a Json-Configuration.
-    public void write(Object o) {
+    public final void write(Object o) {
         if (!isLoaded()) return;
         if (!isJsonFile()) return;
 
@@ -44,7 +44,7 @@ public class JsonConfigurator extends Configurator {  // cannot be final, becaus
     }
 
     @Nullable
-    public Object read(Class<?> classOfT) {
+    public final Object read(Class<?> classOfT) {
         if (!isLoaded()) return null;
         if (!file.exists()) return null;
 
@@ -63,7 +63,7 @@ public class JsonConfigurator extends Configurator {  // cannot be final, becaus
     }
 
     @Override
-    public void load() {
+    public final void load() {
         if (!isJsonFile()) throw new RuntimeException("file must be corect type.");
 
         try {
@@ -77,7 +77,7 @@ public class JsonConfigurator extends Configurator {  // cannot be final, becaus
         }
     }
 
-    public boolean isJsonFile() {
+    public final boolean isJsonFile() {
         return hasEnding(file.getName(), ".json");
     }
 

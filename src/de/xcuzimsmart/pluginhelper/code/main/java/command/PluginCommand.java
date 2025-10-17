@@ -23,14 +23,14 @@ public abstract class PluginCommand implements CommandExecutor, TabCompleter {
 
     protected final CommandInfo info;
 
-    public PluginCommand(SpigotPlugin plugin) {
-        this.plugin = plugin;
+    public PluginCommand() {
+        this.plugin = SpigotPlugin.getInstance();
         this.info = getClass().getDeclaredAnnotation(CommandInfo.class);
         Validate.notNull(this.info, getClass().getName() + " misses CommandInfo Annotation");
     }
 
     @Override // [from: CommandExecutor]
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    public final boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         try {
             return tryToExecuteCommand(sender, args);
         } catch (Exception e) {
@@ -39,20 +39,20 @@ public abstract class PluginCommand implements CommandExecutor, TabCompleter {
     }
 
     @Override
-    public List<String> onTabComplete(CommandSender commandSender, Command command, String s, String[] strings) {
+    public final List<String> onTabComplete(CommandSender commandSender, Command command, String s, String[] strings) {
         return this.onTabComplete(commandSender, strings);
     }
 
-    boolean tryToExecuteCommand(CommandSender sender, String[] args) throws CommandExecuteException {
+    final boolean tryToExecuteCommand(CommandSender sender, String[] args) throws CommandExecuteException {
         try {
             if (this.requiresPermission() && (!sender.hasPermission(info.permission()))) {
-                Messanger.broadcast(plugin, sender, MessageBuilder.COMMAND_NO_PERMISSION);
+                Messanger.broadcast(sender, MessageBuilder.COMMAND_NO_PERMISSION);
                 return false;
             }
 
             if (info.requiresPlayer()) {
                 if (!isPlayer(sender)) {
-                    Messanger.broadcast(plugin, sender, MessageBuilder.COMMAND_NO_PLAYER_INSTANCE);
+                    Messanger.broadcast(sender, MessageBuilder.COMMAND_NO_PLAYER_INSTANCE);
                     return false;
                 }
 
@@ -67,34 +67,38 @@ public abstract class PluginCommand implements CommandExecutor, TabCompleter {
         }
     }
 
-    public void execute(CommandSender sender, String[] strings) {}
+    public final void execute(CommandSender sender, String[] strings) {}
 
-    public void execute(Player sender, String[] strings) {}
+    public final void execute(Player sender, String[] strings) {}
 
-    public List<String> onTabComplete(CommandSender sender, String[] strings) {
+    public final List<String> onTabComplete(CommandSender sender, String[] strings) {
         return List.of();
     }
 
-    public void sendSyntax(CommandSender sender, String... args) {
+    public final void sendSyntax(CommandSender sender, String... args) {
         final StringBuilder builder = new StringBuilder();
         for (String arg : args) builder.append(arg).append("&7, ").append(ChatColor.AQUA);
-        Messanger.broadcast(plugin, sender, "&cSyntax: &8/&7" + getInfo().name() + " &b" + builder);
+        Messanger.broadcast(sender, "&cSyntax: &8/&7" + getInfo().name() + " &b" + builder);
     }
 
-    public CommandInfo getInfo() {
+    public final CommandInfo getInfo() {
         return info;
     }
 
-    public boolean requiresPermission() {
+    public final boolean requiresPermission() {
         return info != null && info.permission().isEmpty();
     }
 
-    public boolean isPlayer(CommandSender sender) {
+    public final boolean isPlayer(CommandSender sender) {
         return sender instanceof Player;
     }
 
-    public Logger getLogger() {
+    public final Logger getLogger() {
         return logger;
+    }
+
+    public SpigotPlugin plugin() {
+        return plugin;
     }
 }
 

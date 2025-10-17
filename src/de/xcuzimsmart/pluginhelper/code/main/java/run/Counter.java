@@ -1,27 +1,25 @@
 package de.xcuzimsmart.pluginhelper.code.main.java.run;
 
 import de.xcuzimsmart.pluginhelper.code.main.java.plugin.SpigotPlugin;
+import de.xcuzimsmart.pluginhelper.code.main.java.utils.AbstractUsage;
 import de.xcuzimsmart.pluginhelper.code.main.java.utils.Executable;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public abstract class Counter extends BukkitRunnable implements Executable {
 
-    protected final SpigotPlugin plugin;
-
     protected boolean running = false;
 
     protected final long delay, period;
 
-    public Counter(SpigotPlugin plugin, long delay, long period) {
-        this.plugin = plugin;
+    public Counter(long delay, long period) {
         this.delay = delay;
         this.period = period;
 
-        this.runTaskTimer(plugin.getPlugin(), delay, period);
+        this.runTaskTimer(SpigotPlugin.getInstance(), delay, period);
     }
 
     @Override
-    public void run() {
+    public final void run() {
         try {
             execute();
         } catch (Exception e) {
@@ -29,31 +27,27 @@ public abstract class Counter extends BukkitRunnable implements Executable {
         }
     }
 
-    public void start() {
-       if (!isRunning()) this.setRunning(true);
-    }
-
-    public void stop() {
-        if (isRunning()) this.setRunning(false);
-    }
-
-    public SpigotPlugin getPlugin() {
-        return plugin;
-    }
-
-    public boolean isRunning() {
+    @AbstractUsage public boolean isRunning() {
         return running;
     }
 
-    public void setRunning(boolean running) {
+    @AbstractUsage public void setRunning(boolean running) {
         this.running = running;
     }
 
-    public long getDelay() {
+    public final void start() {
+       if (!isRunning()) this.setRunning(true);
+    }
+
+    public final void stop() {
+        if (isRunning()) this.setRunning(false);
+    }
+
+    public final long getDelay() {
         return delay;
     }
 
-    public long getPeriod() {
+    public final long getPeriod() {
         return period;
     }
 }

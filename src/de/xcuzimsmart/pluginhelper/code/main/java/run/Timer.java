@@ -22,8 +22,8 @@ public final class Timer extends Counter {
 
     final TimerColor color = getClass().getDeclaredAnnotation(TimerColor.class);
 
-    public Timer(SpigotPlugin plugin, long delay, long period) {
-        super(plugin, delay, period);
+    public Timer(long delay, long period) {
+        super(delay, period);
         Validate.notNull(color, "Timer must have Color Annotation!");
 
         this.hours = 0;
@@ -101,7 +101,7 @@ public final class Timer extends Counter {
                 + color.brackets() + "]";
     }
 
-    void sendActionBar() {
+    private void sendActionBar() {
         if (shown.isEmpty()) return;
 
         for (UUID uuid : shown) {

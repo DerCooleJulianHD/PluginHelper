@@ -13,8 +13,8 @@ public final class Base64 {
 
     public static String itemStackArrayToBase64(ItemStack[] items) throws IllegalStateException {
         try {
-            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-            BukkitObjectOutputStream dataOutput = new BukkitObjectOutputStream(outputStream);
+            final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            final BukkitObjectOutputStream dataOutput = new BukkitObjectOutputStream(outputStream);
 
             // Write the size of the inventory
             dataOutput.writeInt(items.length);
@@ -34,9 +34,9 @@ public final class Base64 {
 
     public static ItemStack[] itemStackArrayFromBase64(String base64) throws IOException {
         try {
-            ByteArrayInputStream inputStream = new ByteArrayInputStream(Base64Coder.decodeLines(base64));
-            BukkitObjectInputStream dataInput = new BukkitObjectInputStream(inputStream);
-            ItemStack[] items = new ItemStack[dataInput.readInt()];
+            final ByteArrayInputStream inputStream = new ByteArrayInputStream(Base64Coder.decodeLines(base64));
+            final BukkitObjectInputStream dataInput = new BukkitObjectInputStream(inputStream);
+            final ItemStack[] items = new ItemStack[dataInput.readInt()];
 
             // Read the serialized inventory
             for (int i = 0; i < items.length; i++) {

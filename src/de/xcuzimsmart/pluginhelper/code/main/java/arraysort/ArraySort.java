@@ -54,7 +54,7 @@ public abstract class ArraySort implements SortAlgorithm {
     }
 
     @Override
-    public int[] getSorted() {
+    public final int[] getSorted() {
         return sorted;
     }
 

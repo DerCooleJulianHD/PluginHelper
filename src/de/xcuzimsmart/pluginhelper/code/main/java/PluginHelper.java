@@ -1,20 +1,16 @@
 package de.xcuzimsmart.pluginhelper.code.main.java;
 
-import de.xcuzimsmart.pluginhelper.code.main.java.plugin.MCSpigotPlugin;
+import de.xcuzimsmart.pluginhelper.code.main.java.plugin.SpigotPlugin;
 
-public final class PluginHelper extends MCSpigotPlugin {
-
-    static PluginHelper instance;
+public final class PluginHelper extends SpigotPlugin {
 
     @Override
     public void onEnable() {
-        instance = this;
-
         this.setPrefix(getPrefix());
         if (config.isEmpty()) this.setConfigPrefix(prefix);
     }
 
     public static PluginHelper get() {
-        return instance;
+        return (PluginHelper) getInstance();
     }
 }

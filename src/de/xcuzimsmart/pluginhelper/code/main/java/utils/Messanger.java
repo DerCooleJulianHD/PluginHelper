@@ -5,10 +5,8 @@ import net.minecraft.server.v1_8_R3.IChatBaseComponent;
 import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
 import net.minecraft.server.v1_8_R3.PacketPlayOutTitle;
 import net.minecraft.server.v1_8_R3.PlayerConnection;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
@@ -61,28 +59,11 @@ public final class Messanger {
         for (Player target : collection) Messanger.sendActionBar(target, content);
     }
 
-    public static void broadcast(SpigotPlugin plugin, CommandSender entity, String message)  {
-        entity.sendMessage(MessageBuilder.build(plugin, message));
+    public static void broadcast(CommandSender entity, String message)  {
+        entity.sendMessage(MessageBuilder.build(SpigotPlugin.getInstance(), message));
     }
 
-    public static void broadcast(SpigotPlugin plugin, Collection<? extends CommandSender> collection, String message) {
-        if (collection.isEmpty()) return;
-        final String s = MessageBuilder.build(plugin, message);
-        collection.forEach(target -> target.sendMessage(s));
-    }
-
-    public static void log(SpigotPlugin plugin, String log) {
-        final ConsoleCommandSender console = Bukkit.getConsoleSender();
-
-        broadcast(plugin, console, log);
-    }
-
-    public static void logError(SpigotPlugin plugin, String message, Throwable ex) {
-        final ConsoleCommandSender console = Bukkit.getConsoleSender();
-
-        broadcast(plugin, console, message);
-        broadcast(plugin, console, ChatColor.RED.toString() + ex);
-
-        ex.printStackTrace();
+    public static void broadcast(Collection<? extends CommandSender> collection, String message) {
+        if (!collection.isEmpty()) collection.forEach(target -> broadcast(target, message));
     }
 }

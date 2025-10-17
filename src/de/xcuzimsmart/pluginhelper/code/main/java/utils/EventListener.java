@@ -16,15 +16,15 @@ public abstract class EventListener implements Listener {
         this(k, clazz.getSimpleName());
     }
 
-    public String getKey() {
+    public final String getKey() {
         return key;
     }
 
-    public String getName() {
+    public final String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public final void setName(String name) {
         this.name = name;
     }
 }

@@ -10,14 +10,10 @@ public final class ListenerBundle extends Bundle<EventListener> {
 
     final PluginManager pluginManager = Bukkit.getPluginManager();
 
-    public ListenerBundle(SpigotPlugin plugin) {
-        super(plugin);
-    }
-
     @Override
     // adding it.
     public void onRegisterObject(EventListener listener) {
-        pluginManager.registerEvents(listener, plugin.getPlugin());
+        pluginManager.registerEvents(listener, SpigotPlugin.getInstance());
     }
 
     @Override
