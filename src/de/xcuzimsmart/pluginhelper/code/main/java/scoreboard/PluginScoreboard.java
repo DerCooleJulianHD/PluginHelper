@@ -104,7 +104,7 @@ public abstract class PluginScoreboard {
         this.scoreboard = scoreboard;
     }
 
-    protected void setObjective(Objective objective) {
+    protected final void setObjective(Objective objective) {
         this.objective = objective;
     }
 }
