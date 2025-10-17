@@ -68,6 +68,7 @@ public abstract class PluginScoreboard {
         if (scoreboard.getTeam(name) == null) scoreboard.registerNewTeam(name);
 
         team.setEntry(scoreboard.getTeam(name));
+        team.entry.setPrefix(prefix + color);
         teams.put(name, team);
 
         return team;
