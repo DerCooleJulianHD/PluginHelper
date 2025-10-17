@@ -37,7 +37,7 @@ public class YamlConfigurator extends Configurator {
             config.load(file);
             setLoaded(true);
         } catch (InvalidConfigurationException | IOException e) {
-            logger.log(Level.SEVERE, "Unable to load: " + file.getName(), e);
+            SpigotPlugin.getPluginLogger().log(Level.SEVERE, "Unable to load: " + file.getName(), e);
         }
     }
 
@@ -50,7 +50,7 @@ public class YamlConfigurator extends Configurator {
             config.set(k, v);
             save();
         } catch (Exception e) {
-            logger.log(Level.SEVERE, "Unable to write object to: " + file.getName(), e);
+            SpigotPlugin.getPluginLogger().log(Level.SEVERE, "Unable to write object to: " + file.getName(), e);
         }
     }
 
@@ -64,7 +64,7 @@ public class YamlConfigurator extends Configurator {
         try {
             return config.get(k);
         } catch (Exception e) {
-            logger.log(Level.SEVERE, "Unable to read object from: " + file.getName(), e);
+            SpigotPlugin.getPluginLogger().log(Level.SEVERE, "Unable to read object from: " + file.getName(), e);
         }
 
         return null;
@@ -75,7 +75,7 @@ public class YamlConfigurator extends Configurator {
         try {
             config.save(file);
         } catch (IOException e) {
-            logger.log(Level.SEVERE, "Unable to save: " + file.getName(), e);
+            SpigotPlugin.getPluginLogger().log(Level.SEVERE, "Unable to save: " + file.getName(), e);
         }
     }
 

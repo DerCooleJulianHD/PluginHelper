@@ -1,11 +1,8 @@
 package de.xcuzimsmart.pluginhelper.code.main.java.configuration;
 
 import java.io.File;
-import java.util.logging.Logger;
 
 public abstract class Configurator implements Config {
-
-    public static final Logger logger = Logger.getLogger(Configurator.class.getName());
 
     protected final File dir, file;
 

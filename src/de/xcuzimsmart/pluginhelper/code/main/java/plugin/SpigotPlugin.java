@@ -1,7 +1,6 @@
 package de.xcuzimsmart.pluginhelper.code.main.java.plugin;
 
 import de.xcuzimsmart.pluginhelper.code.main.java.bundle.ListenerBundle;
-import de.xcuzimsmart.pluginhelper.code.main.java.command.CommandManager;
 import de.xcuzimsmart.pluginhelper.code.main.java.run.Timer;
 import de.xcuzimsmart.pluginhelper.code.main.java.scoreboard.GlobalScoreboard;
 import de.xcuzimsmart.pluginhelper.code.main.java.scoreboard.PluginScoreboard;
@@ -13,6 +12,8 @@ import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.logging.Logger;
+
 public abstract class SpigotPlugin extends JavaPlugin implements Prefixable {
 
     protected static SpigotPlugin plugin;
@@ -21,10 +22,11 @@ public abstract class SpigotPlugin extends JavaPlugin implements Prefixable {
 
     protected PluginScoreboard scoreboard;
 
-    protected PluginConfigFile config;
+    protected static PluginConfigFile config;
 
     protected ListenerBundle listeners;
-    protected CommandManager commandManager;
+
+    protected static Logger logger = Logger.getLogger(SpigotPlugin.class.getSimpleName());
 
     @Override
     @AbstractUsage
@@ -44,7 +46,6 @@ public abstract class SpigotPlugin extends JavaPlugin implements Prefixable {
     public void onEnable() {
         // creating both bundles.
         this.listeners = new ListenerBundle();
-        this.commandManager = new CommandManager(); // ...CommandManager is also a Bundle.
         this.scoreboard = new GlobalScoreboard(); // creating a default scoreboard.
 
         getPlugin().onEnable(); // invoke the 'onEnable()' on sub class.
@@ -122,15 +123,11 @@ public abstract class SpigotPlugin extends JavaPlugin implements Prefixable {
         this.scoreboard = scoreboard;
     }
 
-    public final CommandManager getCommandManager() {
-        return commandManager;
-    }
-
     public final ListenerBundle getListeners() {
         return listeners;
     }
 
-    public final PluginConfigFile getConfiguration() {
+    public static PluginConfigFile getConfiguration() {
         return config;
     }
 
@@ -140,5 +137,9 @@ public abstract class SpigotPlugin extends JavaPlugin implements Prefixable {
 
     public static SpigotPlugin getInstance() {
         return plugin;
+    }
+
+    public static Logger getPluginLogger() {
+        return logger;
     }
 }

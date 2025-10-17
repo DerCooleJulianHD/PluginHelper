@@ -1,18 +1,14 @@
 package de.xcuzimsmart.pluginhelper.code.main.java.utils;
 
+import de.xcuzimsmart.pluginhelper.code.main.java.plugin.SpigotPlugin;
 import org.bukkit.util.FileUtil;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Objects;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public final class FileManager {
-    
-    static Logger logger = Logger.getLogger(FileManager.class.getName());
 
     public static void copyInnerFiles(File from, File to) {
         FileUtil.copy(from, to);
@@ -53,7 +49,7 @@ public final class FileManager {
 
             copyDir(target, zip);
         } catch (IOException e) {
-            logger.log(Level.SEVERE, e.getLocalizedMessage(), e);
+            SpigotPlugin.getPluginLogger().log(Level.SEVERE, e.getLocalizedMessage(), e);
         }
     }
 

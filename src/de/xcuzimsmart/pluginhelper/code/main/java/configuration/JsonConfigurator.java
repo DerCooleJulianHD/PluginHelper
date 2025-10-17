@@ -39,7 +39,7 @@ public class JsonConfigurator extends Configurator {  // cannot be final, becaus
             writer.write(gson.toJson(o));
             writer.close();
         } catch (IOException e) {
-            logger.log(Level.SEVERE, "Unable to write object to: " + file.getName(), e);
+            SpigotPlugin.getPluginLogger().log(Level.SEVERE, "Unable to write object to: " + file.getName(), e);
         }
     }
 
@@ -56,7 +56,7 @@ public class JsonConfigurator extends Configurator {  // cannot be final, becaus
            reader.close();
            return o;
         } catch (IOException e) {
-            logger.log(Level.SEVERE, "Unable to read object from: " + file.getName(), e);
+            SpigotPlugin.getPluginLogger().log(Level.SEVERE, "Unable to read object from: " + file.getName(), e);
         }
 
         return null;
@@ -73,7 +73,7 @@ public class JsonConfigurator extends Configurator {  // cannot be final, becaus
 
             this.setLoaded(true);
         } catch (IOException e) {
-            logger.log(Level.SEVERE, "Unable to load: " + file.getName(), e);
+            SpigotPlugin.getPluginLogger().log(Level.SEVERE, "Unable to load: " + file.getName(), e);
         }
     }
 

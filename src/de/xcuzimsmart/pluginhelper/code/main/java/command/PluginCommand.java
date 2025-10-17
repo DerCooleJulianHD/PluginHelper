@@ -2,6 +2,7 @@ package de.xcuzimsmart.pluginhelper.code.main.java.command;
 
 import de.xcuzimsmart.pluginhelper.code.main.java.exceptions.CommandExecuteException;
 import de.xcuzimsmart.pluginhelper.code.main.java.plugin.SpigotPlugin;
+import de.xcuzimsmart.pluginhelper.code.main.java.utils.AbstractUsage;
 import de.xcuzimsmart.pluginhelper.code.main.java.utils.MessageBuilder;
 import de.xcuzimsmart.pluginhelper.code.main.java.utils.Messanger;
 import org.apache.commons.lang.Validate;
@@ -13,11 +14,9 @@ import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
 import java.util.List;
-import java.util.logging.Logger;
+import java.util.logging.Level;
 
 public abstract class PluginCommand implements CommandExecutor, TabCompleter {
-
-    protected final Logger logger = Logger.getLogger(PluginCommand.class.getSimpleName());
 
     protected final SpigotPlugin plugin;
 
@@ -27,19 +26,24 @@ public abstract class PluginCommand implements CommandExecutor, TabCompleter {
         this.plugin = SpigotPlugin.getInstance();
         this.info = getClass().getDeclaredAnnotation(CommandInfo.class);
         Validate.notNull(this.info, getClass().getName() + " misses CommandInfo Annotation");
+        plugin.getServer().getPluginCommand(info.name()).setExecutor(this);
     }
 
     @Override // [from: CommandExecutor]
-    public final boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    @AbstractUsage
+    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         try {
             return tryToExecuteCommand(sender, args);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            SpigotPlugin.getPluginLogger().log(Level.SEVERE, e.getLocalizedMessage(), e);
         }
+
+        return false;
     }
 
     @Override
-    public final List<String> onTabComplete(CommandSender commandSender, Command command, String s, String[] strings) {
+    @AbstractUsage
+    public List<String> onTabComplete(CommandSender commandSender, Command command, String s, String[] strings) {
         return this.onTabComplete(commandSender, strings);
     }
 
@@ -67,11 +71,11 @@ public abstract class PluginCommand implements CommandExecutor, TabCompleter {
         }
     }
 
-    public final void execute(CommandSender sender, String[] strings) {}
+    @AbstractUsage public void execute(CommandSender sender, String[] strings) {}
 
-    public final void execute(Player sender, String[] strings) {}
+    @AbstractUsage public void execute(Player player, String[] strings) {}
 
-    public final List<String> onTabComplete(CommandSender sender, String[] strings) {
+    @AbstractUsage public List<String> onTabComplete(CommandSender sender, String[] strings) {
         return List.of();
     }
 
@@ -91,10 +95,6 @@ public abstract class PluginCommand implements CommandExecutor, TabCompleter {
 
     public final boolean isPlayer(CommandSender sender) {
         return sender instanceof Player;
-    }
-
-    public final Logger getLogger() {
-        return logger;
     }
 
     public SpigotPlugin plugin() {
