@@ -19,7 +19,6 @@ public final class PluginConfigFile extends YamlConfigurator implements Prefixab
     public void setPrefix(String s) {
         writeString("prefix", s);
     }
-
     public void setPrefix() {
         this.setPrefix("");
     }
