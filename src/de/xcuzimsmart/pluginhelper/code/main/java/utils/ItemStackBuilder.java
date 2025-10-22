@@ -7,7 +7,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.*;
 
-@AbstractUsage
+@Abstract
 public class ItemStackBuilder extends ItemStack {
 
     Material material;
