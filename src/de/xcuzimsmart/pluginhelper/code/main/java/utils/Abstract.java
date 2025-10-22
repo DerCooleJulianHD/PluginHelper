@@ -7,6 +7,6 @@ import java.lang.annotation.Target;
 
 @Target({ElementType.TYPE, ElementType.METHOD})
 @Retention(RetentionPolicy.CLASS)
-public @interface AbstractUsage {
+public @interface Abstract {
     // description: class cannot be final, because this might be used abstract, without being an abstract class at all.
 }

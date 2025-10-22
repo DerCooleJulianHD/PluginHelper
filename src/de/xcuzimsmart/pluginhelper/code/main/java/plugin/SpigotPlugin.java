@@ -4,7 +4,7 @@ import de.xcuzimsmart.pluginhelper.code.main.java.bundle.ListenerBundle;
 import de.xcuzimsmart.pluginhelper.code.main.java.run.Timer;
 import de.xcuzimsmart.pluginhelper.code.main.java.scoreboard.GlobalScoreboard;
 import de.xcuzimsmart.pluginhelper.code.main.java.scoreboard.PluginScoreboard;
-import de.xcuzimsmart.pluginhelper.code.main.java.utils.AbstractUsage;
+import de.xcuzimsmart.pluginhelper.code.main.java.utils.Abstract;
 import de.xcuzimsmart.pluginhelper.code.main.java.utils.FileManager;
 import de.xcuzimsmart.pluginhelper.code.main.java.utils.MessageBuilder;
 import org.bukkit.Bukkit;
@@ -32,7 +32,7 @@ public abstract class SpigotPlugin extends JavaPlugin implements MinecraftPlugin
     protected final ConsoleCommandSender console = Bukkit.getConsoleSender();
 
     @Override
-    @AbstractUsage
+    @Abstract
     public void onLoad() {
         // creating an instance.
         plugin = this;
@@ -46,7 +46,7 @@ public abstract class SpigotPlugin extends JavaPlugin implements MinecraftPlugin
     }
 
     @Override
-    @AbstractUsage
+    @Abstract
     public void onEnable() {
         // creating a bundle for listeners.
         this.listeners = new ListenerBundle();
@@ -57,7 +57,7 @@ public abstract class SpigotPlugin extends JavaPlugin implements MinecraftPlugin
     }
 
     @Override
-    @AbstractUsage
+    @Abstract
     public void onDisable() {
         getPlugin().onDisable(); // invoke the 'onDisable()' on sub class.
         this.sendDisableMessage(); // printing out to console, that the plugin has been disabled.

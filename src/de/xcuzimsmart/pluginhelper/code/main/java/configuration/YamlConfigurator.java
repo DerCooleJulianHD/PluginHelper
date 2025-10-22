@@ -1,7 +1,7 @@
 package de.xcuzimsmart.pluginhelper.code.main.java.configuration;
 
 import de.xcuzimsmart.pluginhelper.code.main.java.plugin.SpigotPlugin;
-import de.xcuzimsmart.pluginhelper.code.main.java.utils.AbstractUsage;
+import de.xcuzimsmart.pluginhelper.code.main.java.utils.Abstract;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.ConfigurationSection;
@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 
-@AbstractUsage
+@Abstract
 public class YamlConfigurator extends Configurator {
 
     FileConfiguration config = new YamlConfiguration();

@@ -1,7 +1,7 @@
 package de.xcuzimsmart.pluginhelper.code.main.java.run;
 
 import de.xcuzimsmart.pluginhelper.code.main.java.plugin.SpigotPlugin;
-import de.xcuzimsmart.pluginhelper.code.main.java.utils.AbstractUsage;
+import de.xcuzimsmart.pluginhelper.code.main.java.utils.Abstract;
 import de.xcuzimsmart.pluginhelper.code.main.java.utils.Executable;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -27,11 +27,13 @@ public abstract class Counter extends BukkitRunnable implements Executable {
         }
     }
 
-    @AbstractUsage public boolean isRunning() {
+    @Abstract
+    public boolean isRunning() {
         return running;
     }
 
-    @AbstractUsage public void setRunning(boolean running) {
+    @Abstract
+    public void setRunning(boolean running) {
         this.running = running;
     }
 

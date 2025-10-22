@@ -3,7 +3,7 @@ package de.xcuzimsmart.pluginhelper.code.main.java.configuration;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import de.xcuzimsmart.pluginhelper.code.main.java.plugin.SpigotPlugin;
-import de.xcuzimsmart.pluginhelper.code.main.java.utils.AbstractUsage;
+import de.xcuzimsmart.pluginhelper.code.main.java.utils.Abstract;
 import org.apache.commons.lang.Validate;
 
 import javax.annotation.Nullable;
@@ -13,7 +13,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.logging.Level;
 
-@AbstractUsage
+@Abstract
 @JsonProperties() /* <-- by default */
 public class JsonConfigurator extends Configurator {  // cannot be final, because of abstract usages.
 

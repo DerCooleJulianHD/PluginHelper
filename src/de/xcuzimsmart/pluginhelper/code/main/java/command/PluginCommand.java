@@ -2,7 +2,7 @@ package de.xcuzimsmart.pluginhelper.code.main.java.command;
 
 import de.xcuzimsmart.pluginhelper.code.main.java.exceptions.CommandExecuteException;
 import de.xcuzimsmart.pluginhelper.code.main.java.plugin.SpigotPlugin;
-import de.xcuzimsmart.pluginhelper.code.main.java.utils.AbstractUsage;
+import de.xcuzimsmart.pluginhelper.code.main.java.utils.Abstract;
 import de.xcuzimsmart.pluginhelper.code.main.java.utils.MessageBuilder;
 import de.xcuzimsmart.pluginhelper.code.main.java.utils.Messanger;
 import org.apache.commons.lang.Validate;
@@ -30,7 +30,7 @@ public abstract class PluginCommand implements CommandExecutor, TabCompleter {
     }
 
     @Override // [from: CommandExecutor]
-    @AbstractUsage
+    @Abstract
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         try {
             return tryToExecuteCommand(sender, args);
@@ -42,7 +42,7 @@ public abstract class PluginCommand implements CommandExecutor, TabCompleter {
     }
 
     @Override
-    @AbstractUsage
+    @Abstract
     public List<String> onTabComplete(CommandSender commandSender, Command command, String s, String[] strings) {
         return this.onTabComplete(commandSender, strings);
     }
@@ -71,11 +71,14 @@ public abstract class PluginCommand implements CommandExecutor, TabCompleter {
         }
     }
 
-    @AbstractUsage public void execute(CommandSender sender, String[] strings) {}
+    @Abstract
+    public void execute(CommandSender sender, String[] strings) {}
 
-    @AbstractUsage public void execute(Player player, String[] strings) {}
+    @Abstract
+    public void execute(Player player, String[] strings) {}
 
-    @AbstractUsage public List<String> onTabComplete(CommandSender sender, String[] strings) {
+    @Abstract
+    public List<String> onTabComplete(CommandSender sender, String[] strings) {
         return List.of();
     }
 
