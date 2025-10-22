@@ -8,25 +8,27 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.*;
 
 @Abstract
-public class ItemStackBuilder extends ItemStack {
+public class ItemStackBuilder {
 
-    Material material;
+    protected final ItemStack itemStack;
+
+    protected Material material;
 
     // subid of material
-    int id;
+    protected int id;
 
-    String displayName;
-    boolean unbreakable = false;
+    protected String displayName;
+    protected boolean unbreakable = false;
 
-    final Map<Enchantment, Integer> enchantments = new HashMap<>();
+    protected final Map<Enchantment, Integer> enchantments = new HashMap<>();
 
-    ItemMeta meta;
+    protected ItemMeta meta;
 
     protected ItemStackBuilder(Material material, int id, int amount) {
-        super(material, amount, (byte) id);
+        this.itemStack = new ItemStack(material, amount, (byte) id);
 
         // from ItemStack of trooper class
-        this.meta = this.getItemMeta();
+        this.meta = itemStack.getItemMeta();
 
         this.material = material;
         this.id = id;
@@ -78,7 +80,7 @@ public class ItemStackBuilder extends ItemStack {
 
     public final ItemStackBuilder setMaterial(Material material) {
         this.material = material;
-        this.setType(material);
+        itemStack.setType(material);
         return this;
     }
 
@@ -91,7 +93,6 @@ public class ItemStackBuilder extends ItemStack {
         return this;
     }
 
-    @Override
     public final Map<Enchantment, Integer> getEnchantments() {
         return enchantments;
     }
@@ -101,15 +102,19 @@ public class ItemStackBuilder extends ItemStack {
     }
 
     public final ItemStack build() {
-        if (meta == null) return this;
+        if (meta == null) return itemStack;
 
         meta.setDisplayName(displayName);
         meta.spigot().setUnbreakable(unbreakable);
 
         if (!enchantments.isEmpty()) enchantments.forEach((enchantment, lvl) -> meta.addEnchant(enchantment, lvl, true));
 
-        this.setItemMeta(meta);
-        return this;
+        itemStack.setItemMeta(meta);
+        return itemStack;
+    }
+
+    public ItemStack getItemStack() {
+        return itemStack;
     }
 
     public final ItemStack update() {

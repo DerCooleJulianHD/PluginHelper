@@ -19,7 +19,6 @@ public abstract class Icon extends ItemStackBuilder implements Cloneable {
         super(material, id, amount);
         this.menu = menu;
         if (!displayName.isEmpty()) this.setDisplayName(displayName);
-        this.build();
     }
 
     protected Icon(Menu menu, Material material, int amount, String displayName) {
@@ -32,17 +31,21 @@ public abstract class Icon extends ItemStackBuilder implements Cloneable {
 
     @Override
     public final Icon clone() {
-        return (Icon) super.clone();
+        try {
+            return (Icon) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public final void enchant(boolean visible) {
         this.addEnchant(ENCHANTMENT_TYPE, 1);
         if (!visible)
-            this.getItemMeta().addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
     }
 
     public final boolean isEnchanted() {
-        return (getItemMeta().hasEnchants() || getItemMeta().hasEnchant(ENCHANTMENT_TYPE));
+        return (meta.hasEnchants() || meta.hasEnchant(ENCHANTMENT_TYPE));
     }
 
     public final void setEnchantments() {

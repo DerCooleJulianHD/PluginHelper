@@ -23,30 +23,30 @@ import java.util.function.Consumer;
 
 public abstract class Menu implements InventoryHolder {
 
-    protected final Rows rows;
+    protected Rows rows;
+
     protected final String title;
+
     protected final Inventory inventory;
-    protected final Map<Integer, Icon> icons; // this map contains all the items
-    protected final List<Player> viewers;
+
+    protected final Map<Integer, Icon> icons = new HashMap<>(); // this map contains all the items
+
+    protected final List<Player> viewers = new ArrayList<>();
+
     protected InventoryView view;
+
     protected boolean keepOpen;
 
-    public Menu(Rows rows, String title, Map<Integer, Icon> icons, boolean keepOpen) {
+    public Menu(Rows rows, String title, boolean keepOpen) {
         this.rows = rows;
         this.title = title;
         this.inventory = Bukkit.createInventory(this, rows.getSlots(), title);
-        this.icons = icons;
-        this.viewers = new ArrayList<>();
         this.keepOpen = keepOpen;
-    }
-
-    public Menu(Rows rows, String title, boolean keepOpen) {
-        this(rows, title, new HashMap<>(), keepOpen);
     }
 
     // improves menu style by adding glass-panes to empty slots
     public final void setGlassPanes(int color) {
-        // looping every slot in inventory...
+        // looping over every single slot in the inventory.
         for (int slot = 0; slot < rows.getSlots(); slot++) this.setGlassPanes(color, slot);
     }
 
@@ -86,12 +86,13 @@ public abstract class Menu implements InventoryHolder {
     // adds an item to inventory
     public final void setIcon(int slot, Icon icon) {
         icons.put(slot, icon); // adding it to the map
+        inventory.setItem(slot, icon.build());
     }
 
     // removes an item from the menu
     public final void removeIcon(int slot) {
         icons.remove(slot); // removing it form the map
-        this.inventory.clear(slot); // removes out of inventory
+        inventory.clear(slot); // removes out of inventory
     }
 
     // Identifier to indicate how big the menu is
@@ -99,12 +100,16 @@ public abstract class Menu implements InventoryHolder {
         return rows;
     }
 
+    public void setRows(Rows rows) {
+        this.rows = rows;
+    }
+
     // the title of the menu inventory
     public final String getTitle() {
         return title;
     }
 
-    // this contains all the items that will be set in inventory by opening it up
+    // this contains all the items.
     public final Map<Integer, Icon> getIcons() {
         return icons;
     }
