@@ -106,11 +106,7 @@ public class ItemStackBuilder extends ItemStack {
         meta.setDisplayName(displayName);
         meta.spigot().setUnbreakable(unbreakable);
 
-        if (!enchantments.isEmpty()) {
-            enchantments.forEach((enchantment, lvl) -> {
-                meta.addEnchant(enchantment, lvl, true);
-            });
-        }
+        if (!enchantments.isEmpty()) enchantments.forEach((enchantment, lvl) -> meta.addEnchant(enchantment, lvl, true));
 
         this.setItemMeta(meta);
         return this;
