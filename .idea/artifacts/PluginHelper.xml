@@ -1,5 +1,5 @@
 <component name="ArtifactManager">
-  <artifact type="jar" name="PluginHelper">
+  <artifact type="jar" build-on-make="true" name="PluginHelper">
     <output-path>$USER_HOME$/.minecraft_servers/plugins</output-path>
     <root id="archive" name="PluginHelper.jar">
       <element id="module-output" name="PluginHelper" />
