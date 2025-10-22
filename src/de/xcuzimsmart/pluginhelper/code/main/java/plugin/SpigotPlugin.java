@@ -5,6 +5,7 @@ import de.xcuzimsmart.pluginhelper.code.main.java.run.Timer;
 import de.xcuzimsmart.pluginhelper.code.main.java.scoreboard.GlobalScoreboard;
 import de.xcuzimsmart.pluginhelper.code.main.java.scoreboard.PluginScoreboard;
 import de.xcuzimsmart.pluginhelper.code.main.java.utils.AbstractUsage;
+import de.xcuzimsmart.pluginhelper.code.main.java.utils.FileManager;
 import de.xcuzimsmart.pluginhelper.code.main.java.utils.MessageBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -14,7 +15,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.logging.Logger;
 
-public abstract class SpigotPlugin extends JavaPlugin implements Prefixable {
+public abstract class SpigotPlugin extends JavaPlugin implements MinecraftPlugin {
 
     protected static SpigotPlugin plugin;
 
@@ -28,23 +29,26 @@ public abstract class SpigotPlugin extends JavaPlugin implements Prefixable {
 
     protected static Logger logger = Logger.getLogger(SpigotPlugin.class.getSimpleName());
 
+    protected final ConsoleCommandSender console = Bukkit.getConsoleSender();
+
     @Override
     @AbstractUsage
     public void onLoad() {
-        // creating the Plugin folder first.
+        // creating an instance.
         plugin = this;
 
-        if (!getDataFolder().exists()) this.getDataFolder().mkdirs();
+        // creating the Plugin folder first.
+        FileManager.mkdirIfNotExists(getDataFolder());
 
         // creating the config file and load it.
-        this.config = new PluginConfigFile(true);
+        config = new PluginConfigFile(true);
         getPlugin().onLoad(); // invoke the 'onLoad()' on sub class.
     }
 
     @Override
     @AbstractUsage
     public void onEnable() {
-        // creating both bundles.
+        // creating a bundle for listeners.
         this.listeners = new ListenerBundle();
         this.scoreboard = new GlobalScoreboard(); // creating a default scoreboard.
 
@@ -62,42 +66,36 @@ public abstract class SpigotPlugin extends JavaPlugin implements Prefixable {
     @Override
     public final String getPrefix() {
         if (this.prefix != null) return this.prefix;
-       
-        final String read = getPrefixFromConfig();
-       
+        if (config == null) return null;
+
+        final String read = config.getPrefix();
+
         if (read != null && (!read.isEmpty())) return read;
         return null;
     }
 
+    @Override
     public final void sendEnableMessage() {
-        final ConsoleCommandSender console = Bukkit.getConsoleSender();
-        final String message = MessageBuilder.build(this, ChatColor.GREEN + getPluginName() + " has been successfully enabled.");
-
-        console.sendMessage(message);
+        console.sendMessage(MessageBuilder.build(this, ChatColor.GREEN + getPluginName() + " has been successfully enabled."));
     }
 
+    @Override
     public final void sendDisableMessage() {
-        final ConsoleCommandSender console = Bukkit.getConsoleSender();
-        final String message = MessageBuilder.build(this, ChatColor.RED + getPluginName() + " has been successfully disabled.");
-
-        console.sendMessage(message);
+        console.sendMessage(MessageBuilder.build(this, ChatColor.RED + getPluginName() + " has been successfully disabled."));
     }
 
     public final Timer createTimer() {
         return new Timer(0, 20);
     }
 
+    @Override
     public final Plugin getPlugin() {
         return getAsJavaPlugin();
     }
 
+    @Override
     public final JavaPlugin getAsJavaPlugin() {
         return plugin;
-    }
-
-    @Override
-    public final String getPrefixFromConfig() {
-        return config.getPrefix();
     }
 
     @Override
@@ -106,19 +104,11 @@ public abstract class SpigotPlugin extends JavaPlugin implements Prefixable {
     }
 
     @Override
-    public final void setConfigPrefix(String prefix) {
-        config.setPrefix(prefix);
-    }
-
-    @Override
-    public final void setConfigPrefix() {
-        this.setConfigPrefix("");
-    }
-
     public final PluginScoreboard getScoreboard() {
         return scoreboard;
     }
 
+    @Override
     public final void setScoreboard(PluginScoreboard scoreboard) {
         this.scoreboard = scoreboard;
     }
@@ -127,10 +117,12 @@ public abstract class SpigotPlugin extends JavaPlugin implements Prefixable {
         return listeners;
     }
 
-    public static PluginConfigFile getConfiguration() {
+    @Override
+    public PluginConfigFile getConfiguration() {
         return config;
     }
 
+    @Override
     public final String getPluginName() {
         return getDescription().getFullName();
     }
@@ -141,5 +133,9 @@ public abstract class SpigotPlugin extends JavaPlugin implements Prefixable {
 
     public static Logger getPluginLogger() {
         return logger;
+    }
+
+    public ConsoleCommandSender getConsoleSender() {
+        return console;
     }
 }

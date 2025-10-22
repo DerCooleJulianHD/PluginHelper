@@ -38,6 +38,18 @@ public final class FileManager {
         file.delete();
     }
 
+    public static void mkdir(File file) {
+        file.mkdirs();
+    }
+
+    public static void mkdirIf(boolean expression, File file) {
+        if (expression) mkdir(file);
+    }
+
+    public static void mkdirIfNotExists(File file) {
+        mkdirIf(!file.exists(), file);
+    }
+
     public static void zip(File target) {
         if (!target.exists()) return;
 
