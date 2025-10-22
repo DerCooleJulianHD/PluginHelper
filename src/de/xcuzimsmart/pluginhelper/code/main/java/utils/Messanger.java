@@ -30,14 +30,14 @@ public final class Messanger {
 
         if (subtitle != null) {
             final IChatBaseComponent subTitleComponent = IChatBaseComponent.ChatSerializer.a(
-                    "{\"text\": \"" + ChatColor.translateAlternateColorCodes('&', subtitle) + "\"}");
+                    "{\"text\": \"" + Colorize.translateColorCodes(subtitle) + "\"}");
             final PacketPlayOutTitle subTitlePacket = new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.SUBTITLE, subTitleComponent);
             connection.sendPacket(subTitlePacket);
         }
 
         if (title != null) {
             final IChatBaseComponent titleComponent = IChatBaseComponent.ChatSerializer.a(
-                    "{\"text\": \"" + ChatColor.translateAlternateColorCodes('&', title) + "\"}");
+                    "{\"text\": \"" + Colorize.translateColorCodes(title) + "\"}");
             final PacketPlayOutTitle titlePacket = new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.TITLE, titleComponent);
             connection.sendPacket(titlePacket);
         }
@@ -51,7 +51,7 @@ public final class Messanger {
     public static void sendActionBar(Player player, String message) {
         ((CraftPlayer) player).getHandle().playerConnection.sendPacket(
                 new PacketPlayOutChat(IChatBaseComponent.ChatSerializer.a(
-                        "{\"text\": \"" + ChatColor.translateAlternateColorCodes('&', message) + "\"}"), (byte) 2));
+                        "{\"text\": \"" + Colorize.translateColorCodes(message) + "\"}"), (byte) 2));
     }
 
     public static void sendActionBar(Collection<? extends Player> collection, String content) {

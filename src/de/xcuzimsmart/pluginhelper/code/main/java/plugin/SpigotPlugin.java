@@ -1,12 +1,13 @@
 package de.xcuzimsmart.pluginhelper.code.main.java.plugin;
 
-import de.xcuzimsmart.pluginhelper.code.main.java.bundle.ListenerBundle;
+import de.xcuzimsmart.pluginhelper.code.main.java.listener.ListenerManager;
 import de.xcuzimsmart.pluginhelper.code.main.java.run.Timer;
 import de.xcuzimsmart.pluginhelper.code.main.java.scoreboard.GlobalScoreboard;
 import de.xcuzimsmart.pluginhelper.code.main.java.scoreboard.PluginScoreboard;
 import de.xcuzimsmart.pluginhelper.code.main.java.utils.Abstract;
 import de.xcuzimsmart.pluginhelper.code.main.java.utils.FileManager;
 import de.xcuzimsmart.pluginhelper.code.main.java.utils.MessageBuilder;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.ConsoleCommandSender;
@@ -23,9 +24,9 @@ public abstract class SpigotPlugin extends JavaPlugin implements MinecraftPlugin
 
     protected PluginScoreboard scoreboard;
 
-    protected static PluginConfigFile config;
+    protected ListenerManager listenerManager;
 
-    protected ListenerBundle listeners;
+    protected static PluginConfigFile config;
 
     protected static Logger logger = Logger.getLogger(SpigotPlugin.class.getSimpleName());
 
@@ -48,8 +49,8 @@ public abstract class SpigotPlugin extends JavaPlugin implements MinecraftPlugin
     @Override
     @Abstract
     public void onEnable() {
-        // creating a bundle for listeners.
-        this.listeners = new ListenerBundle();
+        this.listenerManager = new ListenerManager();
+
         this.scoreboard = new GlobalScoreboard(); // creating a default scoreboard.
 
         getPlugin().onEnable(); // invoke the 'onEnable()' on sub class.
@@ -113,8 +114,9 @@ public abstract class SpigotPlugin extends JavaPlugin implements MinecraftPlugin
         this.scoreboard = scoreboard;
     }
 
-    public final ListenerBundle getListeners() {
-        return listeners;
+    @Override
+    public ListenerManager getListenerManager() {
+        return listenerManager;
     }
 
     @Override

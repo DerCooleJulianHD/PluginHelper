@@ -21,5 +21,7 @@ public final class SelectionSort extends ArraySort {
 
             swap(input, i, index);
         }
+
+        setSorted(input);
     }
 }

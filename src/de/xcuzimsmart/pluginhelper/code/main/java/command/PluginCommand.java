@@ -18,27 +18,19 @@ import java.util.logging.Level;
 
 public abstract class PluginCommand implements CommandExecutor, TabCompleter {
 
-    protected final SpigotPlugin plugin;
+    protected final SpigotPlugin plugin = SpigotPlugin.getInstance();
 
-    protected final CommandInfo info;
+    protected final CommandInfo info = getClass().getDeclaredAnnotation(CommandInfo.class);;
 
     public PluginCommand() {
-        this.plugin = SpigotPlugin.getInstance();
-        this.info = getClass().getDeclaredAnnotation(CommandInfo.class);
-        Validate.notNull(this.info, getClass().getName() + " misses CommandInfo Annotation");
+        Validate.notNull(this.info, getClass().getSimpleName() + " misses CommandInfo Annotation");
         plugin.getServer().getPluginCommand(info.name()).setExecutor(this);
     }
 
     @Override // [from: CommandExecutor]
     @Abstract
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        try {
-            return tryToExecuteCommand(sender, args);
-        } catch (Exception e) {
-            SpigotPlugin.getPluginLogger().log(Level.SEVERE, e.getLocalizedMessage(), e);
-        }
-
-        return false;
+        return tryToExecuteCommand(sender, args);
     }
 
     @Override
@@ -47,7 +39,7 @@ public abstract class PluginCommand implements CommandExecutor, TabCompleter {
         return this.onTabComplete(commandSender, strings);
     }
 
-    final boolean tryToExecuteCommand(CommandSender sender, String[] args) throws CommandExecuteException {
+    final boolean tryToExecuteCommand(CommandSender sender, String[] args) {
         try {
             if (this.requiresPermission() && (!sender.hasPermission(info.permission()))) {
                 Messanger.broadcast(sender, MessageBuilder.COMMAND_NO_PERMISSION);
@@ -64,18 +56,20 @@ public abstract class PluginCommand implements CommandExecutor, TabCompleter {
                 return true;
             }
 
-            this.execute(sender, args);
+            execute(sender, args);
             return true;
         } catch (Exception e) {
-            throw new CommandExecuteException("couldn't execute command: '" + info.name() + "'.", e, this);
+            SpigotPlugin.getPluginLogger().log(Level.SEVERE, "couldn't execute command: '" + info.name() + "'.", e);
         }
+
+        return false;
     }
 
     @Abstract
-    public void execute(CommandSender sender, String[] strings) {}
+    public void execute(CommandSender sender, String[] args) {}
 
     @Abstract
-    public void execute(Player player, String[] strings) {}
+    public void execute(Player player, String[] args) {}
 
     @Abstract
     public List<String> onTabComplete(CommandSender sender, String[] strings) {

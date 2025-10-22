@@ -55,7 +55,7 @@ public final class Team {
         this.color = color;
     }
 
-    public void addPlaywe(Player player) {
+    public void addPlayer(Player player) {
         if (entry != null) entry.addEntry(player.getName());
     }
 

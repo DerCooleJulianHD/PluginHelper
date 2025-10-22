@@ -1,5 +1,6 @@
 package de.xcuzimsmart.pluginhelper.code.main.java.plugin;
 
+import de.xcuzimsmart.pluginhelper.code.main.java.listener.ListenerManager;
 import de.xcuzimsmart.pluginhelper.code.main.java.scoreboard.PluginScoreboard;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -23,4 +24,6 @@ public interface MinecraftPlugin extends Prefixable {
     PluginConfigFile getConfiguration();
 
     String getPluginName();
+
+    ListenerManager getListenerManager();
 }

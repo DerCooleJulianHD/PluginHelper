@@ -69,4 +69,8 @@ public abstract class Icon extends ItemStackBuilder implements Cloneable {
     public final boolean isMovable() {
         return this instanceof Moveable;
     }
+
+    public void update(int slot) {
+        menu.inventory.setItem(slot, this.update());
+    }
 }

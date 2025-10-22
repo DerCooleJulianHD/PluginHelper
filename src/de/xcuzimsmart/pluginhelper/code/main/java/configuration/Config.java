@@ -4,17 +4,52 @@ import de.xcuzimsmart.pluginhelper.code.main.java.utils.Loadable;
 
 import java.io.File;
 
-public interface Config extends Loadable {
+public abstract class Config implements Loadable {
 
-    // the folder the config file is in.
-    File getDir();
+    protected final File dir, file;
 
-    // returns the config file.
-    File getFile();
+    boolean loaded = false;
+
+    public Config(File dir, String fileName, boolean loadOnInit) {
+        this.dir = dir;
+        this.file = new File(dir, fileName);
+        if (loadOnInit) load();
+    }
+
+    public Config(String dir, String fileName, boolean loadOnInit) {
+        this(new File(dir), fileName, loadOnInit);
+    }
 
     // returns true if config file does end with 'filename.{ending}'
-    boolean hasEnding(String fileName, String ending);
+    public final boolean hasEnding(String fileName, String ending) {
+        if (fileName == null) return false;
+        return fileName.endsWith(ending);
+    }
+
+    @Override
+    // returns true when config has been loaded.
+    public final boolean isLoaded() {
+        return loaded;
+    }
+
+    @Override
+    // sets if config has been loaded or not.
+    public final void setLoaded(boolean loaded) {
+        this.loaded = loaded;
+    }
 
     // returns true when 'getDir()' does not return null and file is exist.
-    boolean exists();
+    public final boolean exists() {
+        return dir != null && dir.exists() && file.exists();
+    }
+
+    // the folder the config file is in.
+    public final File getDir() {
+        return dir;
+    }
+
+    // returns the config file.
+    public final File getFile() {
+        return file;
+    }
 }

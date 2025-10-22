@@ -17,7 +17,7 @@ import java.util.Set;
 import java.util.logging.Level;
 
 @Abstract
-public class YamlConfigurator extends Configurator {
+public class YamlConfigurator extends Config {
 
     FileConfiguration config = new YamlConfiguration();
 
@@ -27,7 +27,8 @@ public class YamlConfigurator extends Configurator {
 
     @Override
     public final void load() {
-        if (!isYamlFile()) throw new RuntimeException("file must be corect type.");
+        if (!file.exists()) return;
+        if (!isYamlFile()) throw new RuntimeException("file must be correct type.");
 
         try {
             if (config == null) this.config = new YamlConfiguration();
@@ -43,7 +44,6 @@ public class YamlConfigurator extends Configurator {
 
     // writes an object to a Yaml-Configuration.
     public final void write(String k, Object v) {
-        if (!isYamlFile()) return;
         if (!isLoaded()) load();
 
         try {
@@ -57,8 +57,6 @@ public class YamlConfigurator extends Configurator {
     // returns an Object from YamlConfiguration
     public final Object read(String k) {
         if (!file.exists()) return null;
-        if (!isYamlFile()) return null;
-
         if (!isLoaded()) load();
 
         try {

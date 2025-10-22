@@ -194,7 +194,7 @@ public abstract class Menu implements InventoryHolder {
             Inventory inventory = event.getClickedInventory();
 
             if (inventory == null) return; // looking for a valid inventory.
-            if (!(inventory.getHolder() instanceof Menu menu)) return; // check if inventory what has been clicked was a menu inventory.
+            if (!(inventory.getHolder() instanceof Menu menu)) return; // check if inventory what has been clicked, was a menu inventory.
             if (!menu.isViewing(player)) return; // only executing when player is viewing this menu, so that only viewers can interact with icons.
             if (!event.isLeftClick()) return; // asking for the right click type.
 
@@ -208,7 +208,7 @@ public abstract class Menu implements InventoryHolder {
                 if (action != null) {
                     // executing code when clicking on icon.
                     action.accept(player);
-                    icon.update();
+                    icon.update(slot); // updating the item if it has to change.
 
                     if (!menu.isKeepOpen()) player.closeInventory(); // closing menu when is not keep open.
                 }

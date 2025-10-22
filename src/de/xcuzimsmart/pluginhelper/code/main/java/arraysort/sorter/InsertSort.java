@@ -17,5 +17,7 @@ public final class InsertSort extends ArraySort {
 
             input[j + 1] = current;
         }
+
+        this.setSorted(input);
     }
 }

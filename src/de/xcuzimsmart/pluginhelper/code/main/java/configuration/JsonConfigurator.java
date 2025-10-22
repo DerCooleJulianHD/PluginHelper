@@ -15,7 +15,7 @@ import java.util.logging.Level;
 
 @Abstract
 @JsonProperties() /* <-- by default */
-public class JsonConfigurator extends Configurator {  // cannot be final, because of abstract usages.
+public class JsonConfigurator extends Config {  // cannot be final, because of abstract usages.
 
     final Gson gson;
 
@@ -30,8 +30,8 @@ public class JsonConfigurator extends Configurator {  // cannot be final, becaus
 
     // writes an object to a Json-Configuration.
     public final void write(Object o) {
-        if (!isLoaded()) return;
-        if (!isJsonFile()) return;
+        if (!file.exists())
+        if (!isLoaded()) load();
 
         try {
             final FileWriter writer = new FileWriter(file);
@@ -45,10 +45,9 @@ public class JsonConfigurator extends Configurator {  // cannot be final, becaus
 
     @Nullable
     public final Object read(Class<?> classOfT) {
-        if (!isLoaded()) return null;
         if (!file.exists()) return null;
-
         if (!isJsonFile()) return null;
+        if (!isLoaded()) return null;
 
         try {
            final FileReader reader = new FileReader(file);
@@ -64,7 +63,7 @@ public class JsonConfigurator extends Configurator {  // cannot be final, becaus
 
     @Override
     public final void load() {
-        if (!isJsonFile()) throw new RuntimeException("file must be corect type.");
+        if (!isJsonFile()) throw new RuntimeException("file must be correct type.");
 
         try {
             if (!exists()) {
@@ -81,7 +80,7 @@ public class JsonConfigurator extends Configurator {  // cannot be final, becaus
         return hasEnding(file.getName(), ".json");
     }
 
-    public static final class JsonConfigurationBuilder {
+    private static final class JsonConfigurationBuilder {
 
         public static Gson build(JsonProperties properties) {
             final GsonBuilder builder = new GsonBuilder();

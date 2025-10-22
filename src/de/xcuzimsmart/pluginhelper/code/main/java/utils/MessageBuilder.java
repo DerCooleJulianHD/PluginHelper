@@ -13,7 +13,7 @@ public final class MessageBuilder {
         final StringBuilder out = new StringBuilder();
         if (prefix != null) out.append(prefix);
         out.append(message);
-        return ChatColor.translateAlternateColorCodes('&', out.toString());
+        return Colorize.translateColorCodes(out.toString());
     }
 
     public static String build(SpigotPlugin plugin, String message) {
@@ -22,6 +22,6 @@ public final class MessageBuilder {
     }
 
     public static String message(String message) {
-        return ChatColor.translateAlternateColorCodes('&', message);
+        return Colorize.translateColorCodes(message);
     }
 }

@@ -9,6 +9,7 @@ public final class QuickSort extends ArraySort {
     @Override
     public void sort(int[] input) {
         sort(input, 0, input.length - 1);
+        setSorted(input);
     }
 
     private void sort(int[] input, int lowIndex, int highIndex) {
