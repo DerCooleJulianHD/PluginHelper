@@ -10,7 +10,6 @@ import org.bukkit.plugin.PluginManager;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 
 public final class ListenerBundle implements Bundle<Listener> {
 
@@ -52,6 +51,12 @@ public final class ListenerBundle implements Bundle<Listener> {
         if (action == null) return;
 
         actives.forEach(action);
+    }
+
+    @Override
+    public void clear() {
+        unregisterAll();
+        actives.clear();
     }
 
     @Override

@@ -36,6 +36,7 @@ public abstract class SpigotPlugin extends JavaPlugin implements MinecraftPlugin
     protected final ConsoleCommandSender console = Bukkit.getConsoleSender();
 
     @Override
+    @Deprecated
     @Abstract
     public void onLoad() {
         // creating an instance.
@@ -46,26 +47,32 @@ public abstract class SpigotPlugin extends JavaPlugin implements MinecraftPlugin
 
         // creating the config file and load it.
         config = new PluginConfigFile(true);
-        getPlugin().onLoad(); // invoke the 'onLoad()' on sub class.
+        onPluginLoad();
     }
 
     @Override
+    @Deprecated
     @Abstract
     public void onEnable() {
         this.listenerBundles = new HashMap<>();
 
         this.scoreboard = new GlobalScoreboard(); // creating a default scoreboard.
 
-        getPlugin().onEnable(); // invoke the 'onEnable()' on sub class.
+        onInitialize();
         this.sendEnableMessage(); // printing out to console, that the plugin has been enabled.
     }
 
     @Override
+    @Deprecated
     @Abstract
     public void onDisable() {
-        getPlugin().onDisable(); // invoke the 'onDisable()' on sub class.
+        onPluginDisable();
         this.sendDisableMessage(); // printing out to console, that the plugin has been disabled.
     }
+
+    public void onPluginLoad() {}
+    public abstract void onInitialize();
+    public void onPluginDisable() {}
 
     @Override
     public final String getPrefix() {

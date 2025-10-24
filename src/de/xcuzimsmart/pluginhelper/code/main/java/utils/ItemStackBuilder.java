@@ -18,7 +18,8 @@ public class ItemStackBuilder {
     // subid of material
     protected int id;
 
-    protected String displayName;
+    protected String displayName, name;
+
     protected boolean unbreakable = false;
 
     protected final Map<Enchantment, Integer> enchantments = new HashMap<>();
@@ -98,8 +99,9 @@ public class ItemStackBuilder {
         return enchantments;
     }
 
-    public final void setMeta(ItemMeta meta) {
+    public final ItemStackBuilder setMeta(ItemMeta meta) {
         this.meta = meta;
+        return this;
     }
 
     public final ItemStack build() {
@@ -114,7 +116,20 @@ public class ItemStackBuilder {
         return itemStack;
     }
 
-    public ItemStack getItemStack() {
+    public final ItemStackBuilder setName(String name) {
+        this.name = name;
+        return this;
+    }
+
+    public final String getName() {
+        return name;
+    }
+
+    public final String getIDName() {
+        return name;
+    }
+
+    public final ItemStack getItemStack() {
         return itemStack;
     }
 

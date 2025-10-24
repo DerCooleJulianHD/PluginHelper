@@ -5,7 +5,7 @@ import de.xcuzimsmart.pluginhelper.code.main.java.plugin.SpigotPlugin;
 public final class PluginHelper extends SpigotPlugin {
 
     @Override
-    public void onEnable() {
+    public void onInitialize() {
         this.setPrefix(getPrefix());
         if (config.isEmpty()) config.setPrefix(prefix);
     }
