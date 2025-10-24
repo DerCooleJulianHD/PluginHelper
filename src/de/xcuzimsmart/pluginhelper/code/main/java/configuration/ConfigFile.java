@@ -20,7 +20,7 @@ public abstract class ConfigFile implements Loadable {
         this(new File(dir), fileName, loadOnInit);
     }
 
-    // returns true if config file does end with 'filename.{ending}'
+    // returns true if config file does end with 'filename{".ending"}'
     public final boolean hasEnding(String fileName, String ending) {
         if (fileName == null) return false;
         return fileName.endsWith(ending);
