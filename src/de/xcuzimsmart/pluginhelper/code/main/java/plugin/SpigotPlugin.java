@@ -1,6 +1,6 @@
 package de.xcuzimsmart.pluginhelper.code.main.java.plugin;
 
-import de.xcuzimsmart.pluginhelper.code.main.java.listener.ListenerManager;
+import de.xcuzimsmart.pluginhelper.code.main.java.listener.ListenerBundle;
 import de.xcuzimsmart.pluginhelper.code.main.java.plugin.interfaces.MinecraftPlugin;
 import de.xcuzimsmart.pluginhelper.code.main.java.run.Timer;
 import de.xcuzimsmart.pluginhelper.code.main.java.scoreboard.GlobalScoreboard;
@@ -15,6 +15,8 @@ import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Logger;
 
 public abstract class SpigotPlugin extends JavaPlugin implements MinecraftPlugin {
@@ -25,7 +27,7 @@ public abstract class SpigotPlugin extends JavaPlugin implements MinecraftPlugin
 
     protected PluginScoreboard scoreboard;
 
-    protected ListenerManager listenerManager;
+    protected Map<String, ListenerBundle> listenerBundles;
 
     protected PluginConfigFile config;
 
@@ -50,7 +52,7 @@ public abstract class SpigotPlugin extends JavaPlugin implements MinecraftPlugin
     @Override
     @Abstract
     public void onEnable() {
-        this.listenerManager = new ListenerManager();
+        this.listenerBundles = new HashMap<>();
 
         this.scoreboard = new GlobalScoreboard(); // creating a default scoreboard.
 
@@ -117,8 +119,23 @@ public abstract class SpigotPlugin extends JavaPlugin implements MinecraftPlugin
     }
 
     @Override
-    public ListenerManager getListenerManager() {
-        return listenerManager;
+    public ListenerBundle getListeners(String name) {
+        return listenerBundles.getOrDefault(name, ListenerBundle.EMPTY_BUNDLE());
+    }
+
+    @Override
+    public void addListeners(String name, ListenerBundle bundle) {
+        if (!listenerBundles.containsKey(name)) listenerBundles.put(name, bundle);
+    }
+
+    @Override
+    public void removeListeners(String name) {
+        final ListenerBundle bundle = listenerBundles.get(name);
+
+        if (bundle == null) return;
+
+        bundle.unregisterAll();
+        listenerBundles.remove(name);
     }
 
     @Override
