@@ -1,5 +1,7 @@
 package de.xcuzimsmart.pluginhelper.code.main.java.scoreboard;
 
+import de.xcuzimsmart.pluginhelper.code.main.java.scoreboard.score.Score;
+import de.xcuzimsmart.pluginhelper.code.main.java.scoreboard.team.Team;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.DisplaySlot;
@@ -64,11 +66,12 @@ public abstract class PluginScoreboard {
 
     public final Team addTeam(String name, String prefix, ChatColor color) {
         final Team team = new Team(this, name, prefix, color == null ? ChatColor.WHITE : color);
+        org.bukkit.scoreboard.Team entry = scoreboard.getTeam(name);
 
-        if (scoreboard.getTeam(name) == null) scoreboard.registerNewTeam(name);
+        if (entry == null) entry = scoreboard.registerNewTeam(name);
 
-        team.setEntry(scoreboard.getTeam(name));
-        team.entry.setPrefix(prefix + color);
+        entry.setPrefix(prefix + color);
+        team.setEntry(entry);
         teams.put(name, team);
 
         return team;

@@ -1,5 +1,6 @@
 package de.xcuzimsmart.pluginhelper.code.main.java.menu;
 
+import de.xcuzimsmart.pluginhelper.code.main.java.menu.interfaces.Moveable;
 import de.xcuzimsmart.pluginhelper.code.main.java.utils.ItemStackBuilder;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;

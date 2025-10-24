@@ -1,5 +1,6 @@
 package de.xcuzimsmart.pluginhelper.code.main.java.utils;
 
+import de.xcuzimsmart.pluginhelper.code.main.java.utils.annotations.Abstract;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;

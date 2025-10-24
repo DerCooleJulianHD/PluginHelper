@@ -1,7 +1,7 @@
 package de.xcuzimsmart.pluginhelper.code.main.java.configuration;
 
 import de.xcuzimsmart.pluginhelper.code.main.java.plugin.SpigotPlugin;
-import de.xcuzimsmart.pluginhelper.code.main.java.utils.Abstract;
+import de.xcuzimsmart.pluginhelper.code.main.java.utils.annotations.Abstract;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.ConfigurationSection;
@@ -38,7 +38,7 @@ public class YamlConfigurator extends Config {
             config.load(file);
             setLoaded(true);
         } catch (InvalidConfigurationException | IOException e) {
-            SpigotPlugin.getPluginLogger().log(Level.SEVERE, "Unable to load: " + file.getName(), e);
+            SpigotPlugin.getInstance().getPluginLogger().log(Level.SEVERE, "Unable to load: " + file.getName(), e);
         }
     }
 
@@ -50,7 +50,7 @@ public class YamlConfigurator extends Config {
             config.set(k, v);
             save();
         } catch (Exception e) {
-            SpigotPlugin.getPluginLogger().log(Level.SEVERE, "Unable to write object to: " + file.getName(), e);
+            SpigotPlugin.getInstance().getPluginLogger().log(Level.SEVERE, "Unable to write object to: " + file.getName(), e);
         }
     }
 
@@ -62,7 +62,7 @@ public class YamlConfigurator extends Config {
         try {
             return config.get(k);
         } catch (Exception e) {
-            SpigotPlugin.getPluginLogger().log(Level.SEVERE, "Unable to read object from: " + file.getName(), e);
+            SpigotPlugin.getInstance().getPluginLogger().log(Level.SEVERE, "Unable to read object from: " + file.getName(), e);
         }
 
         return null;
@@ -73,7 +73,7 @@ public class YamlConfigurator extends Config {
         try {
             config.save(file);
         } catch (IOException e) {
-            SpigotPlugin.getPluginLogger().log(Level.SEVERE, "Unable to save: " + file.getName(), e);
+            SpigotPlugin.getInstance().getPluginLogger().log(Level.SEVERE, "Unable to save: " + file.getName(), e);
         }
     }
 

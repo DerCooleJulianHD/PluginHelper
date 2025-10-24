@@ -1,5 +1,6 @@
 package de.xcuzimsmart.pluginhelper.code.main.java.menu;
 
+import de.xcuzimsmart.pluginhelper.code.main.java.menu.events.MenuInteractEvent;
 import de.xcuzimsmart.pluginhelper.code.main.java.utils.ItemStackBuilder;
 import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;

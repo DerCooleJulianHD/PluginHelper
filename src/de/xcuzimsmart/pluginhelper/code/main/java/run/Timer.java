@@ -1,7 +1,6 @@
 package de.xcuzimsmart.pluginhelper.code.main.java.run;
 
-import de.xcuzimsmart.pluginhelper.code.main.java.plugin.SpigotPlugin;
-import de.xcuzimsmart.pluginhelper.code.main.java.utils.Messanger;
+import de.xcuzimsmart.pluginhelper.code.main.java.utils.messanger.Messanger;
 import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;

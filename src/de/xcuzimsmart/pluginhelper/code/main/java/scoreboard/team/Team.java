@@ -1,5 +1,6 @@
-package de.xcuzimsmart.pluginhelper.code.main.java.scoreboard;
+package de.xcuzimsmart.pluginhelper.code.main.java.scoreboard.team;
 
+import de.xcuzimsmart.pluginhelper.code.main.java.scoreboard.PluginScoreboard;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 

@@ -1,12 +1,13 @@
 package de.xcuzimsmart.pluginhelper.code.main.java.plugin;
 
 import de.xcuzimsmart.pluginhelper.code.main.java.listener.ListenerManager;
+import de.xcuzimsmart.pluginhelper.code.main.java.plugin.interfaces.MinecraftPlugin;
 import de.xcuzimsmart.pluginhelper.code.main.java.run.Timer;
 import de.xcuzimsmart.pluginhelper.code.main.java.scoreboard.GlobalScoreboard;
 import de.xcuzimsmart.pluginhelper.code.main.java.scoreboard.PluginScoreboard;
-import de.xcuzimsmart.pluginhelper.code.main.java.utils.Abstract;
-import de.xcuzimsmart.pluginhelper.code.main.java.utils.FileManager;
-import de.xcuzimsmart.pluginhelper.code.main.java.utils.MessageBuilder;
+import de.xcuzimsmart.pluginhelper.code.main.java.utils.annotations.Abstract;
+import de.xcuzimsmart.pluginhelper.code.main.java.utils.file.FileManager;
+import de.xcuzimsmart.pluginhelper.code.main.java.utils.messanger.MessageBuilder;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -26,9 +27,9 @@ public abstract class SpigotPlugin extends JavaPlugin implements MinecraftPlugin
 
     protected ListenerManager listenerManager;
 
-    protected static PluginConfigFile config;
+    protected PluginConfigFile config;
 
-    protected static Logger logger = Logger.getLogger(SpigotPlugin.class.getSimpleName());
+    protected Logger logger = Logger.getLogger(SpigotPlugin.class.getSimpleName());
 
     protected final ConsoleCommandSender console = Bukkit.getConsoleSender();
 
@@ -77,14 +78,15 @@ public abstract class SpigotPlugin extends JavaPlugin implements MinecraftPlugin
 
     @Override
     public final void sendEnableMessage() {
-        console.sendMessage(MessageBuilder.build(this, ChatColor.GREEN + getPluginName() + " has been successfully enabled."));
+        console.sendMessage(MessageBuilder.build(this, ChatColor.GREEN + getPluginFullName() + " has been successfully enabled."));
     }
 
     @Override
     public final void sendDisableMessage() {
-        console.sendMessage(MessageBuilder.build(this, ChatColor.RED + getPluginName() + " has been successfully disabled."));
+        console.sendMessage(MessageBuilder.build(this, ChatColor.RED + getPluginFullName() + " has been successfully disabled."));
     }
 
+    @Override
     public final Timer createTimer() {
         return new Timer(0, 20);
     }
@@ -126,6 +128,11 @@ public abstract class SpigotPlugin extends JavaPlugin implements MinecraftPlugin
 
     @Override
     public final String getPluginName() {
+        return getDescription().getName();
+    }
+
+    @Override
+    public String getPluginFullName() {
         return getDescription().getFullName();
     }
 
@@ -133,10 +140,12 @@ public abstract class SpigotPlugin extends JavaPlugin implements MinecraftPlugin
         return plugin;
     }
 
-    public static Logger getPluginLogger() {
+    @Override
+    public Logger getPluginLogger() {
         return logger;
     }
 
+    @Override
     public ConsoleCommandSender getConsoleSender() {
         return console;
     }

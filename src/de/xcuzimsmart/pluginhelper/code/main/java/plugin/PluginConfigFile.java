@@ -1,6 +1,7 @@
 package de.xcuzimsmart.pluginhelper.code.main.java.plugin;
 
 import de.xcuzimsmart.pluginhelper.code.main.java.configuration.YamlConfigurator;
+import de.xcuzimsmart.pluginhelper.code.main.java.plugin.interfaces.Prefixable;
 
 public final class PluginConfigFile extends YamlConfigurator implements Prefixable {
 

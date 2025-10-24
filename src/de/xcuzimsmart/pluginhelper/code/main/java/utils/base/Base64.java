@@ -1,4 +1,4 @@
-package de.xcuzimsmart.pluginhelper.code.main.java.utils;
+package de.xcuzimsmart.pluginhelper.code.main.java.utils.base;
 
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.io.BukkitObjectInputStream;

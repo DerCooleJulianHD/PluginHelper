@@ -1,8 +1,8 @@
 package de.xcuzimsmart.pluginhelper.code.main.java.run;
 
 import de.xcuzimsmart.pluginhelper.code.main.java.plugin.SpigotPlugin;
-import de.xcuzimsmart.pluginhelper.code.main.java.utils.Abstract;
-import de.xcuzimsmart.pluginhelper.code.main.java.utils.Executable;
+import de.xcuzimsmart.pluginhelper.code.main.java.utils.annotations.Abstract;
+import de.xcuzimsmart.pluginhelper.code.main.java.utils.interfaces.Executable;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public abstract class Counter extends BukkitRunnable implements Executable {

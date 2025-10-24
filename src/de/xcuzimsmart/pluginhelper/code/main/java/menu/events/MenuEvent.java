@@ -1,5 +1,6 @@
-package de.xcuzimsmart.pluginhelper.code.main.java.menu;
+package de.xcuzimsmart.pluginhelper.code.main.java.menu.events;
 
+import de.xcuzimsmart.pluginhelper.code.main.java.menu.Menu;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.player.PlayerEvent;

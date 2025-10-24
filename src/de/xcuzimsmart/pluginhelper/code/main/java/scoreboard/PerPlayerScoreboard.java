@@ -1,5 +1,6 @@
 package de.xcuzimsmart.pluginhelper.code.main.java.scoreboard;
 
+import de.xcuzimsmart.pluginhelper.code.main.java.scoreboard.score.Score;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Scoreboard;

@@ -1,6 +1,6 @@
 package de.xcuzimsmart.pluginhelper.code.main.java.configuration;
 
-import de.xcuzimsmart.pluginhelper.code.main.java.utils.Loadable;
+import de.xcuzimsmart.pluginhelper.code.main.java.utils.interfaces.Loadable;
 
 import java.io.File;
 

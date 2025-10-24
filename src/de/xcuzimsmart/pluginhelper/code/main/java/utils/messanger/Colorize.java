@@ -1,4 +1,4 @@
-package de.xcuzimsmart.pluginhelper.code.main.java.utils;
+package de.xcuzimsmart.pluginhelper.code.main.java.utils.messanger;
 
 import org.bukkit.ChatColor;
 

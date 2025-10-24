@@ -1,10 +1,9 @@
 package de.xcuzimsmart.pluginhelper.code.main.java.command;
 
-import de.xcuzimsmart.pluginhelper.code.main.java.exceptions.CommandExecuteException;
 import de.xcuzimsmart.pluginhelper.code.main.java.plugin.SpigotPlugin;
-import de.xcuzimsmart.pluginhelper.code.main.java.utils.Abstract;
-import de.xcuzimsmart.pluginhelper.code.main.java.utils.MessageBuilder;
-import de.xcuzimsmart.pluginhelper.code.main.java.utils.Messanger;
+import de.xcuzimsmart.pluginhelper.code.main.java.utils.annotations.Abstract;
+import de.xcuzimsmart.pluginhelper.code.main.java.utils.messanger.MessageBuilder;
+import de.xcuzimsmart.pluginhelper.code.main.java.utils.messanger.Messanger;
 import org.apache.commons.lang.Validate;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -59,7 +58,7 @@ public abstract class PluginCommand implements CommandExecutor, TabCompleter {
             execute(sender, args);
             return true;
         } catch (Exception e) {
-            SpigotPlugin.getPluginLogger().log(Level.SEVERE, "couldn't execute command: '" + info.name() + "'.", e);
+            SpigotPlugin.getInstance().getPluginLogger().log(Level.SEVERE, "couldn't execute command: '" + info.name() + "'.", e);
         }
 
         return false;

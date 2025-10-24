@@ -1,4 +1,4 @@
-package de.xcuzimsmart.pluginhelper.code.main.java.scoreboard;
+package de.xcuzimsmart.pluginhelper.code.main.java.scoreboard.score;
 
 import org.bukkit.ChatColor;
 import org.bukkit.scoreboard.Objective;

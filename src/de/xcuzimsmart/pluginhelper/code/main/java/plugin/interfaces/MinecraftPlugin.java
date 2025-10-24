@@ -1,9 +1,14 @@
-package de.xcuzimsmart.pluginhelper.code.main.java.plugin;
+package de.xcuzimsmart.pluginhelper.code.main.java.plugin.interfaces;
 
 import de.xcuzimsmart.pluginhelper.code.main.java.listener.ListenerManager;
+import de.xcuzimsmart.pluginhelper.code.main.java.plugin.PluginConfigFile;
+import de.xcuzimsmart.pluginhelper.code.main.java.run.Timer;
 import de.xcuzimsmart.pluginhelper.code.main.java.scoreboard.PluginScoreboard;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.logging.Logger;
 
 public interface MinecraftPlugin extends Prefixable {
 
@@ -25,5 +30,13 @@ public interface MinecraftPlugin extends Prefixable {
 
     String getPluginName();
 
+    String getPluginFullName();
+
     ListenerManager getListenerManager();
+
+    ConsoleCommandSender getConsoleSender();
+
+    Logger getPluginLogger();
+
+    Timer createTimer();
 }

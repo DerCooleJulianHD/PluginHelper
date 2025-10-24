@@ -1,4 +1,4 @@
-package de.xcuzimsmart.pluginhelper.code.main.java.utils;
+package de.xcuzimsmart.pluginhelper.code.main.java.utils.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
