@@ -4,19 +4,19 @@ import de.xcuzimsmart.pluginhelper.code.main.java.utils.interfaces.Loadable;
 
 import java.io.File;
 
-public abstract class Config implements Loadable {
+public abstract class ConfigFile implements Loadable {
 
     protected final File dir, file;
 
     boolean loaded = false;
 
-    public Config(File dir, String fileName, boolean loadOnInit) {
+    public ConfigFile(File dir, String fileName, boolean loadOnInit) {
         this.dir = dir;
         this.file = new File(dir, fileName);
         if (loadOnInit) load();
     }
 
-    public Config(String dir, String fileName, boolean loadOnInit) {
+    public ConfigFile(String dir, String fileName, boolean loadOnInit) {
         this(new File(dir), fileName, loadOnInit);
     }
 

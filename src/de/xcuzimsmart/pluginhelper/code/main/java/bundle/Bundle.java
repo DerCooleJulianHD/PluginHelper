@@ -11,6 +11,10 @@ public interface Bundle<T> {
 
     T get(String k);
 
+    void registerAll();
+
+    void register(T t);
+
     boolean contains(String k);
 
     Map<String, T> getActives();
@@ -25,5 +29,5 @@ public interface Bundle<T> {
 
     void clear();
 
-    int size();
+    int getSize();
 }

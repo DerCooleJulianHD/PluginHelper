@@ -7,9 +7,6 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginManager;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class ListenerBundle extends ObjectBundle<Listener> {
 
     public static final ListenerBundle EMPTY_BUNDLE = new ListenerBundle();
@@ -18,15 +15,13 @@ public class ListenerBundle extends ObjectBundle<Listener> {
 
     final PluginManager pluginManager = Bukkit.getPluginManager();
 
-    final Map<String, Listener> actives = new HashMap<>();
-
     public ListenerBundle() {}
 
     @Override
     public void add(String k, Listener listener) {
         if (contains(k)) return;
         actives.put(k, listener);
-        pluginManager.registerEvents(listener, plugin);
+        register(listener);
     }
 
     @Override
@@ -39,6 +34,11 @@ public class ListenerBundle extends ObjectBundle<Listener> {
 
         actives.remove(k);
         unregister(listener);
+    }
+
+    @Override
+    public void register(Listener listener) {
+        pluginManager.registerEvents(listener, plugin);
     }
 
     @Override

@@ -15,19 +15,20 @@ import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 
 public abstract class SpigotPlugin extends JavaPlugin implements MinecraftPlugin {
 
-    protected static SpigotPlugin plugin;
+    static SpigotPlugin plugin;
 
     protected String prefix = null; /* <-- by default */
 
     protected PluginScoreboard scoreboard;
 
-    protected Map<String, ListenerBundle> listenerBundles;
+    final Map<String, ListenerBundle> listenerBundles = new HashMap<>();;
 
     protected PluginConfigFile config;
 
@@ -54,12 +55,12 @@ public abstract class SpigotPlugin extends JavaPlugin implements MinecraftPlugin
     @Deprecated
     @Abstract
     public void onEnable() {
-        this.listenerBundles = new HashMap<>();
-
-        this.scoreboard = new GlobalScoreboard(); // creating a default scoreboard.
+        // creating a default scoreboard.
+        this.scoreboard = new GlobalScoreboard();
 
         onInitialize();
-        this.sendEnableMessage(); // printing out to console, that the plugin has been enabled.
+        // printing out to console, that the plugin has been enabled.
+        this.sendEnableMessage();
     }
 
     @Override
@@ -67,11 +68,15 @@ public abstract class SpigotPlugin extends JavaPlugin implements MinecraftPlugin
     @Abstract
     public void onDisable() {
         onPluginDisable();
-        this.sendDisableMessage(); // printing out to console, that the plugin has been disabled.
+
+        // printing out to console, that the plugin has been disabled.
+        this.sendDisableMessage();
     }
 
     public void onPluginLoad() {}
+
     public abstract void onInitialize();
+
     public void onPluginDisable() {}
 
     @Override
@@ -126,8 +131,9 @@ public abstract class SpigotPlugin extends JavaPlugin implements MinecraftPlugin
     }
 
     @Override
+    @Nullable
     public ListenerBundle getListeners(String name) {
-        return listenerBundles.getOrDefault(name, ListenerBundle.EMPTY_BUNDLE);
+        return listenerBundles.get(name);
     }
 
     @Override
@@ -137,7 +143,7 @@ public abstract class SpigotPlugin extends JavaPlugin implements MinecraftPlugin
 
     @Override
     public void removeListeners(String name) {
-        final ListenerBundle bundle = listenerBundles.get(name);
+        final ListenerBundle bundle = getListeners(name);
 
         if (bundle == null) return;
 

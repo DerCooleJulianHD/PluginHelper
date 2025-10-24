@@ -2,7 +2,7 @@ package de.xcuzimsmart.pluginhelper.code.main.java.configuration.json;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import de.xcuzimsmart.pluginhelper.code.main.java.configuration.Config;
+import de.xcuzimsmart.pluginhelper.code.main.java.configuration.ConfigFile;
 import de.xcuzimsmart.pluginhelper.code.main.java.plugin.SpigotPlugin;
 import de.xcuzimsmart.pluginhelper.code.main.java.utils.annotations.Abstract;
 import org.apache.commons.lang.Validate;
@@ -16,13 +16,13 @@ import java.util.logging.Level;
 
 @Abstract
 @JsonProperties() /* <-- by default */
-public class JsonConfigurator extends Config {  // cannot be final, because of abstract usages.
+public class JsonConfigFile extends ConfigFile {  // cannot be final, because of abstract usages.
 
     final Gson gson;
 
     final JsonProperties properties = getClass().getDeclaredAnnotation(JsonProperties.class);
 
-    public JsonConfigurator(File dir, String fileName, boolean loadOnInit) {
+    public JsonConfigFile(File dir, String fileName, boolean loadOnInit) {
         super(dir, fileName, loadOnInit);
         Validate.notNull(properties, getClass().getName() + " misses JsonProperties Annotation!");
 

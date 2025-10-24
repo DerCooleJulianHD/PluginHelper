@@ -6,13 +6,17 @@ import java.util.function.BiConsumer;
 
 public abstract class ObjectBundle<T> implements Bundle<T> {
 
-    final Map<String, T> actives = new HashMap<>();
+    protected final Map<String, T> actives = new HashMap<>();
 
     public ObjectBundle() {}
 
     @Override
     public final T get(String k) {
         return actives.get(k);
+    }
+
+    public void registerAll() {
+        actives.values().forEach(this::register);
     }
 
     @Override
@@ -50,7 +54,7 @@ public abstract class ObjectBundle<T> implements Bundle<T> {
     }
 
     @Override
-    public final int size() {
+    public final int getSize() {
         return actives.size();
     }
 }
