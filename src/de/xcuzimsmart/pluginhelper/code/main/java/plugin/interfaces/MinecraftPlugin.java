@@ -1,6 +1,6 @@
 package de.xcuzimsmart.pluginhelper.code.main.java.plugin.interfaces;
 
-import de.xcuzimsmart.pluginhelper.code.main.java.listener.ListenerManager;
+import de.xcuzimsmart.pluginhelper.code.main.java.listener.ListenerBundle;
 import de.xcuzimsmart.pluginhelper.code.main.java.plugin.PluginConfigFile;
 import de.xcuzimsmart.pluginhelper.code.main.java.run.Timer;
 import de.xcuzimsmart.pluginhelper.code.main.java.scoreboard.PluginScoreboard;
@@ -32,7 +32,11 @@ public interface MinecraftPlugin extends Prefixable {
 
     String getPluginFullName();
 
-    ListenerManager getListenerManager();
+    ListenerBundle getListeners(String name);
+
+    void addListeners(String name, ListenerBundle bundle);
+
+    void removeListeners(String name);
 
     ConsoleCommandSender getConsoleSender();
 
