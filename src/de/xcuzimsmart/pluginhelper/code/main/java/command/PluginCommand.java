@@ -40,7 +40,7 @@ public abstract class PluginCommand implements CommandExecutor, TabCompleter {
 
     final boolean tryToExecuteCommand(CommandSender sender, String[] args) {
         try {
-            if (this.requiresPermission() && (!sender.hasPermission(info.permission()))) {
+            if (!info.permission().isEmpty() && (!sender.hasPermission(info.permission()))) {
                 Messanger.broadcast(sender, MessageBuilder.COMMAND_NO_PERMISSION);
                 return false;
             }
@@ -64,6 +64,12 @@ public abstract class PluginCommand implements CommandExecutor, TabCompleter {
         return false;
     }
 
+    public final void sendSyntax(CommandSender sender, String... args) {
+        final StringBuilder builder = new StringBuilder();
+        for (String arg : args) builder.append(arg).append("&7, ").append(ChatColor.AQUA);
+        Messanger.broadcast(sender, "&cSyntax: &8/&7" + getInfo().name() + " &b" + builder);
+    }
+
     @Abstract
     public void execute(CommandSender sender, String[] args) {}
 
@@ -75,18 +81,8 @@ public abstract class PluginCommand implements CommandExecutor, TabCompleter {
         return List.of();
     }
 
-    public final void sendSyntax(CommandSender sender, String... args) {
-        final StringBuilder builder = new StringBuilder();
-        for (String arg : args) builder.append(arg).append("&7, ").append(ChatColor.AQUA);
-        Messanger.broadcast(sender, "&cSyntax: &8/&7" + getInfo().name() + " &b" + builder);
-    }
-
     public final CommandInfo getInfo() {
         return info;
-    }
-
-    public final boolean requiresPermission() {
-        return info != null && info.permission().isEmpty();
     }
 
     public final boolean isPlayer(CommandSender sender) {
