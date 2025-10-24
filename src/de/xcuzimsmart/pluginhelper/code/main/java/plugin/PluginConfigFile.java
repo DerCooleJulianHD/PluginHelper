@@ -12,7 +12,7 @@ public final class PluginConfigFile extends YamlConfigurator implements Prefixab
     @Override
     // returns the String that is set in plugin config.
     public String getPrefix() {
-        return isSet("prefx") ? readString("prefix") : "";
+        return isSet("prefix") ? readString("prefix") : "";
     }
 
     @Override

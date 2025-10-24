@@ -127,7 +127,7 @@ public abstract class SpigotPlugin extends JavaPlugin implements MinecraftPlugin
 
     @Override
     public ListenerBundle getListeners(String name) {
-        return listenerBundles.getOrDefault(name, ListenerBundle.EMPTY_BUNDLE());
+        return listenerBundles.getOrDefault(name, ListenerBundle.EMPTY_BUNDLE);
     }
 
     @Override

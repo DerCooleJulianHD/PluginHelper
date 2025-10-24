@@ -5,13 +5,13 @@ import java.util.function.BiConsumer;
 
 public interface Bundle<T> {
 
-    void add(String name, T t);
+    void add(String k, T t);
 
-    void remove(String name);
+    void remove(String k);
 
-    T get(String name);
+    T get(String k);
 
-    boolean contains(String name);
+    boolean contains(String k);
 
     Map<String, T> getActives();
 
@@ -24,4 +24,6 @@ public interface Bundle<T> {
     void forEach(BiConsumer<String, ? super T> action);
 
     void clear();
+
+    int size();
 }
