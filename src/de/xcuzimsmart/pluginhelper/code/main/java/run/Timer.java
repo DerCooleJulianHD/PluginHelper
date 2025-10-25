@@ -1,8 +1,7 @@
 package de.xcuzimsmart.pluginhelper.code.main.java.run;
 
-import de.xcuzimsmart.pluginhelper.code.main.java.listener.ListenerBundle;
-import de.xcuzimsmart.pluginhelper.code.main.java.plugin.SpigotPlugin;
-import de.xcuzimsmart.pluginhelper.code.main.java.utils.messanger.Messanger;
+import de.xcuzimsmart.pluginhelper.code.main.java.plugin.interfaces.MinecraftPlugin;
+import de.xcuzimsmart.pluginhelper.code.main.java.utils.messanger.Messager;
 import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -23,8 +22,8 @@ public final class Timer extends Counter {
 
     final TimerColor color = getClass().getDeclaredAnnotation(TimerColor.class);
 
-    public Timer(long delay, long period) {
-        super(delay, period);
+    public Timer(MinecraftPlugin plugin, long delay, long period) {
+        super(plugin, delay, period);
         Validate.notNull(color, "Timer must have Color Annotation!");
 
         this.hours = 0;
@@ -111,7 +110,7 @@ public final class Timer extends Counter {
             if (player == null) return;
             if (!player.isOnline()) return;
 
-            Messanger.sendActionBar(player, this.toString());
+            plugin.getMessager().sendActionBar(player, this.toString());
         }
     }
 }

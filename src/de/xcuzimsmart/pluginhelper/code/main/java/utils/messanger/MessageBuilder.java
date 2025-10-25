@@ -1,9 +1,11 @@
 package de.xcuzimsmart.pluginhelper.code.main.java.utils.messanger;
 
 import de.xcuzimsmart.pluginhelper.code.main.java.plugin.interfaces.Prefixable;
-import de.xcuzimsmart.pluginhelper.code.main.java.plugin.SpigotPlugin;
+import de.xcuzimsmart.pluginhelper.code.main.java.utils.annotations.ColorCodeSupport;
 import org.bukkit.ChatColor;
+import org.bukkit.plugin.Plugin;
 
+@ColorCodeSupport("&")
 public final class MessageBuilder {
 
     public static final String COMMAND_NO_PERMISSION = ChatColor.RED + "You doun't have the permission to execute this command.";
@@ -16,8 +18,8 @@ public final class MessageBuilder {
         return Colorize.translateColorCodes(out.toString());
     }
 
-    public static String build(SpigotPlugin plugin, String message) {
-        if (!(plugin instanceof Prefixable prefixable)) return buildMessageOutput(null, message);
+    public static String build(Plugin plugin, String message) {
+        if (!(plugin instanceof Prefixable prefixable)) return message(message);
         return buildMessageOutput(prefixable.getPrefix(), message);
     }
 

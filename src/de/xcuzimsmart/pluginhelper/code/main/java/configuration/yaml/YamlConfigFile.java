@@ -1,6 +1,8 @@
-package de.xcuzimsmart.pluginhelper.code.main.java.configuration;
+package de.xcuzimsmart.pluginhelper.code.main.java.configuration.yaml;
 
+import de.xcuzimsmart.pluginhelper.code.main.java.configuration.ConfigFile;
 import de.xcuzimsmart.pluginhelper.code.main.java.plugin.SpigotPlugin;
+import de.xcuzimsmart.pluginhelper.code.main.java.plugin.interfaces.MinecraftPlugin;
 import de.xcuzimsmart.pluginhelper.code.main.java.utils.annotations.Abstract;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -21,8 +23,8 @@ public class YamlConfigFile extends ConfigFile {
 
     FileConfiguration config = new YamlConfiguration();
 
-    public YamlConfigFile(File dir, String fileName, boolean loadOnInit) {
-        super(dir, fileName, loadOnInit);
+    public YamlConfigFile(MinecraftPlugin plugin, File dir, String fileName, boolean loadOnInit) {
+        super(plugin, dir, fileName, loadOnInit);
     }
 
     @Override
@@ -38,7 +40,7 @@ public class YamlConfigFile extends ConfigFile {
             config.load(file);
             setLoaded(true);
         } catch (InvalidConfigurationException | IOException e) {
-            SpigotPlugin.getInstance().getPluginLogger().log(Level.SEVERE, "Unable to load: " + file.getName(), e);
+            plugin.getPluginLogger().log(Level.SEVERE, "Unable to load: " + file.getName(), e);
         }
     }
 
@@ -50,7 +52,7 @@ public class YamlConfigFile extends ConfigFile {
             config.set(k, v);
             save();
         } catch (Exception e) {
-            SpigotPlugin.getInstance().getPluginLogger().log(Level.SEVERE, "Unable to write object to: " + file.getName(), e);
+            plugin.getPluginLogger().log(Level.SEVERE, "Unable to write object to: " + file.getName(), e);
         }
     }
 
@@ -62,7 +64,7 @@ public class YamlConfigFile extends ConfigFile {
         try {
             return config.get(k);
         } catch (Exception e) {
-            SpigotPlugin.getInstance().getPluginLogger().log(Level.SEVERE, "Unable to read object from: " + file.getName(), e);
+            plugin.getPluginLogger().log(Level.SEVERE, "Unable to read object from: " + file.getName(), e);
         }
 
         return null;
@@ -73,7 +75,7 @@ public class YamlConfigFile extends ConfigFile {
         try {
             config.save(file);
         } catch (IOException e) {
-            SpigotPlugin.getInstance().getPluginLogger().log(Level.SEVERE, "Unable to save: " + file.getName(), e);
+            plugin.getPluginLogger().log(Level.SEVERE, "Unable to save: " + file.getName(), e);
         }
     }
 

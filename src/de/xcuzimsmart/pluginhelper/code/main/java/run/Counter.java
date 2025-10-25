@@ -1,29 +1,35 @@
 package de.xcuzimsmart.pluginhelper.code.main.java.run;
 
 import de.xcuzimsmart.pluginhelper.code.main.java.plugin.SpigotPlugin;
+import de.xcuzimsmart.pluginhelper.code.main.java.plugin.interfaces.MinecraftPlugin;
 import de.xcuzimsmart.pluginhelper.code.main.java.utils.annotations.Abstract;
 import de.xcuzimsmart.pluginhelper.code.main.java.utils.interfaces.Executable;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public abstract class Counter extends BukkitRunnable implements Executable {
 
+    protected final MinecraftPlugin plugin;
+
     protected boolean running = false;
 
     protected final long delay, period;
 
-    public Counter(long delay, long period) {
+    public Counter(MinecraftPlugin plugin, long delay, long period) {
+        this.plugin = plugin;
         this.delay = delay;
         this.period = period;
 
-        this.runTaskTimer(SpigotPlugin.getInstance(), delay, period);
+        this.runTaskTimer((SpigotPlugin) plugin, delay, period);
     }
 
     @Override
     public final void run() {
-        try {
-            execute();
-        } catch (Exception e) {
-            this.cancel();
+        if (isRunning()) {
+            try {
+                execute();
+            } catch (Exception e) {
+                this.cancel();
+            }
         }
     }
 

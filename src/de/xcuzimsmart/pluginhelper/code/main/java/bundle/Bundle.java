@@ -11,8 +11,6 @@ public interface Bundle<T> {
 
     T get(String k);
 
-    void registerAll();
-
     void register(T t);
 
     boolean contains(String k);

@@ -1,12 +1,15 @@
 package de.xcuzimsmart.pluginhelper.code.main.java.utils.depend;
 
+import de.xcuzimsmart.pluginhelper.code.main.java.utils.annotations.ColorCodeSupport;
 import org.bukkit.ChatColor;
 import org.bukkit.Server;
+import org.bukkit.Utility;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 
 public final class Dependencies {
 
+    @Utility
     // does check if a plugin, which is using a dependency, also has the dependency plugin installed.
     public static boolean hasDependencyPlugin(Server server, Plugin using, String pluginNameOfDepend) {
         final PluginManager manager = server.getPluginManager();

@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import de.xcuzimsmart.pluginhelper.code.main.java.configuration.ConfigFile;
 import de.xcuzimsmart.pluginhelper.code.main.java.plugin.SpigotPlugin;
+import de.xcuzimsmart.pluginhelper.code.main.java.plugin.interfaces.MinecraftPlugin;
 import de.xcuzimsmart.pluginhelper.code.main.java.utils.annotations.Abstract;
 import org.apache.commons.lang.Validate;
 
@@ -22,8 +23,8 @@ public class JsonConfigFile extends ConfigFile {  // cannot be final, because of
 
     final JsonProperties properties = getClass().getDeclaredAnnotation(JsonProperties.class);
 
-    public JsonConfigFile(File dir, String fileName, boolean loadOnInit) {
-        super(dir, fileName, loadOnInit);
+    public JsonConfigFile(MinecraftPlugin plugin, File dir, String fileName, boolean loadOnInit) {
+        super(plugin, dir, fileName, loadOnInit);
         Validate.notNull(properties, getClass().getName() + " misses JsonProperties Annotation!");
 
         this.gson = JsonConfigurationBuilder.build(properties);
@@ -40,7 +41,7 @@ public class JsonConfigFile extends ConfigFile {  // cannot be final, because of
             writer.write(gson.toJson(o));
             writer.close();
         } catch (IOException e) {
-            SpigotPlugin.getInstance().getPluginLogger().log(Level.SEVERE, "Unable to write object to: " + file.getName(), e);
+            plugin.getPluginLogger().log(Level.SEVERE, "Unable to write object to: " + file.getName(), e);
         }
     }
 
@@ -56,7 +57,7 @@ public class JsonConfigFile extends ConfigFile {  // cannot be final, because of
            reader.close();
            return o;
         } catch (IOException e) {
-            SpigotPlugin.getInstance().getPluginLogger().log(Level.SEVERE, "Unable to read object from: " + file.getName(), e);
+            plugin.getPluginLogger().log(Level.SEVERE, "Unable to read object from: " + file.getName(), e);
         }
 
         return null;
@@ -73,7 +74,7 @@ public class JsonConfigFile extends ConfigFile {  // cannot be final, because of
 
             this.setLoaded(true);
         } catch (IOException e) {
-            SpigotPlugin.getInstance().getPluginLogger().log(Level.SEVERE, "Unable to load: " + file.getName(), e);
+            plugin.getPluginLogger().log(Level.SEVERE, "Unable to load: " + file.getName(), e);
         }
     }
 

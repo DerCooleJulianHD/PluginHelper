@@ -9,6 +9,7 @@ import de.xcuzimsmart.pluginhelper.code.main.java.utils.annotations.Abstract;
 import de.xcuzimsmart.pluginhelper.code.main.java.utils.file.FileManager;
 import de.xcuzimsmart.pluginhelper.code.main.java.utils.messanger.MessageBuilder;
 
+import de.xcuzimsmart.pluginhelper.code.main.java.utils.messanger.Messager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.ConsoleCommandSender;
@@ -22,13 +23,11 @@ import java.util.logging.Logger;
 
 public abstract class SpigotPlugin extends JavaPlugin implements MinecraftPlugin {
 
-    static SpigotPlugin plugin;
-
     protected String prefix = null; /* <-- by default */
 
     protected PluginScoreboard scoreboard;
 
-    final Map<String, ListenerBundle> listenerBundles = new HashMap<>();;
+    final Map<String, ListenerBundle> listeners = new HashMap<>();;
 
     protected PluginConfigFile config;
 
@@ -36,18 +35,19 @@ public abstract class SpigotPlugin extends JavaPlugin implements MinecraftPlugin
 
     protected final ConsoleCommandSender console = Bukkit.getConsoleSender();
 
+    protected Messager messager;
+
     @Override
     @Deprecated
     @Abstract
     public void onLoad() {
-        // creating an instance.
-        plugin = this;
-
         // creating the Plugin folder first.
         FileManager.mkdirIfNotExists(getDataFolder());
 
         // creating the config file and load it.
-        config = new PluginConfigFile(true);
+        config = new PluginConfigFile(this, true);
+
+        messager = new Messager(this);
         onPluginLoad();
     }
 
@@ -102,7 +102,7 @@ public abstract class SpigotPlugin extends JavaPlugin implements MinecraftPlugin
 
     @Override
     public final Timer createTimer() {
-        return new Timer(0, 20);
+        return new Timer(this, 0, 20);
     }
 
     @Override
@@ -112,7 +112,7 @@ public abstract class SpigotPlugin extends JavaPlugin implements MinecraftPlugin
 
     @Override
     public final JavaPlugin getAsJavaPlugin() {
-        return plugin;
+        return this;
     }
 
     @Override
@@ -133,12 +133,12 @@ public abstract class SpigotPlugin extends JavaPlugin implements MinecraftPlugin
     @Override
     @Nullable
     public ListenerBundle getListeners(String name) {
-        return listenerBundles.get(name);
+        return listeners.get(name);
     }
 
     @Override
     public void addListeners(String name, ListenerBundle bundle) {
-        if (!listenerBundles.containsKey(name)) listenerBundles.put(name, bundle);
+        if (!listeners.containsKey(name)) listeners.put(name, bundle);
     }
 
     @Override
@@ -148,7 +148,7 @@ public abstract class SpigotPlugin extends JavaPlugin implements MinecraftPlugin
         if (bundle == null) return;
 
         bundle.unregisterAll();
-        listenerBundles.remove(name);
+        listeners.remove(name);
     }
 
     @Override
@@ -166,13 +166,14 @@ public abstract class SpigotPlugin extends JavaPlugin implements MinecraftPlugin
         return getDescription().getFullName();
     }
 
-    public static SpigotPlugin getInstance() {
-        return plugin;
-    }
-
     @Override
     public Logger getPluginLogger() {
         return logger;
+    }
+
+    @Override
+    public Messager getMessager() {
+        return messager;
     }
 
     @Override

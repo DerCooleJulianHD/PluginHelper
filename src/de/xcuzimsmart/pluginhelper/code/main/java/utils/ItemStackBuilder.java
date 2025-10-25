@@ -1,6 +1,8 @@
 package de.xcuzimsmart.pluginhelper.code.main.java.utils;
 
 import de.xcuzimsmart.pluginhelper.code.main.java.utils.annotations.Abstract;
+import de.xcuzimsmart.pluginhelper.code.main.java.utils.annotations.ColorCodeSupport;
+import de.xcuzimsmart.pluginhelper.code.main.java.utils.messanger.Colorize;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
@@ -11,7 +13,7 @@ import java.util.*;
 @Abstract
 public class ItemStackBuilder {
 
-    protected final ItemStack itemStack;
+    protected ItemStack itemStack;
 
     protected Material material;
 
@@ -41,9 +43,10 @@ public class ItemStackBuilder {
         return new ItemStackBuilder(material, id, amount);
     }
 
+    @ColorCodeSupport("&")
     public final ItemStackBuilder setDisplayName(String displayName) {
         this.displayName = displayName;
-        if (meta != null) meta.setDisplayName(displayName);
+        if (meta != null) meta.setDisplayName(Colorize.translateColorCodes(displayName));
         return this;
     }
 
@@ -52,7 +55,7 @@ public class ItemStackBuilder {
         return this;
     }
 
-    public final ItemStackBuilder setLore(String[] lore) {
+    public final ItemStackBuilder setLore(String... lore) {
         if (meta != null) {
             final List<String> list = Arrays.stream(lore).toList();
             if (list.isEmpty()) return this;
@@ -68,12 +71,16 @@ public class ItemStackBuilder {
         return this;
     }
 
-    public final void addEnchant(Enchantment enchantment, int lvl) {
+    public final ItemStackBuilder addEnchant(Enchantment enchantment, int lvl) {
         this.enchantments.put(enchantment, lvl);
+        if (meta != null) meta.addEnchant(enchantment, lvl, true);
+        return this;
     }
 
-    public final void removeEnchant(Enchantment enchantment) {
+    public final ItemStackBuilder removeEnchant(Enchantment enchantment) {
         this.enchantments.remove(enchantment);
+        if (meta != null) meta.removeEnchant(enchantment);
+        return this;
     }
 
     public final Material getMaterial() {
@@ -106,18 +113,12 @@ public class ItemStackBuilder {
 
     public final ItemStack build() {
         if (meta == null) return itemStack;
-
-        meta.setDisplayName(displayName);
-        meta.spigot().setUnbreakable(unbreakable);
-
-        if (!enchantments.isEmpty()) enchantments.forEach((enchantment, lvl) -> meta.addEnchant(enchantment, lvl, true));
-
         itemStack.setItemMeta(meta);
         return itemStack;
     }
 
     public final ItemStackBuilder setName(String name) {
-        this.name = name;
+        this.name = Colorize.stripColor(name);
         return this;
     }
 
@@ -133,7 +134,7 @@ public class ItemStackBuilder {
         return itemStack;
     }
 
-    public final ItemStack update() {
-        return this.build();
+    public void setItemStack(ItemStack itemStack) {
+        this.itemStack = itemStack;
     }
 }

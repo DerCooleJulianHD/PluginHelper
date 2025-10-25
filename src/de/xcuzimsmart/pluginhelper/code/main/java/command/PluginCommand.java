@@ -1,9 +1,9 @@
 package de.xcuzimsmart.pluginhelper.code.main.java.command;
 
 import de.xcuzimsmart.pluginhelper.code.main.java.plugin.SpigotPlugin;
+import de.xcuzimsmart.pluginhelper.code.main.java.plugin.interfaces.MinecraftPlugin;
 import de.xcuzimsmart.pluginhelper.code.main.java.utils.annotations.Abstract;
 import de.xcuzimsmart.pluginhelper.code.main.java.utils.messanger.MessageBuilder;
-import de.xcuzimsmart.pluginhelper.code.main.java.utils.messanger.Messanger;
 import org.apache.commons.lang.Validate;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -17,13 +17,14 @@ import java.util.logging.Level;
 
 public abstract class PluginCommand implements CommandExecutor, TabCompleter {
 
-    protected final SpigotPlugin plugin = SpigotPlugin.getInstance();
+    protected final MinecraftPlugin plugin;
 
     protected final CommandInfo info = getClass().getDeclaredAnnotation(CommandInfo.class);;
 
-    public PluginCommand() {
+    public PluginCommand(MinecraftPlugin plugin) {
+        this.plugin = plugin;
         Validate.notNull(this.info, getClass().getSimpleName() + " misses CommandInfo Annotation");
-        plugin.getServer().getPluginCommand(info.name()).setExecutor(this);
+        ((SpigotPlugin) plugin).getServer().getPluginCommand(info.name()).setExecutor(this);
     }
 
     @Override // [from: CommandExecutor]
@@ -41,24 +42,24 @@ public abstract class PluginCommand implements CommandExecutor, TabCompleter {
     final boolean tryToExecuteCommand(CommandSender sender, String[] args) {
         try {
             if (!info.permission().isEmpty() && (!sender.hasPermission(info.permission()))) {
-                Messanger.broadcast(sender, MessageBuilder.COMMAND_NO_PERMISSION);
+                plugin.getMessager().sendMessage(sender, MessageBuilder.COMMAND_NO_PERMISSION);
                 return false;
             }
 
             if (info.requiresPlayer()) {
-                if (!isPlayer(sender)) {
-                    Messanger.broadcast(sender, MessageBuilder.COMMAND_NO_PLAYER_INSTANCE);
+                if (!(sender instanceof Player player)) {
+                    plugin.getMessager().sendMessage(sender, MessageBuilder.COMMAND_NO_PLAYER_INSTANCE);
                     return false;
                 }
 
-                this.execute((Player) sender, args);
+                this.execute(player, args);
                 return true;
             }
 
             execute(sender, args);
             return true;
         } catch (Exception e) {
-            SpigotPlugin.getInstance().getPluginLogger().log(Level.SEVERE, "couldn't execute command: '" + info.name() + "'.", e);
+            plugin.getPluginLogger().log(Level.SEVERE, "couldn't execute command: '" + info.name() + "'.", e);
         }
 
         return false;
@@ -67,7 +68,7 @@ public abstract class PluginCommand implements CommandExecutor, TabCompleter {
     public final void sendSyntax(CommandSender sender, String... args) {
         final StringBuilder builder = new StringBuilder();
         for (String arg : args) builder.append(arg).append("&7, ").append(ChatColor.AQUA);
-        Messanger.broadcast(sender, "&cSyntax: &8/&7" + getInfo().name() + " &b" + builder);
+        plugin.getMessager().sendMessage(sender, "&cSyntax: &8/&7" + getInfo().name() + " &b" + builder);
     }
 
     @Abstract
@@ -83,14 +84,6 @@ public abstract class PluginCommand implements CommandExecutor, TabCompleter {
 
     public final CommandInfo getInfo() {
         return info;
-    }
-
-    public final boolean isPlayer(CommandSender sender) {
-        return sender instanceof Player;
-    }
-
-    public SpigotPlugin plugin() {
-        return plugin;
     }
 }
 

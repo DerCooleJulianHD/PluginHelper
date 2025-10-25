@@ -1,23 +1,27 @@
 package de.xcuzimsmart.pluginhelper.code.main.java.configuration;
 
+import de.xcuzimsmart.pluginhelper.code.main.java.plugin.interfaces.MinecraftPlugin;
 import de.xcuzimsmart.pluginhelper.code.main.java.utils.interfaces.Loadable;
 
 import java.io.File;
 
 public abstract class ConfigFile implements Loadable {
 
+    protected final MinecraftPlugin plugin;
+
     protected final File dir, file;
 
     boolean loaded = false;
 
-    public ConfigFile(File dir, String fileName, boolean loadOnInit) {
+    public ConfigFile(MinecraftPlugin plugin, File dir, String fileName, boolean loadOnInit) {
+        this.plugin = plugin;
         this.dir = dir;
         this.file = new File(dir, fileName);
         if (loadOnInit) load();
     }
 
-    public ConfigFile(String dir, String fileName, boolean loadOnInit) {
-        this(new File(dir), fileName, loadOnInit);
+    public ConfigFile(MinecraftPlugin plugin, String dir, String fileName, boolean loadOnInit) {
+        this(plugin, new File(dir), fileName, loadOnInit);
     }
 
     // returns true if config file does end with 'filename{".ending"}'

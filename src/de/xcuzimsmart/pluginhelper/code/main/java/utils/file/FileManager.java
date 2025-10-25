@@ -1,12 +1,10 @@
 package de.xcuzimsmart.pluginhelper.code.main.java.utils.file;
 
-import de.xcuzimsmart.pluginhelper.code.main.java.plugin.SpigotPlugin;
 import org.bukkit.util.FileUtil;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
-import java.util.logging.Level;
 
 public final class FileManager {
 
@@ -61,7 +59,7 @@ public final class FileManager {
 
             copyDir(target, zip);
         } catch (IOException e) {
-            SpigotPlugin.getInstance().getPluginLogger().log(Level.SEVERE, e.getLocalizedMessage(), e);
+            throw new RuntimeException("Unable to zip file: '" + target.getName() + "'!");
         }
     }
 

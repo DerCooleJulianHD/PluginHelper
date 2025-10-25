@@ -1,12 +1,12 @@
 package de.xcuzimsmart.pluginhelper.code.main.java.plugin;
 
-import de.xcuzimsmart.pluginhelper.code.main.java.configuration.YamlConfigFile;
+import de.xcuzimsmart.pluginhelper.code.main.java.configuration.yaml.YamlConfigFile;
 import de.xcuzimsmart.pluginhelper.code.main.java.plugin.interfaces.Prefixable;
 
 public final class PluginConfigFile extends YamlConfigFile implements Prefixable {
 
-    public PluginConfigFile(boolean loadOnInit) {
-        super(SpigotPlugin.getInstance().getDataFolder(), "config.yml", loadOnInit);
+    public PluginConfigFile(SpigotPlugin plugin, boolean loadOnInit) {
+        super(plugin, plugin.getDataFolder(), "config.yml", loadOnInit);
     }
 
     @Override

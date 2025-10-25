@@ -1,6 +1,8 @@
 package de.xcuzimsmart.pluginhelper.code.main.java.utils.messanger;
 
-import de.xcuzimsmart.pluginhelper.code.main.java.plugin.SpigotPlugin;
+import de.xcuzimsmart.pluginhelper.code.main.java.plugin.interfaces.MinecraftPlugin;
+import de.xcuzimsmart.pluginhelper.code.main.java.utils.annotations.Abstract;
+import de.xcuzimsmart.pluginhelper.code.main.java.utils.annotations.ColorCodeSupport;
 import net.minecraft.server.v1_8_R3.IChatBaseComponent;
 import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
 import net.minecraft.server.v1_8_R3.PacketPlayOutTitle;
@@ -11,18 +13,21 @@ import org.bukkit.entity.Player;
 
 import java.util.Collection;
 
-public final class Messanger {
+@Abstract
+@ColorCodeSupport("&")
+public record Messager(MinecraftPlugin plugin) {
+    /* ### send titles ### */
 
-    public static void sendTitle(Player player, String title, String subtitle) {
-        player.sendTitle(title, subtitle);
+    public void sendTitle(Player player, String title, String subtitle) {
+        player.sendTitle(Colorize.translateColorCodes(title), Colorize.translateColorCodes(subtitle));
     }
 
-    public static void sendTitle(Collection<? extends Player> collection, String title, String subtitle) {
+    public void sendTitle(Collection<? extends Player> collection, String title, String subtitle) {
         if (collection.isEmpty()) return;
-        collection.forEach(target -> Messanger.sendTitle(target, title, subtitle));
+        collection.forEach(target -> sendTitle(target, title, subtitle));
     }
 
-    public static void sendTitle(Player player, String title, String subtitle, int fadeIn, int stay, int fadeOut) {
+    public void sendTitle(Player player, String title, String subtitle, int fadeIn, int stay, int fadeOut) {
         final PlayerConnection connection = ((CraftPlayer) player).getHandle().playerConnection;
         final PacketPlayOutTitle times = new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.TIMES, null, fadeIn, stay, fadeOut);
         connection.sendPacket(times);
@@ -42,27 +47,33 @@ public final class Messanger {
         }
     }
 
-    public static void sendTitle(Collection<? extends Player> collection, String title, String subtitle, int fadeIn, int stay, int fadeOut) {
+    public void sendTitle(Collection<? extends Player> collection, String title, String subtitle, int fadeIn, int stay, int fadeOut) {
         if (collection.isEmpty()) return;
-        collection.forEach(target -> Messanger.sendTitle(target, title, subtitle, fadeIn, stay, fadeOut));
+        collection.forEach(target -> sendTitle(target, title, subtitle, fadeIn, stay, fadeOut));
     }
 
-    public static void sendActionBar(Player player, String message) {
+    /* ### send actionbars ### */
+
+    public void sendActionBar(Player player, String message) {
         ((CraftPlayer) player).getHandle().playerConnection.sendPacket(
                 new PacketPlayOutChat(IChatBaseComponent.ChatSerializer.a(
                         "{\"text\": \"" + Colorize.translateColorCodes(message) + "\"}"), (byte) 2));
     }
 
-    public static void sendActionBar(Collection<? extends Player> collection, String content) {
+    public void sendActionBar(Collection<? extends Player> collection, String content) {
         if (collection.isEmpty()) return;
-        for (Player target : collection) Messanger.sendActionBar(target, content);
+        for (Player target : collection) sendActionBar(target, content);
     }
 
-    public static void broadcast(CommandSender entity, String message)  {
-        entity.sendMessage(MessageBuilder.build(SpigotPlugin.getInstance(), message));
+
+    /* ### send messages ### */
+
+    public void sendMessage(CommandSender entity, String message) {
+        entity.sendMessage(MessageBuilder.build(plugin.getPlugin(), message));
     }
 
-    public static void broadcast(Collection<? extends CommandSender> collection, String message) {
-        if (!collection.isEmpty()) collection.forEach(target -> broadcast(target, message));
+
+    public void broadcast(Collection<? extends CommandSender> collection, String message) {
+        if (!collection.isEmpty()) collection.forEach(target -> sendMessage(target, message));
     }
 }
