@@ -130,6 +130,14 @@ public class ItemStackBuilder {
         return name;
     }
 
+    public boolean hasName(String name) {
+        return (this.name != null && (!this.name.isEmpty())) && name.equals(this.name);
+    }
+
+    public boolean hasIDName(String name) {
+        return hasName(name);
+    }
+
     public final ItemStack getItemStack() {
         return itemStack;
     }

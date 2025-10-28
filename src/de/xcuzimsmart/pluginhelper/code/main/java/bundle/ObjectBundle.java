@@ -47,7 +47,7 @@ public abstract class ObjectBundle<T> implements Bundle<T> {
     }
 
     @Override
-    // for loop
+    // loop
     public final void forEach(BiConsumer<String, ? super T> action) {
         if (isEmpty()) return;
         if (action == null) return;

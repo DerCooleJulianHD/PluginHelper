@@ -8,7 +8,7 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginManager;
 
-public class ListenerBundle extends ObjectBundle<Listener> {
+public final class ListenerBundle extends ObjectBundle<Listener> {
 
     final PluginManager pluginManager = Bukkit.getPluginManager();
 
@@ -22,6 +22,18 @@ public class ListenerBundle extends ObjectBundle<Listener> {
         if (contains(k)) return; // if it's already in this bundle we aren't going to add it.
         actives.put(k, listener); // storing it.
         register(listener); // enabling it.
+    }
+
+    public void add(Class<? extends Listener> clazz) {
+        try {
+            this.add(clazz.getName(), clazz.newInstance());
+        } catch (InstantiationException | IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public Listener get(Class<? extends Listener> clazz) {
+        return this.get(clazz.getName());
     }
 
     @Override

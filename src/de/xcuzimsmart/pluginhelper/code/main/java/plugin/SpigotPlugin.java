@@ -27,7 +27,7 @@ public abstract class SpigotPlugin extends JavaPlugin implements MinecraftPlugin
 
     protected PluginScoreboard scoreboard;
 
-    final Map<String, ListenerBundle> listeners = new HashMap<>();;
+    final Map<String, ListenerBundle> listeners = new HashMap<>();
 
     protected PluginConfigFile config;
 
