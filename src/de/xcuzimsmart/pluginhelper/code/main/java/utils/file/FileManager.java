@@ -14,8 +14,9 @@ public final class FileManager {
 
     public static void copyDir(File dir, File to) {
         if (!dir.exists()) return;
+        if (!dir.isDirectory()) return;
         // TODO: replace Line with 'mkdirIfNotExists()'
-        if (to.isDirectory() && !to.exists()) to.mkdirs();
+        mkdirIfNotExists(to);
 
         final File copy = new File(to, dir.getName());
 
